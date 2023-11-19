@@ -282,7 +282,7 @@ function AppStack(props) {
           drawerIcon: ({ focused }) => (
             <Icon
               size={16}
-              name="md-switch"
+              name="toggle-outline"
               family="ionicon"
               color={focused ? "white" : materialTheme.COLORS.MUTED}
               style={{ marginRight: 2, marginLeft: 2 }}

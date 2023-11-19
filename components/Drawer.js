@@ -86,7 +86,7 @@ class DrawerItem extends React.Component {
         return (
           <Icon
             size={16}
-            name="md-switch"
+            name="toggle-outline"
             family="ionicon"
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
@@ -134,7 +134,7 @@ class DrawerItem extends React.Component {
     const { focused, title, navigation } = this.props;
     const proScreen = proScreens.includes(title);
     return (
-      <TouchableOpacity style={{ height: 55 }} onPress={() => {navigation.navigate(title)}}>
+      <TouchableOpacity style={{ height: 55 }} onPress={() => { navigation.navigate(title) }}>
         <Block
           flex
           row
@@ -153,8 +153,8 @@ class DrawerItem extends React.Component {
                 focused
                   ? "white"
                   : proScreen
-                  ? materialTheme.COLORS.MUTED
-                  : "black"
+                    ? materialTheme.COLORS.MUTED
+                    : "black"
               }
             >
               {title}
