@@ -19,9 +19,9 @@ export default class Pro extends React.Component {
             source={{ uri: Images.Pro }}
             style={{ height: height / 1.8, width, zIndex: 1 }}
           >
-          <LinearGradient
-            style={styles.gradient}
-            colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} />
+            <LinearGradient
+              style={styles.gradient}
+              colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} />
           </ImageBackground>
           <Block space="between" style={styles.padded}>
             <Block>

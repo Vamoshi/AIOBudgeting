@@ -7,45 +7,8 @@ import { Icon, Product } from '../components/';
 const { width } = Dimensions.get('screen');
 import products from '../constants/products';
 
-export default class Home extends React.Component {
-  renderSearch = () => {
-    const { navigation } = this.props;
-    const iconCamera = <Icon size={16} color={theme.COLORS.MUTED} name="zoom-in" family="material" />
-
-    return (
-      <Input
-        right
-        color="black"
-        style={styles.search}
-        iconContent={iconCamera}
-        placeholder="What are you looking for?"
-        onFocus={() => navigation.navigate('Pro')}
-      />
-    )
-  }
-  
-  renderTabs = () => {
-    const { navigation } = this.props;
-
-    return (
-      <Block row style={styles.tabs}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>Categories</Text>
-          </Block>
-        </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>Best Deals</Text>
-          </Block>
-        </Button>
-      </Block>
-    )
-  }
-
-  renderProducts = () => {
+const Home = ({ navigation }) => {
+  const renderProducts = () => {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -63,18 +26,18 @@ export default class Home extends React.Component {
     )
   }
 
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderProducts()}
-      </Block>
-    );
-  }
+  return (
+    <Block flex center style={styles.home}>
+      {renderProducts()}
+    </Block>
+  );
 }
+
+export default Home;
 
 const styles = StyleSheet.create({
   home: {
-    width: width,    
+    width: width,
   },
   search: {
     height: 48,

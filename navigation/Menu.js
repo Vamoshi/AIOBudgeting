@@ -1,13 +1,12 @@
 import React from "react";
 import { TouchableWithoutFeedback, ScrollView, StyleSheet, Image } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { useSafeArea } from "react-native-safe-area-context";
 
 import { Icon, Drawer as DrawerCustomItem } from '../components/';
 import { Images, materialTheme } from "../constants/";
 
 
-function CustomDrawerContent({
+function Menu({
   drawerPosition,
   navigation,
   profile,
@@ -15,13 +14,8 @@ function CustomDrawerContent({
   state,
   ...rest
 }) {
-  const insets = useSafeArea();
   const screens = [
     "Home",
-    "Woman",
-    "Man",
-    "Kids",
-    "New Collection",
     "Profile",
     "Settings",
     "Components"
@@ -59,13 +53,6 @@ function CustomDrawerContent({
       </Block>
       <Block flex style={{ paddingLeft: 7, paddingRight: 14 }}>
         <ScrollView
-          contentContainerStyle={[
-            {
-              paddingTop: insets.top * 0.4,
-              paddingLeft: drawerPosition === "left" ? insets.left : 0,
-              paddingRight: drawerPosition === "right" ? insets.right : 0
-            }
-          ]}
           showsVerticalScrollIndicator={false}
         >
           {screens.map((item, index) => {
@@ -81,11 +68,11 @@ function CustomDrawerContent({
         </ScrollView>
       </Block>
       <Block flex={0.3} style={{ paddingLeft: 7, paddingRight: 14 }}>
-        <DrawerCustomItem
+        {/* <DrawerCustomItem
           title="Sign In"
           navigation={navigation}
-          focused={state.index === 8 ? true : false}
-        />
+          focused={state.index === 9 ? true : false}
+        /> */}
         <DrawerCustomItem
           title="Sign Up"
           navigation={navigation}
@@ -134,4 +121,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CustomDrawerContent;
+export default Menu;

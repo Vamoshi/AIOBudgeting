@@ -23,7 +23,7 @@ export default class Components extends React.Component {
   };
 
   toggleSwitch = switchId => this.setState({ [switchId]: !this.state[switchId] });
-  
+
   renderButtons = () => {
     return (
       <Block flex>
@@ -60,7 +60,7 @@ export default class Components extends React.Component {
             </Button>
           </Block>
           <Block row space="evenly">
-            <Block flex left style={{marginTop: 8}}>
+            <Block flex left style={{ marginTop: 8 }}>
               <Select
                 defaultIndex={1}
                 options={[1, 2, 3, 4, 5]}
@@ -92,24 +92,24 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderText = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Typography</Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Text h1 style={{marginBottom: theme.SIZES.BASE / 2}}>Heading 1</Text>
-          <Text h2 style={{marginBottom: theme.SIZES.BASE / 2}}>Heading 2</Text>
-          <Text h3 style={{marginBottom: theme.SIZES.BASE / 2}}>Heading 3</Text>
-          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2}}>Heading 4</Text>
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Heading 5</Text>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Paragraph</Text>
+          <Text h1 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Heading 1</Text>
+          <Text h2 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Heading 2</Text>
+          <Text h3 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Heading 3</Text>
+          <Text h4 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Heading 4</Text>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Heading 5</Text>
+          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Paragraph</Text>
           <Text muted>This is a muted paragraph.</Text>
         </Block>
       </Block>
     )
   }
-  
+
   renderInputs = () => {
     return (
       <Block flex style={styles.group}>
@@ -126,7 +126,7 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderSwitches = () => {
     return (
       <Block flex style={styles.group}>
@@ -150,15 +150,14 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderTableCell = () => {
-    const { navigation } = this.props;
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Table Cell</Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Block style={styles.rows}>
-            <TouchableOpacity onPress={() => navigation.navigate('Pro')}>
+            <TouchableOpacity>
               <Block row middle space="between" style={{ paddingTop: 7 }}>
                 <Text size={14}>Manage Options</Text>
                 <Icon name="angle-right" family="font-awesome" style={{ paddingRight: 5 }} />
@@ -169,7 +168,7 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderNavigation = () => {
     return (
       <Block flex style={styles.group}>
@@ -196,7 +195,7 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderSocial = () => {
     return (
       <Block flex style={styles.group}>
@@ -247,7 +246,7 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderCards = () => {
     return (
       <Block flex style={styles.group}>
@@ -276,7 +275,7 @@ export default class Components extends React.Component {
       </Block>
     )
   }
-  
+
   renderAlbum = () => {
     const { navigation } = this.props;
 
@@ -314,15 +313,15 @@ export default class Components extends React.Component {
         <ScrollView
           style={styles.components}
           showsVerticalScrollIndicator={false}>
-            {this.renderButtons()}
-            {this.renderText()}
-            {this.renderInputs()}
-            {this.renderSwitches()}
-            {this.renderTableCell()}
-            {this.renderNavigation()}
-            {this.renderSocial()}
-            {this.renderCards()}
-            {this.renderAlbum()}
+          {this.renderButtons()}
+          {this.renderText()}
+          {this.renderInputs()}
+          {this.renderSwitches()}
+          {this.renderTableCell()}
+          {this.renderNavigation()}
+          {this.renderSocial()}
+          {this.renderCards()}
+          {this.renderAlbum()}
         </ScrollView>
       </Block>
     );
