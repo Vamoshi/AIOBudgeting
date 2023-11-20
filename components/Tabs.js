@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Dimensions, FlatList, Animated } from 'react-native';
 import { Block, theme } from 'galio-framework';
 
@@ -12,64 +12,61 @@ const defaultMenu = [
   { id: 'motocycles', title: 'Motocycles', },
 ];
 
-export default class MenuHorizontal extends React.Component {
-  static defaultProps = {
-    data: defaultMenu,
-    initialIndex: null,
-  }
 
-  state = {
-    active: null,
-  }
+const MenuHorizontal = ({ data = defaultMenu, initialIndex, onChange }) => {
+  const [active, setActive] = useState(null);
+  const animatedValue = useRef(new Animated.Value(1)).current;
+  const menuRef = useRef(null);
 
-  componentDidMount() {
-    const { initialIndex } = this.props;
-    initialIndex && this.selectMenu(initialIndex);
-  }
+  useEffect(() => {
+    if (initialIndex) {
+      selectMenu(initialIndex);
+    }
+  }, [initialIndex]);
 
-  animatedValue = new Animated.Value(1);
+  const animate = () => {
+    animatedValue.setValue(0);
 
-  animate() {
-    this.animatedValue.setValue(0);
-
-    Animated.timing(this.animatedValue, {
+    Animated.timing(animatedValue, {
       toValue: 1,
       duration: 300,
-      // useNativeDriver: true, // color not supported
-    }).start()
-  }
+      useNativeDriver: false,
+    }).start();
+  };
 
-  menuRef = React.createRef();
-
-  onScrollToIndexFailed = () => {
-    this.menuRef.current.scrollToIndex({
+  const onScrollToIndexFailed = () => {
+    menuRef.current.scrollToIndex({
       index: 0,
-      viewPosition: 0.5
+      viewPosition: 0.5,
     });
-  }
+  };
 
-  selectMenu = (id) => {
-    this.setState({ active: id });
+  const selectMenu = (id) => {
+    setActive(id);
 
-    this.menuRef.current.scrollToIndex({
-      index: this.props.data.findIndex(item => item.id === id),
-      viewPosition: 0.5
+    const index = data.findIndex((item) => item.id === id);
+    menuRef.current.scrollToIndex({
+      index,
+      viewPosition: 0.5,
     });
 
-    this.animate();
-    this.props.onChange && this.props.onChange(id);
-  }
+    animate();
+    onChange && onChange(id);
+  };
 
-  renderItem = (item) => {
-    const isActive = this.state.active === item.id;
+  const renderItem = ({ item }) => {
+    const isActive = active === item.id;
 
-    const textColor = this.animatedValue.interpolate({
+    const textColor = animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [materialTheme.COLORS.MUTED, isActive ? materialTheme.COLORS.ACTIVE : materialTheme.COLORS.MUTED],
+      outputRange: [
+        materialTheme.COLORS.MUTED,
+        isActive ? materialTheme.COLORS.ACTIVE : materialTheme.COLORS.MUTED,
+      ],
       extrapolate: 'clamp',
     });
-    
-    const width = this.animatedValue.interpolate({
+
+    const width = animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0%', isActive ? '100%' : '0%'],
       extrapolate: 'clamp',
@@ -80,43 +77,35 @@ export default class MenuHorizontal extends React.Component {
         <Animated.Text
           style={[
             styles.menuTitle,
-            { color: textColor }
+            { color: textColor },
           ]}
-          onPress={() => this.selectMenu(item.id)}>
+          onPress={() => selectMenu(item.id)}
+        >
           {item.title}
         </Animated.Text>
         <Animated.View style={{ height: 2, width, backgroundColor: materialTheme.COLORS.ACTIVE }} />
       </Block>
-    )
-  }
+    );
+  };
 
-  renderMenu = () => {
-    const { data, ...props } = this.props;
-
-    return (
+  return (
+    <Block style={[styles.container, styles.shadow]}>
       <FlatList
-        {...props}
         data={data}
-        horizontal={true}
-        ref={this.menuRef}
-        extraData={this.state}
+        horizontal
+        ref={menuRef}
+        extraData={active}
         keyExtractor={(item) => item.id}
         showsHorizontalScrollIndicator={false}
-        onScrollToIndexFailed={this.onScrollToIndexFailed}
-        renderItem={({ item }) => this.renderItem(item)}
+        onScrollToIndexFailed={onScrollToIndexFailed}
+        renderItem={renderItem}
         contentContainerStyle={styles.menu}
       />
-    )
-  }
+    </Block>
+  );
+};
 
-  render() {
-    return (
-      <Block style={[styles.container, styles.shadow]}>
-        {this.renderMenu()}
-      </Block>
-    )
-  }
-}
+export default MenuHorizontal;
 
 const styles = StyleSheet.create({
   container: {

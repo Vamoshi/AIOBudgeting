@@ -7,7 +7,7 @@ import { Icon, Product } from '../components/';
 const { width } = Dimensions.get('screen');
 import products from '../constants/products';
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const renderProducts = () => {
     return (
       <ScrollView

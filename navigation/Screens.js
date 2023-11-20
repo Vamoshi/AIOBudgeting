@@ -141,7 +141,7 @@ function HomeStack(props) {
   );
 }
 
-function AppStack(props) {
+function AppStack() {
   return (
     <Drawer.Navigator
       style={{ flex: 1 }}
@@ -160,10 +160,8 @@ function AppStack(props) {
         itemStyle: {
           width: width * 0.74,
           paddingHorizontal: 12,
-          // paddingVertical: 4,
           justifyContent: "center",
           alignContent: "center",
-          // alignItems: 'center',
           overflow: "hidden",
         },
         labelStyle: {
@@ -250,7 +248,7 @@ function AppStack(props) {
   );
 }
 
-export default function OnboardingStack(props) {
+export default function ScreenStack() {
   return (
     <Stack.Navigator
       screenOptions={{

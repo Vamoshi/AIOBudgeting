@@ -11,6 +11,7 @@ import { Button, Block, Text, Input, theme } from 'galio-framework';
 
 import { materialTheme, products, Images } from '../constants/';
 import { Select, Icon, Header, Product, Switch } from '../components/';
+import MenuHorizontal from '../components/Tabs';
 
 const { width } = Dimensions.get('screen');
 
@@ -89,6 +90,8 @@ export default class Components extends React.Component {
             </Block>
           </Block>
         </Block>
+        <MenuHorizontal></MenuHorizontal>
+
       </Block>
     )
   }

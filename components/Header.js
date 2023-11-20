@@ -71,7 +71,6 @@ const Header = (props) => {
 }
 
 export default Header;
-
 const styles = StyleSheet.create({
   button: {
     padding: 12,

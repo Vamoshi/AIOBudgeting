@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from './GaButton';
 import Select from './Select';
 import Icon from './Icon';
 import Tabs from './Tabs';

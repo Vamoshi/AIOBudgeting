@@ -1,14 +1,11 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 
-import materialTheme from '../constants/Theme';
 
 const { width } = Dimensions.get('screen');
 
 const Product = ({ product, horizontal, full, style, priceColor, imageStyle }) => {
-  const navigation = useNavigation();
 
   const imageStyles = [
     styles.image,
