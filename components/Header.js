@@ -8,7 +8,7 @@ import materialTheme from '../constants/Theme';
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
-const Header = (props) => {
+const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation }) => {
 
   const renderSearch = () => {
     return (
@@ -17,14 +17,14 @@ const Header = (props) => {
         color="black"
         style={styles.search}
         placeholder="What are you looking for?"
-        // onFocus={() => navigation.navigate('Pro')}
+        // onFocus={() => navigation.navigate('ProScreen')}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
       />
     )
   }
 
   const renderTabs = () => {
-    const { tabTitleLeft, tabTitleRight } = props;
+    // const { tabTitleLeft, tabTitleRight } = props;
     return (
       <Block row style={styles.tabs}>
         <Button shadowless style={[styles.tab, styles.divider]} >
@@ -44,7 +44,7 @@ const Header = (props) => {
   }
 
   const renderHeader = () => {
-    const { search, tabs } = props;
+    // const { search, tabs } = props;
     if (search || tabs) {
       return (
         <Block center>
@@ -56,7 +56,7 @@ const Header = (props) => {
     return null;
   }
 
-  const { title, transparent, search, tabs } = props;
+  // const { title, transparent, search, tabs } = props;
   const noShadow = ["Search", "Categories", "Deals", "Pro", "Profile"].includes(title);
   const headerStyles = [
     !noShadow ? styles.shadow : null,

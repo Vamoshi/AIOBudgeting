@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -17,15 +17,11 @@ const { width } = Dimensions.get('screen');
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default class Components extends React.Component {
-  state = {
-    'switch-1': true,
-    'switch-2': false,
-  };
+export default function Components({ navigation }) {
+  const [switch1, setSwitch1] = useState(true);
+  const [switch2, setSwitch2] = useState(false);
 
-  toggleSwitch = switchId => this.setState({ [switchId]: !this.state[switchId] });
-
-  renderButtons = () => {
+  const renderButtons = () => {
     return (
       <Block flex>
         <Text bold size={16} style={styles.title}>Buttons</Text>
@@ -96,7 +92,7 @@ export default class Components extends React.Component {
     )
   }
 
-  renderText = () => {
+  const renderText = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Typography</Text>
@@ -113,7 +109,7 @@ export default class Components extends React.Component {
     )
   }
 
-  renderInputs = () => {
+  const renderInputs = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Inputs</Text>
@@ -130,7 +126,7 @@ export default class Components extends React.Component {
     )
   }
 
-  renderSwitches = () => {
+  const renderSwitches = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Switches</Text>
@@ -138,15 +134,15 @@ export default class Components extends React.Component {
           <Block row middle space="between" style={{ marginBottom: theme.SIZES.BASE }}>
             <Text size={14}>Switch is ON</Text>
             <Switch
-              value={this.state['switch-1']}
-              onValueChange={() => this.toggleSwitch('switch-1')}
+              value={switch1}
+              onValueChange={() => setSwitch1(!switch1)}
             />
           </Block>
           <Block row middle space="between">
             <Text size={14}>Switch is OFF</Text>
             <Switch
-              value={this.state['switch-2']}
-              onValueChange={() => this.toggleSwitch('switch-2')}
+              value={switch2}
+              onValueChange={() => setSwitch2(!switch2)}
             />
           </Block>
         </Block>
@@ -154,7 +150,7 @@ export default class Components extends React.Component {
     )
   }
 
-  renderTableCell = () => {
+  const renderTableCell = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Table Cell</Text>
@@ -172,17 +168,17 @@ export default class Components extends React.Component {
     )
   }
 
-  renderNavigation = () => {
+  const renderNavigation = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Navigation</Text>
         <Block>
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
+            <Header back title="Title" navigation={navigation} />
           </Block>
 
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header search title="Title" navigation={this.props.navigation} />
+            <Header search title="Title" navigation={navigation} />
           </Block>
 
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
@@ -192,14 +188,14 @@ export default class Components extends React.Component {
               title="Title"
               tabTitleLeft="Option 1"
               tabTitleRight="Option 2"
-              navigation={this.props.navigation} />
+              navigation={navigation} />
           </Block>
         </Block>
       </Block>
     )
   }
 
-  renderSocial = () => {
+  const renderSocial = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Social</Text>
@@ -250,7 +246,7 @@ export default class Components extends React.Component {
     )
   }
 
-  renderCards = () => {
+  const renderCards = () => {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>Cards</Text>
@@ -279,9 +275,7 @@ export default class Components extends React.Component {
     )
   }
 
-  renderAlbum = () => {
-    const { navigation } = this.props;
-
+  const renderAlbum = () => {
     return (
       <Block flex style={[styles.group, { paddingBottom: theme.SIZES.BASE * 5 }]}>
         <Text bold size={16} style={styles.title}>Album</Text>
@@ -310,25 +304,24 @@ export default class Components extends React.Component {
     )
   }
 
-  render() {
-    return (
-      <Block flex center>
-        <ScrollView
-          style={styles.components}
-          showsVerticalScrollIndicator={false}>
-          {this.renderButtons()}
-          {this.renderText()}
-          {this.renderInputs()}
-          {this.renderSwitches()}
-          {this.renderTableCell()}
-          {this.renderNavigation()}
-          {this.renderSocial()}
-          {this.renderCards()}
-          {this.renderAlbum()}
-        </ScrollView>
-      </Block>
-    );
-  }
+
+  return (
+    <Block flex center>
+      <ScrollView
+        style={styles.components}
+        showsVerticalScrollIndicator={false}>
+        {renderButtons()}
+        {renderText()}
+        {renderInputs()}
+        {renderSwitches()}
+        {renderTableCell()}
+        {renderNavigation()}
+        {renderSocial()}
+        {renderCards()}
+        {renderAlbum()}
+      </ScrollView>
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({

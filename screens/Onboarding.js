@@ -7,46 +7,42 @@ const { height, width } = Dimensions.get('screen');
 import materialTheme from '../constants/Theme';
 import Images from '../constants/Images';
 
-export default class Onboarding extends React.Component {
-  render() {
-    const { navigation } = this.props;
-
-    return (
-      <Block flex style={styles.container}>
-        <StatusBar barStyle="light-content" />
-        <Block flex center>
-          <ImageBackground
-            source={{ uri: Images.Onboarding }}
-            style={{ height: height, width: width, marginTop: '-55%', zIndex: 1 }}
-          />
-        </Block>
-        <Block flex space="between" style={styles.padded}>
-          <Block flex space="around" style={{ zIndex: 2 }}>
+export default function Onboarding({ navigation }) {
+  return (
+    <Block flex style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      <Block flex center>
+        <ImageBackground
+          source={{ uri: Images.Onboarding }}
+          style={{ height: height, width: width, marginTop: '-55%', zIndex: 1 }}
+        />
+      </Block>
+      <Block flex space="between" style={styles.padded}>
+        <Block flex space="around" style={{ zIndex: 2 }}>
+          <Block>
             <Block>
-              <Block>
-                <Text color="white" size={60}>Material</Text>
-              </Block>
-              <Block row>
-                <Text color="white" size={60}>Kit</Text>
-              </Block>
-              <Text size={16} color='rgba(255,255,255,0.6)'>
-                Fully coded React Native components.
-              </Text>
+              <Text color="white" size={60}>Material</Text>
             </Block>
-            <Block center>
-              <Button
-                shadowless
-                style={styles.button}
-                color={materialTheme.COLORS.BUTTON_COLOR}
-                onPress={() => navigation.navigate('App')}>
-                GET STARTED
-              </Button>
+            <Block row>
+              <Text color="white" size={60}>Kit</Text>
             </Block>
+            <Text size={16} color='rgba(255,255,255,0.6)'>
+              Fully coded React Native components.
+            </Text>
+          </Block>
+          <Block center>
+            <Button
+              shadowless
+              style={styles.button}
+              color={materialTheme.COLORS.BUTTON_COLOR}
+              onPress={() => navigation.navigate('App')}>
+              GET STARTED
+            </Button>
           </Block>
         </Block>
       </Block>
-    );
-  }
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
