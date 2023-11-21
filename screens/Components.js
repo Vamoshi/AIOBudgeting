@@ -60,7 +60,8 @@ export default function Components({ navigation }) {
             <Block flex left style={{ marginTop: 8 }}>
               <Select
                 defaultIndex={1}
-                options={[1, 2, 3, 4, 5]}
+                // Make sure to have more than 2 options
+                options={["1", "1", "1",]}
                 style={styles.shadow}
               />
             </Block>
