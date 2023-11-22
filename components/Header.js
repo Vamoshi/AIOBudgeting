@@ -51,12 +51,6 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
   }
 
   const renderRight = () => {
-    // if (title === 'Title') {
-    //   return [
-    //     <ChatButton key='chat-title' navigation={navigation} isWhite={white} />,
-    //     <BasketButton key='basket-title' navigation={navigation} isWhite={white} />
-    //   ]
-    // }
 
     switch (title) {
       case 'Home':
