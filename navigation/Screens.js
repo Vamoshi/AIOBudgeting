@@ -141,7 +141,7 @@ function HomeStack(props) {
   );
 }
 
-function AppStack() {
+function DrawerGroup() {
   return (
     <Drawer.Navigator
       style={{ flex: 1 }}
@@ -170,6 +170,7 @@ function AppStack() {
         },
       }}
       initialRouteName="Home"
+      options={{ headerShown: false }}
     >
       <Drawer.Screen
         name="Home"
@@ -183,6 +184,7 @@ function AppStack() {
               color={focused ? "white" : materialTheme.COLORS.MUTED}
             />
           ),
+          headerShown: false,
         }}
       />
       <Drawer.Screen
@@ -197,6 +199,7 @@ function AppStack() {
               color={focused ? "white" : materialTheme.COLORS.MUTED}
             />
           ),
+          headerShown: false,
         }}
       />
       <Drawer.Screen
@@ -212,6 +215,7 @@ function AppStack() {
               style={{ marginRight: -3 }}
             />
           ),
+          headerShown: false,
         }}
       />
       <Drawer.Screen
@@ -227,6 +231,7 @@ function AppStack() {
               style={{ marginRight: 2, marginLeft: 2 }}
             />
           ),
+          headerShown: false,
         }}
       />
 
@@ -242,6 +247,7 @@ function AppStack() {
               color={focused ? "white" : materialTheme.COLORS.MUTED}
             />
           ),
+          headerShown: false,
         }}
       />
     </Drawer.Navigator>
@@ -256,7 +262,7 @@ export default function ScreenStack() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen name="App" component={DrawerGroup} />
     </Stack.Navigator>
   );
 }

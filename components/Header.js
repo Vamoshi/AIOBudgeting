@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Platform, Dimensions } from 'react-native';
-import { Button, Block, Input, Text, theme } from 'galio-framework';
+import { Button, Block, NavBar, Input, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
 import materialTheme from '../constants/Theme';
@@ -8,7 +8,102 @@ import materialTheme from '../constants/Theme';
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
-const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation }) => {
+const ChatButton = ({ isWhite, style, navigation }) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+    <Icon
+      family="GalioExtra"
+      size={16}
+      name="chat-33"
+      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
+    />
+    <Block middle style={styles.notify} />
+  </TouchableOpacity>
+);
+
+const BasketButton = ({ isWhite, style, navigation }) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+    <Icon
+      family="GalioExtra"
+      size={16}
+      name="basket-simple"
+      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
+    />
+    <Block middle style={styles.notify} />
+  </TouchableOpacity>
+);
+
+const SearchButton = ({ isWhite, style, navigation }) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+    <Icon
+      size={16}
+      family="entypo"
+      name="magnifying-glass"
+      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
+    />
+  </TouchableOpacity>
+);
+
+
+const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation, back, white }) => {
+
+  const handleLeftPress = () => {
+    return (back ? navigation.goBack() : navigation.openDrawer());
+  }
+
+  const renderRight = () => {
+    // if (title === 'Title') {
+    //   return [
+    //     <ChatButton key='chat-title' navigation={navigation} isWhite={white} />,
+    //     <BasketButton key='basket-title' navigation={navigation} isWhite={white} />
+    //   ]
+    // }
+
+    switch (title) {
+      case 'Home':
+        return ([
+          <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
+        ]);
+      case 'Deals':
+        return ([
+          <ChatButton key='chat-categories' navigation={navigation} />,
+          <BasketButton key='basket-categories' navigation={navigation} />
+        ]);
+      case 'Categories':
+        return ([
+          <ChatButton key='chat-categories' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-categories' navigation={navigation} isWhite={white} />
+        ]);
+      case 'Category':
+        return ([
+          <ChatButton key='chat-deals' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
+        ]);
+      case 'Profile':
+        return ([
+          <ChatButton key='chat-profile' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
+        ]);
+      case 'Product':
+        return ([
+          <SearchButton key='search-product' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-product' navigation={navigation} isWhite={white} />
+        ]);
+      case 'Search':
+        return ([
+          <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
+        ]);
+      case 'Settings':
+        return ([
+          <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
+        ]);
+      default:
+        break;
+    }
+  }
+
 
   const renderSearch = () => {
     return (
@@ -24,7 +119,6 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
   }
 
   const renderTabs = () => {
-    // const { tabTitleLeft, tabTitleRight } = props;
     return (
       <Block row style={styles.tabs}>
         <Button shadowless style={[styles.tab, styles.divider]} >
@@ -44,7 +138,6 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
   }
 
   const renderHeader = () => {
-    // const { search, tabs } = props;
     if (search || tabs) {
       return (
         <Block center>
@@ -56,7 +149,6 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
     return null;
   }
 
-  // const { title, transparent, search, tabs } = props;
   const noShadow = ["Search", "Categories", "Deals", "Pro", "Profile"].includes(title);
   const headerStyles = [
     !noShadow ? styles.shadow : null,
@@ -65,12 +157,29 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
 
   return (
     <Block style={headerStyles}>
+      <NavBar
+        back={back}
+        title={title}
+        style={styles.navbar}
+        transparent={transparent}
+        right={renderRight()}
+        rightStyle={{ alignItems: 'center' }}
+        leftStyle={{ flex: 0.3, paddingTop: 2 }}
+        leftIconName={(back ? 'chevron-left' : 'navicon')}
+        leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.ICON}
+        titleStyle={[
+          styles.title,
+          { color: theme.COLORS[white ? 'WHITE' : 'ICON'] },
+        ]}
+        onLeftPress={handleLeftPress}
+      />
       {renderHeader(search, tabs)}
     </Block>
   );
 }
 
 export default Header;
+
 const styles = StyleSheet.create({
   button: {
     padding: 12,
