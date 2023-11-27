@@ -4,12 +4,15 @@ import { Button, Block, NavBar, Input, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
 import materialTheme from '../constants/Theme';
+import ScreenNames from '../navigation/ScreenNames';
+import { formatTitle } from '../constants/utils';
+import { useNavigation } from '@react-navigation/native';
 
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
 const ChatButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.StackPro)}>
     <Icon
       family="GalioExtra"
       size={16}
@@ -21,7 +24,7 @@ const ChatButton = ({ isWhite, style, navigation }) => (
 );
 
 const BasketButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.StackPro)}>
     <Icon
       family="GalioExtra"
       size={16}
@@ -33,7 +36,7 @@ const BasketButton = ({ isWhite, style, navigation }) => (
 );
 
 const SearchButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.StackPro)}>
     <Icon
       size={16}
       family="entypo"
@@ -43,52 +46,35 @@ const SearchButton = ({ isWhite, style, navigation }) => (
   </TouchableOpacity>
 );
 
-
 const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation, back, white }) => {
 
+  const formattedTitle = formatTitle(title)
+
+  const { goBack } = useNavigation()
+
   const handleLeftPress = () => {
-    return (back ? navigation.goBack() : navigation.openDrawer());
+    return (back ? goBack() : navigation.openDrawer());
   }
 
   const renderRight = () => {
 
-    switch (title) {
-      case 'Home':
+    switch (formattedTitle) {
+      case formatTitle(ScreenNames.DrawerHome):
         return ([
           <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
-      case 'Deals':
-        return ([
-          <ChatButton key='chat-categories' navigation={navigation} />,
-          <BasketButton key='basket-categories' navigation={navigation} />
-        ]);
-      case 'Categories':
-        return ([
-          <ChatButton key='chat-categories' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-categories' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Category':
-        return ([
-          <ChatButton key='chat-deals' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Profile':
+      case formatTitle(ScreenNames.DrawerProfile):
         return ([
           <ChatButton key='chat-profile' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
         ]);
-      case 'Product':
-        return ([
-          <SearchButton key='search-product' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-product' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Search':
+      case formatTitle(ScreenNames.DrawerSearch):
         return ([
           <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
         ]);
-      case 'Settings':
+      case formatTitle(ScreenNames.DrawerSettings):
         return ([
           <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
@@ -106,7 +92,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         color="black"
         style={styles.search}
         placeholder="What are you looking for?"
-        // onFocus={() => navigation.navigate('ProScreen')}
+        onFocus={() => navigation.navigate(ScreenNames.StackPro)}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
       />
     )
@@ -143,7 +129,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
     return null;
   }
 
-  const noShadow = ["Search", "Categories", "Deals", "Pro", "Profile"].includes(title);
+  const noShadow = ["Search", "Categories", "Deals", "Pro", "Profile"].includes(formattedTitle);
   const headerStyles = [
     !noShadow ? styles.shadow : null,
     transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null,
@@ -153,7 +139,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
     <Block style={headerStyles}>
       <NavBar
         back={back}
-        title={title}
+        title={formattedTitle}
         style={styles.navbar}
         transparent={transparent}
         right={renderRight()}

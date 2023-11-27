@@ -4,6 +4,7 @@ import { Block, Text, theme } from "galio-framework";
 
 import { Icon, Drawer as DrawerCustomItem } from '../components/';
 import { Images, materialTheme } from "../constants/";
+import ScreenNames from "./ScreenNames";
 
 
 function Menu({
@@ -15,10 +16,11 @@ function Menu({
   ...rest
 }) {
   const screens = [
-    "Home",
-    "Profile",
-    "Settings",
-    "Components"
+    ScreenNames.DrawerHome,
+    ScreenNames.DrawerProfile,
+    ScreenNames.DrawerSettings,
+    ScreenNames.DrawerComponents,
+    ScreenNames.DrawerSearch,
   ];
   return (
     <Block
@@ -27,7 +29,7 @@ function Menu({
     >
       <Block flex={0.25} style={styles.header}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => navigation.navigate(ScreenNames.DrawerProfile)}
         >
           <Block style={styles.profile}>
             <Image source={{ uri: profile.avatar }} style={styles.avatar} />
@@ -68,7 +70,7 @@ function Menu({
         </ScrollView>
       </Block>
       <Block flex={0.3} style={{ paddingLeft: 7, paddingRight: 14 }}>
-        <DrawerCustomItem
+        {/* <DrawerCustomItem
           title="Sign In"
           navigation={navigation}
           focused={state.index === 9 ? true : false}
@@ -77,7 +79,7 @@ function Menu({
           title="Sign Up"
           navigation={navigation}
           focused={state.index === 9 ? true : false}
-        />
+        /> */}
       </Block>
     </Block>
   );

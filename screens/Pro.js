@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants/';
 import { HeaderHeight } from "../constants/utils";
+import ScreenNames from '../navigation/ScreenNames';
 
 export default function Pro({ navigation }) {
 
@@ -52,7 +53,7 @@ export default function Pro({ navigation }) {
               shadowless
               style={styles.button}
               color={materialTheme.COLORS.BUTTON_COLOR}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => navigation.navigate(ScreenNames.DrawerHome)}>
               GET PRO VERSION
             </Button>
           </Block>

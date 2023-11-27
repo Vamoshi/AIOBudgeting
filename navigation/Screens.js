@@ -11,6 +11,7 @@ import React from "react";
 import SettingsScreen from "../screens/Settings";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
+import ScreenNames from "./ScreenNames";
 
 const { width } = Dimensions.get("screen");
 
@@ -26,23 +27,25 @@ const profile = {
 };
 
 function ProfileStack(props) {
+  const profile = ScreenNames.StackProfile
+
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
+      initialRouteName={profile}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name="ProfileScreen"
+        name={profile}
         component={ProfileScreen}
         options={{
           header: ({ navigation, scene }) => (
             <Header
               white
               transparent
-              title="Profile"
+              title={profile}
               scene={scene}
               navigation={navigation}
             />
@@ -55,20 +58,21 @@ function ProfileStack(props) {
 }
 
 function SettingsStack(props) {
+  const settings = ScreenNames.StackSettings
   return (
     <Stack.Navigator
-      initialRouteName="Settings"
+      initialRouteName={settings}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name="SettingsScreen"
+        name={settings}
         component={SettingsScreen}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Settings" scene={scene} navigation={navigation} />
+            <Header title={settings} scene={scene} navigation={navigation} />
           ),
         }}
       />
@@ -77,19 +81,21 @@ function SettingsStack(props) {
 }
 
 function ComponentsStack(props) {
+  const components = ScreenNames.StackComponents
   return (
     <Stack.Navigator
+      initialRouteName={components}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name="ComponentsScreen"
+        name={components}
         component={ComponentsScreen}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Components" scene={scene} navigation={navigation} />
+            <Header title={components} scene={scene} navigation={navigation} />
           ),
         }}
       />
@@ -98,22 +104,25 @@ function ComponentsStack(props) {
 }
 
 function HomeStack(props) {
+  const home = ScreenNames.StackHome
+  const pro = ScreenNames.StackPro
   return (
     <Stack.Navigator
+      initialRouteName={home}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name="HomeScreen"
+        name={home}
         component={HomeScreen}
         options={{
           header: ({ navigation, scene }) => (
             <Header
               search
               tabs
-              title="Home"
+              title={home}
               navigation={navigation}
               scene={scene}
             />
@@ -121,7 +130,7 @@ function HomeStack(props) {
         }}
       />
       <Stack.Screen
-        name="ProScreen"
+        name={pro}
         component={ProScreen}
         options={{
           header: ({ navigation, scene }) => (
@@ -135,6 +144,34 @@ function HomeStack(props) {
             />
           ),
           headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function SearchStack(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName={ScreenNames.StackSearch}
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name={ScreenNames.StackSearch}
+        component={HomeScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              search
+              tabs
+              title="Search"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
         }}
       />
     </Stack.Navigator>
@@ -169,11 +206,11 @@ function DrawerGroup() {
           fontWeight: "normal",
         },
       }}
-      initialRouteName="Home"
+      initialRouteName={ScreenNames.DrawerHome}
       options={{ headerShown: false }}
     >
       <Drawer.Screen
-        name="Home"
+        name={ScreenNames.DrawerHome}
         component={HomeStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -188,7 +225,7 @@ function DrawerGroup() {
         }}
       />
       <Drawer.Screen
-        name="Profile"
+        name={ScreenNames.DrawerProfile}
         component={ProfileStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -203,7 +240,7 @@ function DrawerGroup() {
         }}
       />
       <Drawer.Screen
-        name="Settings"
+        name={ScreenNames.DrawerSettings}
         component={SettingsStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -219,7 +256,7 @@ function DrawerGroup() {
         }}
       />
       <Drawer.Screen
-        name="Components"
+        name={ScreenNames.DrawerComponents}
         component={ComponentsStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -236,7 +273,7 @@ function DrawerGroup() {
       />
 
       <Drawer.Screen
-        name="Sign Up"
+        name={ScreenNames.DrawerPro}
         component={ProScreen}
         options={{
           drawerIcon: ({ focused }) => (

@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Icon } from '../components';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
+import ScreenNames from '../navigation/ScreenNames';
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -61,7 +62,7 @@ export default function Profile({ navigation }) {
           </Block>
           <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
             <Text size={16}>Recently viewed</Text>
-            <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate('Home')}>View All</Text>
+            <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(ScreenNames.DrawerHome)}>View All</Text>
           </Block>
           <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
             <Block row space="between" style={{ flexWrap: 'wrap' }} >

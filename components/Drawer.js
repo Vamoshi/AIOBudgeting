@@ -4,6 +4,8 @@ import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
 import materialTheme from "../constants/Theme";
+import ScreenNames from "../navigation/ScreenNames";
+import { formatTitle } from "../constants/utils";
 
 const proScreens = [
   "Woman",
@@ -15,9 +17,10 @@ const proScreens = [
 ];
 
 const DrawerItem = ({ title, focused, navigation }) => {
+
   const renderIcon = () => {
     switch (title) {
-      case "Home":
+      case ScreenNames.DrawerHome:
         return (
           <Icon
             size={16}
@@ -26,7 +29,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case "Profile":
+      case ScreenNames.DrawerProfile:
         return (
           <Icon
             size={16}
@@ -35,7 +38,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case "Settings":
+      case ScreenNames.DrawerSettings:
         return (
           <Icon
             size={16}
@@ -44,7 +47,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case "Components":
+      case ScreenNames.DrawerComponents:
         return (
           <Icon
             size={16}
@@ -53,24 +56,32 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case "Sign In":
+      case ScreenNames.DrawerSearch:
         return (
           <Icon
             size={16}
-            name="ios-log-in"
+            name="search-outline"
             family="ionicon"
             color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
-      case "Sign Up":
-        return (
-          <Icon
-            size={16}
-            name="md-person-add"
-            family="ionicon"
-            color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
+          />)
+      // case "Sign In":
+      //   return (
+      //     <Icon
+      //       size={16}
+      //       name="ios-log-in"
+      //       family="ionicon"
+      //       color={focused ? "white" : materialTheme.COLORS.MUTED}
+      //     />
+      //   );
+      // case "Sign Up":
+      //   return (
+      //     <Icon
+      //       size={16}
+      //       name="md-person-add"
+      //       family="ionicon"
+      //       color={focused ? "white" : materialTheme.COLORS.MUTED}
+      //     />
+      //   );
       default:
         return null;
     }
@@ -116,7 +127,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
                   : "black"
             }
           >
-            {title}
+            {formatTitle(title)}
           </Text>
           {renderLabel()}
         </Block>

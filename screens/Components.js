@@ -12,6 +12,7 @@ import { Button, Block, Text, Input, theme } from 'galio-framework';
 import { materialTheme, products, Images } from '../constants/';
 import { Select, Icon, Header, Product, Switch } from '../components/';
 import MenuHorizontal from '../components/Tabs';
+import ScreenNames from '../navigation/ScreenNames';
 
 const { width } = Dimensions.get('screen');
 
@@ -285,7 +286,7 @@ export default function Components({ navigation }) {
             <Text
               size={12}
               color={theme.COLORS.PRIMARY}
-              onPress={() => navigation.navigate('Home')}>
+              onPress={() => navigation.navigate(ScreenNames.DrawerHome)}>
               View All
             </Text>
           </Block>
