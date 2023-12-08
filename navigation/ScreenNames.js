@@ -1,17 +1,22 @@
 export default ScreenNames = {
-    StackProfile: 'StackProfile',
-    StackSettings: 'StackSettings',
-    StackComponents: 'StackComponents',
-    StackHome: 'StackHome',
-    StackPro: 'StackPro',
-    StackSearch: 'StackSearch',
-
-    DrawerProfile: 'DrawerProfile',
-    DrawerSettings: 'DrawerSettings',
-    DrawerComponents: 'DrawerComponents',
-    DrawerHome: 'DrawerHome',
-    DrawerPro: 'DrawerPro',
-    DrawerSearch: 'DrawerSearch',
+    Stack: {
+        Profile: 'StackProfile',
+        Settings: 'StackSettings',
+        Components: 'StackComponents',
+        Home: 'StackHome',
+        Pro: 'StackPro',
+        RecipeSearch: 'StackRecipeSearch',
+        RecipeDetails: 'StackRecipeDetails',
+    },
+    Drawer: {
+        Profile: 'DrawerProfile',
+        Settings: 'DrawerSettings',
+        Components: 'DrawerComponents',
+        Home: 'DrawerHome',
+        Pro: 'DrawerDrawerPro',
+        RecipeSearch: 'DrawerStackRecipeSearch',
+        RecipeDetails: 'DrawerRecipeDetails',
+    },
 }
 
 Object.freeze(ScreenNames)

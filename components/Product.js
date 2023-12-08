@@ -1,11 +1,14 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width } = Dimensions.get('screen');
 
-const Product = ({ product, horizontal, full, style, priceColor, imageStyle }) => {
+const Product = ({ product, horizontal, full, style, priceColor, imageStyle, navigateTo: navigateToStack, navigationProps }) => {
+
+  const { navigate } = useNavigation()
 
   const imageStyles = [
     styles.image,
@@ -15,18 +18,23 @@ const Product = ({ product, horizontal, full, style, priceColor, imageStyle }) =
 
   return (
     <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-      <TouchableWithoutFeedback >
+      <TouchableWithoutFeedback onPress={() => {
+        navigate(navigateToStack, navigationProps)
+      }}>
         <Block flex style={[styles.imageContainer, styles.shadow]}>
           <Image source={{ uri: product.image }} style={imageStyles} />
         </Block>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback >
+      <TouchableWithoutFeedback onPress={() => {
+        navigate(navigateToStack, navigationProps)
+      }}>
         <Block flex space="between" style={styles.productDescription}>
           <Text size={14} style={styles.productTitle}>{product.title}</Text>
+          <Text size={12} muted={true}></Text>
           <Text size={12} muted={!priceColor} color={priceColor}>${product.price}</Text>
         </Block>
       </TouchableWithoutFeedback>
-    </Block>
+    </Block >
   );
 };
 

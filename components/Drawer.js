@@ -20,7 +20,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
 
   const renderIcon = () => {
     switch (title) {
-      case ScreenNames.DrawerHome:
+      case ScreenNames.Drawer.Home:
         return (
           <Icon
             size={16}
@@ -29,7 +29,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case ScreenNames.DrawerProfile:
+      case ScreenNames.Drawer.Profile:
         return (
           <Icon
             size={16}
@@ -38,7 +38,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case ScreenNames.DrawerSettings:
+      case ScreenNames.Drawer.Settings:
         return (
           <Icon
             size={16}
@@ -47,7 +47,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case ScreenNames.DrawerComponents:
+      case ScreenNames.Drawer.Components:
         return (
           <Icon
             size={16}
@@ -56,7 +56,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case ScreenNames.DrawerSearch:
+      case ScreenNames.Drawer.RecipeSearch:
         return (
           <Icon
             size={16}
@@ -127,7 +127,7 @@ const DrawerItem = ({ title, focused, navigation }) => {
                   : "black"
             }
           >
-            {formatTitle(title)}
+            {title === ScreenNames.Drawer.RecipeSearch ? "Search Recipes" : formatTitle(title)}
           </Text>
           {renderLabel()}
         </Block>

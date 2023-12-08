@@ -12,7 +12,7 @@ const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
 const ChatButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.StackPro)}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.Stack.Pro)}>
     <Icon
       family="GalioExtra"
       size={16}
@@ -24,7 +24,7 @@ const ChatButton = ({ isWhite, style, navigation }) => (
 );
 
 const BasketButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.StackPro)}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.Stack.Pro)}>
     <Icon
       family="GalioExtra"
       size={16}
@@ -36,7 +36,7 @@ const BasketButton = ({ isWhite, style, navigation }) => (
 );
 
 const SearchButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.StackPro)}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames.Stack.Pro)}>
     <Icon
       size={16}
       family="entypo"
@@ -59,22 +59,22 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
   const renderRight = () => {
 
     switch (formattedTitle) {
-      case formatTitle(ScreenNames.DrawerHome):
+      case formatTitle(ScreenNames.Drawer.Home):
         return ([
           <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
-      case formatTitle(ScreenNames.DrawerProfile):
+      case formatTitle(ScreenNames.Drawer.Profile):
         return ([
           <ChatButton key='chat-profile' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
         ]);
-      case formatTitle(ScreenNames.DrawerSearch):
+      case formatTitle(ScreenNames.Drawer.RecipeSearch):
         return ([
           <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
         ]);
-      case formatTitle(ScreenNames.DrawerSettings):
+      case formatTitle(ScreenNames.Drawer.Settings):
         return ([
           <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
@@ -92,7 +92,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         color="black"
         style={styles.search}
         placeholder="What are you looking for?"
-        onFocus={() => navigation.navigate(ScreenNames.StackPro)}
+        onFocus={() => navigation.navigate(ScreenNames.Stack.Pro)}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
       />
     )

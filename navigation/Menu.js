@@ -16,11 +16,11 @@ function Menu({
   ...rest
 }) {
   const screens = [
-    ScreenNames.DrawerHome,
-    ScreenNames.DrawerProfile,
-    ScreenNames.DrawerSettings,
-    ScreenNames.DrawerComponents,
-    ScreenNames.DrawerSearch,
+    ScreenNames.Drawer.Home,
+    ScreenNames.Drawer.Profile,
+    ScreenNames.Drawer.Settings,
+    ScreenNames.Drawer.Components,
+    ScreenNames.Drawer.RecipeSearch,
   ];
   return (
     <Block
@@ -29,7 +29,7 @@ function Menu({
     >
       <Block flex={0.25} style={styles.header}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate(ScreenNames.DrawerProfile)}
+          onPress={() => navigation.navigate(ScreenNames.Drawer.Profile)}
         >
           <Block style={styles.profile}>
             <Image source={{ uri: profile.avatar }} style={styles.avatar} />

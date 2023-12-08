@@ -12,6 +12,7 @@ import SettingsScreen from "../screens/Settings";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
+import RecipeSearch from "../screens/RecipeSearch";
 
 const { width } = Dimensions.get("screen");
 
@@ -27,7 +28,7 @@ const profile = {
 };
 
 function ProfileStack(props) {
-  const profile = ScreenNames.StackProfile
+  const profile = ScreenNames.Stack.Profile
 
   return (
     <Stack.Navigator
@@ -58,7 +59,7 @@ function ProfileStack(props) {
 }
 
 function SettingsStack(props) {
-  const settings = ScreenNames.StackSettings
+  const settings = ScreenNames.Stack.Settings
   return (
     <Stack.Navigator
       initialRouteName={settings}
@@ -81,7 +82,7 @@ function SettingsStack(props) {
 }
 
 function ComponentsStack(props) {
-  const components = ScreenNames.StackComponents
+  const components = ScreenNames.Stack.Components
   return (
     <Stack.Navigator
       initialRouteName={components}
@@ -104,8 +105,8 @@ function ComponentsStack(props) {
 }
 
 function HomeStack(props) {
-  const home = ScreenNames.StackHome
-  const pro = ScreenNames.StackPro
+  const home = ScreenNames.Stack.Home
+  const pro = ScreenNames.Stack.Pro
   return (
     <Stack.Navigator
       initialRouteName={home}
@@ -153,21 +154,20 @@ function HomeStack(props) {
 function SearchStack(props) {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenNames.StackSearch}
+      initialRouteName={ScreenNames.Stack.RecipeSearch}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name={ScreenNames.StackSearch}
-        component={HomeScreen}
+        name={ScreenNames.Stack.RecipeSearch}
+        component={RecipeSearch}
         options={{
           header: ({ navigation, scene }) => (
             <Header
               search
-              tabs
-              title="Search"
+              title="Search Recipes"
               navigation={navigation}
               scene={scene}
             />
@@ -206,11 +206,11 @@ function DrawerGroup() {
           fontWeight: "normal",
         },
       }}
-      initialRouteName={ScreenNames.DrawerHome}
+      initialRouteName={ScreenNames.Drawer.Home}
       options={{ headerShown: false }}
     >
       <Drawer.Screen
-        name={ScreenNames.DrawerHome}
+        name={ScreenNames.Drawer.Home}
         component={HomeStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -225,7 +225,7 @@ function DrawerGroup() {
         }}
       />
       <Drawer.Screen
-        name={ScreenNames.DrawerProfile}
+        name={ScreenNames.Drawer.Profile}
         component={ProfileStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -240,7 +240,7 @@ function DrawerGroup() {
         }}
       />
       <Drawer.Screen
-        name={ScreenNames.DrawerSettings}
+        name={ScreenNames.Drawer.Settings}
         component={SettingsStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -256,7 +256,7 @@ function DrawerGroup() {
         }}
       />
       <Drawer.Screen
-        name={ScreenNames.DrawerComponents}
+        name={ScreenNames.Drawer.Components}
         component={ComponentsStack}
         options={{
           drawerIcon: ({ focused }) => (
@@ -273,7 +273,7 @@ function DrawerGroup() {
       />
 
       <Drawer.Screen
-        name={ScreenNames.DrawerPro}
+        name={ScreenNames.Drawer.Pro}
         component={ProScreen}
         options={{
           drawerIcon: ({ focused }) => (
@@ -281,6 +281,22 @@ function DrawerGroup() {
               size={16}
               name="md-person-add"
               family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+
+      <Drawer.Screen
+        name={ScreenNames.Drawer.RecipeSearch}
+        component={SearchStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="shop"
+              family="GalioExtra"
               color={focused ? "white" : materialTheme.COLORS.MUTED}
             />
           ),
