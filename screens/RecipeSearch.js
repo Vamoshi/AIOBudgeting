@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 
-import Product from '../components/Product';
+import RecipeCard from '../components/RecipeCard';
 
 const { width } = Dimensions.get('screen');
 import products from '../constants/products';
+import ScreenNames from '../navigation/ScreenNames';
 
 const RecipeSearch = () => {
   const renderProducts = () => {
@@ -16,7 +17,11 @@ const RecipeSearch = () => {
       >
         <Block flex>
           {/* Put product.map here */}
-          <Product product={products[0]} horizontal />
+          <RecipeCard
+            product={products[0]}
+            horizontal
+            navigateToStack={ScreenNames().Stack.RecipeDetails}
+          />
         </Block>
       </ScrollView>
     )

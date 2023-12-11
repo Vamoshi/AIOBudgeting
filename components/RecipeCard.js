@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('screen');
 
-const Product = ({ product, horizontal, full, style, priceColor, imageStyle, navigateTo: navigateToStack, navigationProps }) => {
+const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, navigateToStack, navigationProps }) => {
 
   const { navigate } = useNavigation()
 
@@ -38,7 +38,7 @@ const Product = ({ product, horizontal, full, style, priceColor, imageStyle, nav
   );
 };
 
-export default Product;
+export default RecipeCard;
 
 const styles = StyleSheet.create({
   product: {

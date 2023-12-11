@@ -145,7 +145,8 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         right={renderRight()}
         rightStyle={{ alignItems: 'center' }}
         leftStyle={{ flex: 0.3, paddingTop: 2 }}
-        leftIconName={(back ? 'chevron-left' : 'navicon')}
+        leftIconSize={16}
+        leftIconName={back ? 'chevron-left' : 'navicon'}
         leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.ICON}
         titleStyle={[
           styles.title,

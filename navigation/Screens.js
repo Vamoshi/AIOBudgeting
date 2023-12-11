@@ -248,7 +248,7 @@ function RecipeSearchStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              search
+              back
               title="Recipe Details"
               navigation={navigation}
               scene={scene}

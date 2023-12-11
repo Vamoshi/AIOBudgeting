@@ -14,7 +14,7 @@ import { materialTheme, products, Images } from '../constants/';
 import DropDown from '../components/Select';
 import Icon from '../components/IconExtra';
 import Header from '../components/Header';
-import Product from '../components/Product';
+import RecipeCard from '../components/RecipeCard';
 import Switch from '../components/MkSwitch';
 import MenuHorizontal from '../components/MenuHorizontal';
 import Home from './Home';
@@ -259,13 +259,13 @@ export default function Components({ navigation }) {
         <Text bold size={16} style={styles.title}>Cards</Text>
         <Block flex>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Product product={products[0]} horizontal />
+            <RecipeCard product={products[0]} horizontal />
             <Block flex row>
-              <Product product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-              <Product product={products[2]} />
+              <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
+              <RecipeCard product={products[2]} />
             </Block>
-            <Product product={products[3]} horizontal />
-            <Product product={products[4]} full />
+            <RecipeCard product={products[3]} horizontal />
+            <RecipeCard product={products[4]} full />
             <Block flex card shadow style={styles.category}>
               <ImageBackground
                 source={{ uri: Images.Products['Accessories'] }}

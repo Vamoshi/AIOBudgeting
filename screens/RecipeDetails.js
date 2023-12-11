@@ -20,21 +20,12 @@ export default function RecipeDetails({ navigation }) {
                     imageStyle={styles.profileImage}>
                     <Block flex style={styles.profileDetails}>
                         <Block style={styles.profileTexts}>
-                            <Text color="white" size={28} style={{ paddingBottom: 8 }}>Rachel Brown</Text>
+                            <Text color="white" size={28} style={{ paddingBottom: 8 }}>Recipe Name</Text>
                             <Block row space="between">
                                 <Block row>
-                                    <Block middle style={styles.pro}>
-                                        <Text size={16} color="white">Pro</Text>
-                                    </Block>
-                                    <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
+                                    <Text color="white" size={16} muted style={styles.seller}>Author</Text>
                                     <Text size={16} color={materialTheme.COLORS.WARNING}>
-                                        4.8 <IconExtra name="shape-star" family="GalioExtra" size={14} />
-                                    </Text>
-                                </Block>
-                                <Block>
-                                    <Text color={theme.COLORS.MUTED} size={16}>
-                                        <IconExtra name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                                        {` `} Los Angeles, CA
+                                        Stars [Number] <IconExtra name="shape-star" family="GalioExtra" size={14} />
                                     </Text>
                                 </Block>
                             </Block>
@@ -84,7 +75,7 @@ export default function RecipeDetails({ navigation }) {
 const styles = StyleSheet.create({
     profile: {
         marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
-        marginBottom: -HeaderHeight * 2,
+        // marginBottom: -HeaderHeight * 2,
     },
     profileImage: {
         width: width * 1.1,
@@ -101,7 +92,7 @@ const styles = StyleSheet.create({
     },
     profileTexts: {
         paddingHorizontal: theme.SIZES.BASE * 2,
-        paddingVertical: theme.SIZES.BASE * 2,
+        paddingVertical: theme.SIZES.BASE * 6,
         zIndex: 2
     },
     pro: {

@@ -1,3 +1,6 @@
+// Order is important from Stack and Drawer
+// After the space starts the subscreens
+
 export default ScreenNames = () => {
     return {
         Stack: {
@@ -5,8 +8,9 @@ export default ScreenNames = () => {
             Profile: 'StackProfile',
             Settings: 'StackSettings',
             Components: 'StackComponents',
-            Pro: 'StackPro',
             RecipeSearch: 'StackRecipeSearch',
+
+            Pro: 'StackPro',
             RecipeDetails: 'StackRecipeDetails',
         },
         Drawer: {
@@ -14,8 +18,9 @@ export default ScreenNames = () => {
             Profile: 'DrawerProfile',
             Settings: 'DrawerSettings',
             Components: 'DrawerComponents',
-            Pro: 'DrawerPro',
             RecipeSearch: 'DrawerRecipeSearch',
+
+            Pro: 'DrawerPro',
             RecipeDetails: 'DrawerRecipeDetails',
         },
         Icons: {
