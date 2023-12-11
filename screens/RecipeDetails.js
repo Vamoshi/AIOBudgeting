@@ -2,16 +2,15 @@ import React from 'react';
 import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-
-import { Icon } from '../components';
+import IconExtra from '../components/IconExtra';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import ScreenNames from '../navigation/ScreenNames';
+import Home from './Home';
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function Profile({ navigation }) {
+export default function RecipeDetails({ navigation }) {
     return (
         <Block flex style={styles.profile}>
             <Block flex>
@@ -29,12 +28,12 @@ export default function Profile({ navigation }) {
                                     </Block>
                                     <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
                                     <Text size={16} color={materialTheme.COLORS.WARNING}>
-                                        4.8 <Icon name="shape-star" family="GalioExtra" size={14} />
+                                        4.8 <IconExtra name="shape-star" family="GalioExtra" size={14} />
                                     </Text>
                                 </Block>
                                 <Block>
                                     <Text color={theme.COLORS.MUTED} size={16}>
-                                        <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
+                                        <IconExtra name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
                                         {` `} Los Angeles, CA
                                     </Text>
                                 </Block>
@@ -62,7 +61,7 @@ export default function Profile({ navigation }) {
                     </Block>
                     <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
                         <Text size={16}>Recently viewed</Text>
-                        <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(ScreenNames.DrawerHome)}>View All</Text>
+                        <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text>
                     </Block>
                     <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
                         <Block row space="between" style={{ flexWrap: 'wrap' }} >

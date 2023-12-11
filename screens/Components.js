@@ -10,9 +10,14 @@ import {
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 
 import { materialTheme, products, Images } from '../constants/';
-import { Select, Icon, Header, Product, Switch } from '../components/';
-import MenuHorizontal from '../components/Tabs';
-import ScreenNames from '../navigation/ScreenNames';
+// import { Select, Icon, Header, Product, Switch } from '../components/';
+import DropDown from '../components/Select';
+import Icon from '../components/IconExtra';
+import Header from '../components/Header';
+import Product from '../components/Product';
+import Switch from '../components/MkSwitch';
+import MenuHorizontal from '../components/MenuHorizontal';
+import Home from './Home';
 
 const { width } = Dimensions.get('screen');
 
@@ -59,7 +64,7 @@ export default function Components({ navigation }) {
           </Block>
           <Block row space="evenly">
             <Block flex left style={{ marginTop: 8 }}>
-              <Select
+              <DropDown
                 defaultIndex={1}
                 // Make sure to have more than 2 options
                 options={["1", "1", "1",]}
@@ -286,7 +291,7 @@ export default function Components({ navigation }) {
             <Text
               size={12}
               color={theme.COLORS.PRIMARY}
-              onPress={() => navigation.navigate(ScreenNames.DrawerHome)}>
+              onPress={() => navigation.navigate(Home)}>
               View All
             </Text>
           </Block>

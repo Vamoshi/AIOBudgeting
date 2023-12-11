@@ -2,10 +2,12 @@ import React from "react";
 import { TouchableWithoutFeedback, ScrollView, StyleSheet, Image } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
-import { Icon, Drawer as DrawerCustomItem } from '../components/';
+// import { Icon, Drawer as DrawerCustomItem } from '../components/';
 import { Images, materialTheme } from "../constants/";
 import ScreenNames from "./ScreenNames";
 
+import IconExtra from '../components/IconExtra';
+import DrawerItem from '../components/DrawerItem';
 
 function Menu({
   drawerPosition,
@@ -15,13 +17,18 @@ function Menu({
   state,
   ...rest
 }) {
-  const screens = [
-    ScreenNames.Drawer.Home,
-    ScreenNames.Drawer.Profile,
-    ScreenNames.Drawer.Settings,
-    ScreenNames.Drawer.Components,
-    ScreenNames.Drawer.RecipeSearch,
-  ];
+  const screens = () => {
+    return Object.keys(ScreenNames().Drawer).filter(
+      (key) => {
+        const drawer = ScreenNames().Drawer
+        const dontIclude = drawer[key]
+
+        return dontIclude != drawer.Pro &&
+          dontIclude != drawer.RecipeDetails
+      }
+    )
+  };
+
   return (
     <Block
       style={styles.container}
@@ -29,7 +36,7 @@ function Menu({
     >
       <Block flex={0.25} style={styles.header}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate(ScreenNames.Drawer.Profile)}
+          onPress={() => navigation.navigate(ScreenNames().Drawer.Profile)}
         >
           <Block style={styles.profile}>
             <Image source={{ uri: profile.avatar }} style={styles.avatar} />
@@ -49,7 +56,7 @@ function Menu({
           </Text>
           <Text size={16} color={materialTheme.COLORS.WARNING}>
             {profile.rating}{" "}
-            <Icon name="shape-star" family="GalioExtra" size={14} />
+            <IconExtra name="shape-star" family="GalioExtra" size={14} />
           </Text>
         </Block>
       </Block>
@@ -57,10 +64,10 @@ function Menu({
         <ScrollView
           showsVerticalScrollIndicator={false}
         >
-          {screens.map((item, index) => {
+          {screens().map((screenKey, index) => {
             return (
-              <DrawerCustomItem
-                title={item}
+              <DrawerItem
+                screenKey={screenKey}
                 key={index}
                 navigation={navigation}
                 focused={state.index === index ? true : false}

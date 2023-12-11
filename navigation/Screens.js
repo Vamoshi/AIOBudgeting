@@ -1,5 +1,6 @@
 import { Animated, Dimensions, Easing } from "react-native";
-import { Header, Icon } from "../components";
+// import { Header } from "../components";
+import Header from '../components/Header';
 import { Images, materialTheme } from "../constants/";
 
 import ComponentsScreen from "../screens/Components";
@@ -13,6 +14,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
 import RecipeSearch from "../screens/RecipeSearch";
+import RecipeDetails from "../screens/RecipeDetails";
 
 const { width } = Dimensions.get("screen");
 
@@ -27,8 +29,73 @@ const profile = {
   rating: 4.8,
 };
 
+const RenderScreens = () => {
+  const screenKeys = Object.keys(ScreenNames().Stack)
+  const screenNames = ScreenNames()
+
+  return (
+    <Drawer.Navigator
+      style={{ flex: 1 }}
+      drawerContent={(props) => (
+        <Menu {...props} profile={profile} />
+      )}
+      drawerStyle={{
+        backgroundColor: "white",
+        width: width * 0.8,
+      }}
+      screenOptions={{
+        activeTintColor: "white",
+        inactiveTintColor: "#000",
+        activeBackgroundColor: materialTheme.COLORS.ACTIVE,
+        inactiveBackgroundColor: "transparent",
+        itemStyle: {
+          width: width * 0.74,
+          paddingHorizontal: 12,
+          justifyContent: "center",
+          alignContent: "center",
+          overflow: "hidden",
+        },
+        labelStyle: {
+          fontSize: 18,
+          fontWeight: "normal",
+        },
+      }}
+      initialRouteName={ScreenNames().Drawer.Home}
+      options={{ headerShown: false }}
+    >
+      {
+        screenKeys.map((screenKey, index) => {
+
+          const stackName = screenNames.Stack[screenKey]
+          const drawerName = screenNames.Drawer[screenKey]
+
+
+
+          return (
+            <Drawer.Screen
+              name={drawerName}
+              options={{
+                headerShown: false,
+              }}
+              key={index}
+              component={
+                stackName === screenNames.Stack.Home ? HomeStack :
+                  stackName === screenNames.Stack.Profile ? ProfileStack :
+                    stackName === screenNames.Stack.Settings ? SettingsStack :
+                      stackName === screenNames.Stack.Components ? ComponentsStack :
+                        stackName === screenNames.Stack.RecipeSearch ? RecipeSearchStack :
+                          HomeStack
+              }
+            />
+          )
+        })
+      }
+    </Drawer.Navigator>
+  )
+}
+
 function ProfileStack(props) {
-  const profile = ScreenNames.Stack.Profile
+  const profile = ScreenNames().Stack.Profile
 
   return (
     <Stack.Navigator
@@ -59,7 +126,7 @@ function ProfileStack(props) {
 }
 
 function SettingsStack(props) {
-  const settings = ScreenNames.Stack.Settings
+  const settings = ScreenNames().Stack.Settings
   return (
     <Stack.Navigator
       initialRouteName={settings}
@@ -82,7 +149,8 @@ function SettingsStack(props) {
 }
 
 function ComponentsStack(props) {
-  const components = ScreenNames.Stack.Components
+  const components = ScreenNames().Stack.Components
+
   return (
     <Stack.Navigator
       initialRouteName={components}
@@ -105,8 +173,8 @@ function ComponentsStack(props) {
 }
 
 function HomeStack(props) {
-  const home = ScreenNames.Stack.Home
-  const pro = ScreenNames.Stack.Pro
+  const home = ScreenNames().Stack.Home
+  const pro = ScreenNames().Stack.Pro
   return (
     <Stack.Navigator
       initialRouteName={home}
@@ -151,17 +219,17 @@ function HomeStack(props) {
   );
 }
 
-function SearchStack(props) {
+function RecipeSearchStack(props) {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenNames.Stack.RecipeSearch}
+      initialRouteName={ScreenNames().Stack.RecipeSearch}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name={ScreenNames.Stack.RecipeSearch}
+        name={ScreenNames().Stack.RecipeSearch}
         component={RecipeSearch}
         options={{
           header: ({ navigation, scene }) => (
@@ -174,136 +242,21 @@ function SearchStack(props) {
           ),
         }}
       />
+      <Stack.Screen
+        name={ScreenNames().Stack.RecipeDetails}
+        component={RecipeDetails}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              search
+              title="Recipe Details"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
-  );
-}
-
-function DrawerGroup() {
-  return (
-    <Drawer.Navigator
-      style={{ flex: 1 }}
-      drawerContent={(props) => (
-        <Menu {...props} profile={profile} />
-      )}
-      drawerStyle={{
-        backgroundColor: "white",
-        width: width * 0.8,
-      }}
-      screenOptions={{
-        activeTintColor: "white",
-        inactiveTintColor: "#000",
-        activeBackgroundColor: materialTheme.COLORS.ACTIVE,
-        inactiveBackgroundColor: "transparent",
-        itemStyle: {
-          width: width * 0.74,
-          paddingHorizontal: 12,
-          justifyContent: "center",
-          alignContent: "center",
-          overflow: "hidden",
-        },
-        labelStyle: {
-          fontSize: 18,
-          fontWeight: "normal",
-        },
-      }}
-      initialRouteName={ScreenNames.Drawer.Home}
-      options={{ headerShown: false }}
-    >
-      <Drawer.Screen
-        name={ScreenNames.Drawer.Home}
-        component={HomeStack}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="shop"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name={ScreenNames.Drawer.Profile}
-        component={ProfileStack}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="circle-10"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name={ScreenNames.Drawer.Settings}
-        component={SettingsStack}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="gears"
-              family="font-awesome"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-              style={{ marginRight: -3 }}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name={ScreenNames.Drawer.Components}
-        component={ComponentsStack}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="toggle-outline"
-              family="ionicon"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-              style={{ marginRight: 2, marginLeft: 2 }}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-
-      <Drawer.Screen
-        name={ScreenNames.Drawer.Pro}
-        component={ProScreen}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="md-person-add"
-              family="ionicon"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-
-      <Drawer.Screen
-        name={ScreenNames.Drawer.RecipeSearch}
-        component={SearchStack}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="shop"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-    </Drawer.Navigator>
   );
 }
 
@@ -315,7 +268,7 @@ export default function ScreenStack() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="App" component={DrawerGroup} />
+      <Stack.Screen name="App" component={RenderScreens} />
     </Stack.Navigator>
   );
 }

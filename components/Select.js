@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { Block, Text, Icon, theme } from 'galio-framework';
 
-export default function DropDown({ onSelect, style, ...props }) {
+export default function Select({ onSelect, style, ...props }) {
   const [value, setValue] = useState(1);
 
   const handleOnSelect = (index, selectedValue) => {
