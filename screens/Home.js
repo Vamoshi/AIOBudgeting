@@ -7,6 +7,7 @@ import RecipeCard from '../components/RecipeCard';
 
 const { width } = Dimensions.get('screen');
 import products from '../constants/products';
+import ScreenNames from '../navigation/ScreenNames';
 
 const Home = () => {
   const renderProducts = () => {
@@ -15,13 +16,22 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
+          <RecipeCard
+            product={{
+              title: 'Recipes Search',
+              image: 'https://source.unsplash.com/tb6ulgGY5Zc/840x840',
+              price: 220,
+            }}
+            horizontal
+            navigateTo={ScreenNames().Drawer.RecipeSearch}
+          />
           <RecipeCard product={products[0]} horizontal />
-          <Block flex row>
+          {/* <Block flex row>
             <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
             <RecipeCard product={products[2]} />
           </Block>
           <RecipeCard product={products[3]} horizontal />
-          <RecipeCard product={products[4]} full />
+          <RecipeCard product={products[4]} full /> */}
         </Block>
       </ScrollView>
     )

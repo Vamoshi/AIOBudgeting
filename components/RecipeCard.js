@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('screen');
 
-const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, navigateToStack, navigationProps }) => {
+const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, navigateTo, navigationProps }) => {
 
   const { navigate } = useNavigation()
 
@@ -19,17 +19,17 @@ const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, 
   return (
     <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
       <TouchableWithoutFeedback onPress={() => {
-        navigate(navigateToStack, navigationProps)
+        navigate(navigateTo, navigationProps)
       }}>
         <Block flex style={[styles.imageContainer, styles.shadow]}>
           <Image source={{ uri: product.image }} style={imageStyles} />
         </Block>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => {
-        navigate(navigateToStack, navigationProps)
+        navigate(navigateTo, navigationProps)
       }}>
         <Block flex space="between" style={styles.productDescription}>
-          <Text size={14} style={styles.productTitle}>{product.title}</Text>
+          <Text size={20} style={styles.productTitle}>{product.title}</Text>
           <Text size={12} muted={true}></Text>
           <Text size={12} muted={!priceColor} color={priceColor}>${product.price}</Text>
         </Block>
