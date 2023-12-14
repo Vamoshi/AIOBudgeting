@@ -7,6 +7,9 @@ import materialTheme from '../constants/Theme';
 import ScreenNames from '../navigation/ScreenNames';
 import { formatTitle } from '../constants/utils';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { updateIngredientList } from "../redux/IngredientSearchSlice"
+import { fetchRecipes } from '../redux/RecipeSearchSlice';
 
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
@@ -51,6 +54,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
   const formattedTitle = formatTitle(title)
 
   const { goBack } = useNavigation()
+  const dispatch = useDispatch()
 
   const handleLeftPress = () => {
     return (back ? goBack() : navigation.openDrawer());
@@ -84,6 +88,10 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
     }
   }
 
+  const handleEndEditing = (event) => {
+    dispatch(updateIngredientList(event.nativeEvent.text))
+    dispatch(fetchRecipes())
+  }
 
   const renderSearch = () => {
     return (
@@ -91,8 +99,9 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         right
         color="black"
         style={styles.search}
-        placeholder="What are you looking for?"
-        onFocus={() => navigation.navigate(ScreenNames().Stack.Pro)}
+        placeholder="Separate ingredients by Comma or Space"
+        onEndEditing={handleEndEditing}
+        // onFocus={() => navigation.navigate(ScreenNames().Stack.Pro)}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
       />
     )
@@ -142,7 +151,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         title={formattedTitle}
         style={styles.navbar}
         transparent={transparent}
-        right={renderRight()}
+        // right={renderRight()}
         rightStyle={{ alignItems: 'center' }}
         leftStyle={{ flex: 0.3, paddingTop: 2 }}
         leftIconSize={16}
