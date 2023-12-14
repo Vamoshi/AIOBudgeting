@@ -22,16 +22,14 @@ const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, 
         navigate(navigateToStack, navigationProps)
       }}>
         <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Image source={{ uri: product.image }} style={imageStyles} />
+          <Image source={{ uri: product.image }}  />
         </Block>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => {
         navigate(navigateToStack, navigationProps)
       }}>
-        <Block flex space="between" style={styles.productDescription}>
-          <Text size={14} style={styles.productTitle}>{product.title}</Text>
-          <Text size={12} muted={true}></Text>
-          <Text size={12} muted={!priceColor} color={priceColor}>${product.price}</Text>
+        <Block flex space="betwen" style={styles.productDescription}>
+          <Text size={42} style={styles.productTitle}>{product.title}</Text>
         </Block>
       </TouchableWithoutFeedback>
     </Block >
