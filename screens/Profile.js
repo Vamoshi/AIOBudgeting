@@ -21,21 +21,21 @@ export default function Profile({ navigation }) {
           imageStyle={styles.profileImage}>
           <Block flex style={styles.profileDetails}>
             <Block style={styles.profileTexts}>
-              <Text color="white" size={28} style={{ paddingBottom: 8 }}>Rachel Brown</Text>
+              <Text color="white" size={28} style={{ paddingBottom: 8 }}>Your Account</Text>
               <Block row space="between">
                 <Block row>
                   <Block middle style={styles.pro}>
-                    <Text size={16} color="white">Pro</Text>
+                    <Text size={14} color="white">#00001</Text>
                   </Block>
-                  <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
+                  {/* <Text color="white" size={16} muted style={styles.seller}>Recipe</Text> */}
                   <Text size={16} color={materialTheme.COLORS.WARNING}>
-                    4.8 <IconExtra name="shape-star" family="GalioExtra" size={14} />
+                    Favorites <IconExtra name="shape-star" family="GalioExtra" size={14} />
                   </Text>
                 </Block>
                 <Block>
                   <Text color={theme.COLORS.MUTED} size={16}>
-                    <IconExtra name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                    {` `} Los Angeles, CA
+                    {/* <IconExtra name="" family="font-awesome" color={theme.COLORS.MUTED} size={16} /> */}
+                    {/* {` `} Los Angeles, CA */}
                   </Text>
                 </Block>
               </Block>
@@ -46,23 +46,23 @@ export default function Profile({ navigation }) {
       </Block>
       <Block flex style={styles.options}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
+          <Block row space="between" style={{ padding: theme.SIZES.BASE / 100, }}>
             <Block middle>
-              <Text bold size={12} style={{ marginBottom: 8 }}>36</Text>
-              <Text muted size={12}>Orders</Text>
+              {/* <Text bold size={12} style={{ marginBottom: 8 }}>36</Text> */}
+              {/* <Text muted size={12}>Orders</Text> */}
             </Block>
             <Block middle>
-              <Text bold size={12} style={{ marginBottom: 8 }}>5</Text>
-              <Text muted size={12}>Bids & Offers</Text>
+              {/* <Text bold size={12} style={{ marginBottom: 8 }}>5</Text>
+              <Text muted size={12}>Bids & Offers</Text> */}
             </Block>
             <Block middle>
-              <Text bold size={12} style={{ marginBottom: 8 }}>2</Text>
-              <Text muted size={12}>Messages</Text>
+              {/* <Text bold size={12} style={{ marginBottom: 8 }}>2</Text>
+              <Text muted size={12}>Messages</Text> */}
             </Block>
           </Block>
-          <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-            <Text size={16}>Recently viewed</Text>
-            <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text>
+          <Block row space="between" style={{ paddingVertical: 0, alignItems: 'baseline' }}>
+            <Text size={30}>Recipes</Text>
+            {/* <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text> */}
           </Block>
           <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
             <Block row space="between" style={{ flexWrap: 'wrap' }} >
@@ -70,8 +70,8 @@ export default function Profile({ navigation }) {
                 <Image
                   source={{ uri: img }}
                   key={`viewed-${img}`}
-                  resizeMode="cover"
-                  style={styles.thumb}
+                  // resizeMode="cover"
+                  // style={styles.thumb}
                 />
               ))}
             </Block>
@@ -85,15 +85,15 @@ export default function Profile({ navigation }) {
 const styles = StyleSheet.create({
   profile: {
     marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
-    marginBottom: -HeaderHeight * 2,
+    marginBottom: -HeaderHeight * 1.5,
   },
   profileImage: {
-    width: width * 1.1,
+    width: width * 1.0,
     height: 'auto',
   },
   profileContainer: {
     width: width,
-    height: height / 2,
+    height: height / 2.1,
   },
   profileDetails: {
     paddingTop: theme.SIZES.BASE * 4,
@@ -107,11 +107,11 @@ const styles = StyleSheet.create({
   },
   pro: {
     backgroundColor: materialTheme.COLORS.LABEL,
-    paddingHorizontal: 6,
-    marginRight: theme.SIZES.BASE / 2,
-    borderRadius: 4,
+    paddingHorizontal: 0,
+    marginRight: theme.SIZES.BASE*12,
+    borderRadius: 30,
     height: 19,
-    width: 38,
+    width: 66,
   },
   seller: {
     marginRight: theme.SIZES.BASE / 2,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     padding: theme.SIZES.BASE,
     marginHorizontal: theme.SIZES.BASE,
-    marginTop: -theme.SIZES.BASE * 7,
+    marginTop: -theme.SIZES.BASE * 10,
     borderTopLeftRadius: 13,
     borderTopRightRadius: 13,
     backgroundColor: theme.COLORS.WHITE,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: '30%',
+    height: '50%',
     position: 'absolute',
   },
 });

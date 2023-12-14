@@ -47,7 +47,7 @@ function Menu({
         </TouchableWithoutFeedback>
         <Block row>
           <Block middle style={styles.pro}>
-            <Text size={16} color="white">
+            <Text size={16} color="white">{"#00001"}
               {profile.plan}
             </Text>
           </Block>
@@ -55,8 +55,8 @@ function Menu({
             {profile.type}
           </Text>
           <Text size={16} color={materialTheme.COLORS.WARNING}>
-            {profile.rating}{" "}
-            <IconExtra name="shape-star" family="GalioExtra" size={14} />
+            {profile.rating}{""}
+            {/* <IconExtra name="shape-star" family="GalioExtra" size={14} /> */}
           </Text>
         </Block>
       </Block>
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
     backgroundColor: materialTheme.COLORS.LABEL,
     paddingHorizontal: 6,
     marginRight: 8,
-    borderRadius: 4,
-    height: 19,
-    width: 38,
+    borderRadius: 30,
+    height: 22,
+    width: 69,
   },
   seller: {
     marginRight: 16,

@@ -5,8 +5,8 @@ export default ScreenNames = () => {
     return {
         Stack: {
             Home: 'StackHome',
-            Profile: 'StackProfile',
-            Settings: 'StackSettings',
+            Profile: 'StackFavorites',
+            Settings: 'StackShopping List',
             Components: 'StackComponents',
             RecipeSearch: 'StackRecipeSearch',
 
@@ -15,8 +15,8 @@ export default ScreenNames = () => {
         },
         Drawer: {
             Home: 'DrawerHome',
-            Profile: 'DrawerProfile',
-            Settings: 'DrawerSettings',
+            Profile: 'DrawerFavorites',
+            Settings: 'DrawerShopping List',
             Components: 'DrawerComponents',
             RecipeSearch: 'DrawerRecipeSearch',
 
@@ -24,8 +24,8 @@ export default ScreenNames = () => {
             RecipeDetails: 'DrawerRecipeDetails',
         },
         Icons: {
-            Profile: { icon: "circle-10", family: "GalioExtra" },
-            Settings: { icon: "gears", family: "font-awesome" },
+            Profile: { icon: "heart", family: "font-awesome" },
+            Settings: { icon: "cart", family: "ionicon" },
             Components: { icon: "toggle-outline", family: "ionicon" },
             Home: { icon: "shop", family: "GalioExtra" },
             RecipeSearch: { icon: "search-outline", family: "ionicon" },
