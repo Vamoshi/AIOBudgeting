@@ -10,6 +10,7 @@ const initialState = {
     to: 0,
     count: 0,
     error: "",
+    favorites: {},
 }
 
 const formatListToHttpString = (li) => {
@@ -31,6 +32,24 @@ const fetchRecipes = createAsyncThunk('recipeSearch/fetchRecipes', async (_, { g
 const RecipeSearchSlice = createSlice({
     name: 'recipeSearch',
     initialState,
+    reducers: {
+        addFavorite: (state, action) => {
+            const key = Object.keys(action.payload)
+            const value = action.payload[key]
+
+            state.favorites[key] = value
+        },
+        removeFavorite: (state, action) => {
+            const keyToRemove = action.payload
+
+            state.favorites = Object.keys(state.favorites)
+                .filter(key => key !== keyToRemove)
+                .reduce((obj, key) => {
+                    obj[key] = myDictionary[key];
+                    return obj;
+                }, {});
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchRecipes.pending, state => {
             state.loading = true
@@ -45,8 +64,6 @@ const RecipeSearchSlice = createSlice({
             state.error = ""
         })
         builder.addCase(fetchRecipes.rejected, (state, action) => {
-            console.log(action);
-
             state.loading = false
             state.recipes = []
             state.error = action.error.message
@@ -56,3 +73,4 @@ const RecipeSearchSlice = createSlice({
 
 export default RecipeSearchSlice.reducer
 export { fetchRecipes }
+export const { addFavorite, removeFavorite } = RecipeSearchSlice.actions

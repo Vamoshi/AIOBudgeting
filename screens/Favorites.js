@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,11 +7,34 @@ import IconExtra from '../components/IconExtra';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import Home from './Home';
+import { useSelector } from 'react-redux';
+import RecipeCard from '../components/RecipeCard';
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
 export default function Favorites({ navigation }) {
+
+  const [recipes, setRecipes] = useState([])
+  const [pairs, setPairs] = useState([])
+
+  const chunkArray = (recipeList, chunkSize = 2) => {
+
+    const chunked = [];
+    for (let i = 0; i < recipeList.length; i += chunkSize) {
+      chunked.push(recipeList.slice(i, i + chunkSize));
+    }
+    return chunked;
+  };
+
+
+  useEffect(() => {
+    setRecipes(Object.values(favorites))
+    recipes.length > 0 && setPairs(chunkArray(recipes))
+  }, [])
+
+  const favorites = useSelector(state => state.recipeSearch.favorites)
+
   return (
     <Block flex style={styles.profile}>
       <Block flex>
@@ -46,36 +69,28 @@ export default function Favorites({ navigation }) {
       </Block>
       <Block flex style={styles.options}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block row space="between" style={{ padding: theme.SIZES.BASE / 100, }}>
-            <Block middle>
-              {/* <Text bold size={12} style={{ marginBottom: 8 }}>36</Text> */}
-              {/* <Text muted size={12}>Orders</Text> */}
-            </Block>
-            <Block middle>
-              {/* <Text bold size={12} style={{ marginBottom: 8 }}>5</Text>
-              <Text muted size={12}>Bids & Offers</Text> */}
-            </Block>
-            <Block middle>
-              {/* <Text bold size={12} style={{ marginBottom: 8 }}>2</Text>
-              <Text muted size={12}>Messages</Text> */}
-            </Block>
+          <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+            <Text size={25}>Recipes</Text>
           </Block>
-          <Block row space="between" style={{ paddingVertical: 0, alignItems: 'baseline' }}>
-            <Text size={30}>Recipes</Text>
-            {/* <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text> */}
-          </Block>
-          <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-            <Block row space="between" style={{ flexWrap: 'wrap' }} >
-              {Images.Viewed.map((img, imgIndex) => (
-                <Image
-                  source={{ uri: img }}
-                  key={`viewed-${img}`}
-                // resizeMode="cover"
-                // style={styles.thumb}
-                />
-              ))}
-            </Block>
-          </Block>
+          {
+            pairs && pairs.length > 0 && pairs.map((pair, index) => {
+              return <Block flex row key={index}>
+                {
+                  pair.map((recipe, i) =>
+                    <RecipeCard
+                      key={i}
+                      product={{
+                        title: recipe.recipe.label,
+                        image: recipe.recipe.image,
+                        // price: 220,
+                      }}
+                      style={{ marginRight: theme.SIZES.BASE }}
+                    />)
+                }
+              </Block>
+            }
+            )
+          }
         </ScrollView>
       </Block>
     </Block>

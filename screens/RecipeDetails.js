@@ -6,6 +6,10 @@ import { materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { useRoute } from '@react-navigation/core';
 import RecipeCard from '../components/RecipeCard';
+import IconExtra from "../components/IconExtra";
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite } from '../redux/RecipeSearchSlice';
+
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -16,23 +20,31 @@ export default function RecipeDetails({ navigation }) {
     const [recipe, setRecipe] = useState({})
     const [link, setLink] = useState({})
     const [pairs, setPairs] = useState([])
+    const [isFavorite, setIsFavorite] = useState(false)
 
     const chunkArray = (ingredients, chunkSize = 2) => {
         const chunked = [];
         for (let i = 0; i < ingredients.length; i += chunkSize) {
             chunked.push(ingredients.slice(i, i + chunkSize));
-            // console.log(chunked);
         }
         return chunked;
     };
 
+    const dispatch = useDispatch()
+
+    const favorites = useSelector(state => {
+        return state.recipeSearch.favorites
+    })
 
     useEffect(() => {
         setRecipe(navigationProps.recipe)
-        setLink(navigation._links)
+        setLink(navigationProps._links)
         recipe.ingredients && setPairs(chunkArray(recipe.ingredients))
 
-    }, [navigationProps, recipe])
+        setIsFavorite(false)
+        link.self && link.self.href in favorites && setIsFavorite(true)
+
+    }, [navigationProps, recipe, favorites])
 
     return (
         <Block flex style={styles.profile}>
@@ -48,8 +60,17 @@ export default function RecipeDetails({ navigation }) {
                                 <Block row>
                                     <Text color="white" size={16} muted style={styles.seller}>{recipe.source}</Text>
                                     <Text size={16} color={materialTheme.COLORS.WARNING}>
-                                        {recipe.calories && `${recipe.totalNutrients.ENERC_KCAL.quantity.toFixed(2)} ${recipe.totalNutrients.ENERC_KCAL.unit.toUpperCase()}` || ""}
-                                        {/* <IconExtra name="shape-star" family="GalioExtra" size={14} /> */}
+                                        {recipe.calories && `${recipe.totalNutrients.ENERC_KCAL.quantity.toFixed(2)} ${recipe.totalNutrients.ENERC_KCAL.unit.toUpperCase()}             ` || ""}
+                                    </Text>
+                                    <Text size={16} color={materialTheme.COLORS.WARNING}>{
+                                        isFavorite ?
+                                            <IconExtra name="star" family="FontAwesome" size={20} onPress={() => dispatch(removeFavorite(link.self.href))} />
+                                            :
+                                            <IconExtra name="shape-star" family="GalioExtra" size={20} onPress={() => dispatch(addFavorite(obj = { [link.self.href]: navigationProps }))} />
+                                    }
+                                    </Text>
+                                    <Text size={16} color={materialTheme.COLORS.WARNING}>
+                                        {`   Favorite`}
                                     </Text>
                                 </Block>
                             </Block>
