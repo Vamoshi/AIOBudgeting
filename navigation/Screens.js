@@ -80,7 +80,7 @@ const RenderScreens = () => {
               key={index}
               component={
                 stackName === screenNames.Stack.Home ? HomeStack :
-                  stackName === screenNames.Stack.Favorites ? ProfileStack :
+                  stackName === screenNames.Stack.Profile ? ProfileStack :
                     stackName === screenNames.Stack.Settings ? SettingsStack :
                       stackName === screenNames.Stack.Components ? ComponentsStack :
                         stackName === screenNames.Stack.RecipeSearch ? RecipeSearchStack :
@@ -95,7 +95,7 @@ const RenderScreens = () => {
 }
 
 function ProfileStack(props) {
-  const profile = ScreenNames().Stack.Favorites
+  const profile = ScreenNames().Stack.Profile
 
   return (
     <Stack.Navigator
