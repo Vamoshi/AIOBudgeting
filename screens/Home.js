@@ -19,13 +19,31 @@ const Home = () => {
           <RecipeCard
             product={{
               title: 'Recipes Search',
-              image: 'https://source.unsplash.com/tb6ulgGY5Zc/840x840',
+              image: 'https://food-ubc.b-cdn.net/wp-content/uploads/2020/02/Save-Money-On-Groceries_UBC-Food-Services.jpg',
               price: 220,
             }}
             horizontal
             navigateTo={ScreenNames().Drawer.RecipeSearch}
           />
-          <RecipeCard product={products[0]} horizontal />
+          {/* <RecipeCard product={products[0]} horizontal /> */}
+          {/* <Block flex row>
+            <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
+            <RecipeCard product={products[2]} />
+          </Block>
+          <RecipeCard product={products[3]} horizontal />
+          <RecipeCard product={products[4]} full /> */}
+        </Block>
+        <Block flex>
+          <RecipeCard
+            product={{
+              title: 'Favorites Recipes',
+              image: 'https://www.diabetesfoodhub.org/system/user_files/Images/1837-diabetic-pecan-crusted-chicken-breast_JulAug20DF_clean-simple_061720.jpg',
+              price: 220,
+            }}
+            horizontal
+            navigateTo={ScreenNames().Drawer.Favorites}
+          />
+          {/* <RecipeCard product={products[0]} horizontal /> */}
           {/* <Block flex row>
             <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
             <RecipeCard product={products[2]} />
