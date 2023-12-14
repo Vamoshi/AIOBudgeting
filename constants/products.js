@@ -1,6 +1,9 @@
 export default [
   {
-    title: 'Favorite List',
+    title: 'Hardly Anything Takes More Coura...',
+    image: 'https://source.unsplash.com/dS2hi__ZZMk/840x840',
+    price: 180,
+    horizontal: true,
   },
   {
     title: 'Find the cheapest deals on our range...',
@@ -19,8 +22,8 @@ export default [
     horizontal: true,
   },
   {
-    title: 'Recipe Search',
-    
-    
+    title: 'Coffee - A Drop of Happiness in a Cup',
+    image: 'https://source.unsplash.com/Ws4wd-vJ9M0/840x840',
+    price: 180,
   },
 ];

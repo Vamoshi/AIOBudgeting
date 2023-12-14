@@ -15,8 +15,13 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          <RecipeCard  product={products[4]} full navigateToStack={ScreenNames().Stack.RecipeSearch}/>
-          <RecipeCard product={products[0]} full navigateToStack={ScreenNames().Stack.RecipeDetails} />
+          <RecipeCard product={products[0]} horizontal />
+          <Block flex row>
+            <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
+            <RecipeCard product={products[2]} />
+          </Block>
+          <RecipeCard product={products[3]} horizontal />
+          <RecipeCard product={products[4]} full />
         </Block>
       </ScrollView>
     )
