@@ -6,7 +6,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import IconExtra from '../components/IconExtra';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import Home from './Home';
 import { useSelector } from 'react-redux';
 import RecipeCard from '../components/RecipeCard';
 
@@ -17,6 +16,8 @@ export default function Favorites({ navigation }) {
 
   const [recipes, setRecipes] = useState([])
   const [pairs, setPairs] = useState([])
+
+  const favorites = useSelector(state => state.recipeSearch.favorites)
 
   const chunkArray = (recipeList, chunkSize = 2) => {
 
@@ -31,9 +32,11 @@ export default function Favorites({ navigation }) {
   useEffect(() => {
     setRecipes(Object.values(favorites))
     recipes.length > 0 && setPairs(chunkArray(recipes))
-  }, [])
 
-  const favorites = useSelector(state => state.recipeSearch.favorites)
+    // console.log('====================================');
+
+  }, [favorites])
+
 
   return (
     <Block flex style={styles.profile}>

@@ -48,6 +48,8 @@ const RecipeSearchSlice = createSlice({
                     obj[key] = myDictionary[key];
                     return obj;
                 }, {});
+        },
+        getFavorites: (state) => {
         }
     },
     extraReducers: (builder) => {
@@ -73,4 +75,4 @@ const RecipeSearchSlice = createSlice({
 
 export default RecipeSearchSlice.reducer
 export { fetchRecipes }
-export const { addFavorite, removeFavorite } = RecipeSearchSlice.actions
+export const { addFavorite, removeFavorite, getFavorites } = RecipeSearchSlice.actions
