@@ -13,67 +13,66 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 export default function Profile({ navigation }) {
   return (
-    <Block flex style={styles.profile}>
+    <Block flex >
       <Block flex>
-        <ImageBackground
-          source={{ uri: Images.Profile }}
+        {/* <ImageBackground
+          
           style={styles.profileContainer}
           imageStyle={styles.profileImage}>
           <Block flex style={styles.profileDetails}>
             <Block style={styles.profileTexts}>
-              <Text color="white" size={28} style={{ paddingBottom: 8 }}>Rachel Brown</Text>
+              
               <Block row space="between">
                 <Block row>
                   <Block middle style={styles.pro}>
-                    <Text size={16} color="white">Pro</Text>
+                    
                   </Block>
-                  <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
+                  
                   <Text size={16} color={materialTheme.COLORS.WARNING}>
-                    4.8 <IconExtra name="shape-star" family="GalioExtra" size={14} />
+                  
                   </Text>
                 </Block>
                 <Block>
-                  <Text color={theme.COLORS.MUTED} size={16}>
-                    <IconExtra name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                    {` `} Los Angeles, CA
+                  <Text color={theme.COLORS.MUTED} size={1}>
+                    
                   </Text>
                 </Block>
               </Block>
             </Block>
             <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} style={styles.gradient} />
           </Block>
-        </ImageBackground>
+        </ImageBackground> */}
       </Block>
-      <Block flex style={styles.options}>
+      <Block flex >
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
+          <Block>
             <Block middle>
-              <Text bold size={12} style={{ marginBottom: 8 }}>36</Text>
-              <Text muted size={12}>Orders</Text>
+              {/* <Text bold size={12} style={{ marginBottom: 8 }}>36</Text>
+              <Text muted size={12}>Orders</Text> */}
             </Block>
             <Block middle>
-              <Text bold size={12} style={{ marginBottom: 8 }}>5</Text>
-              <Text muted size={12}>Bids & Offers</Text>
+              {/* <Text bold size={12} style={{ marginBottom: 8 }}>5</Text>
+              <Text muted size={12}>Bids & Offers</Text> */}
             </Block>
             <Block middle>
-              <Text bold size={12} style={{ marginBottom: 8 }}>2</Text>
-              <Text muted size={12}>Messages</Text>
+              {/* <Text bold size={12} style={{ marginBottom: 8 }}>2</Text>
+              <Text muted size={12}>Messages</Text> */}
             </Block>
           </Block>
-          <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-            <Text size={16}>Recently viewed</Text>
-            <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text>
+          <Block >
+            {/* <Text size={16}>Recently viewed</Text> */}
+            {/* <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text> */}
           </Block>
-          <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-            <Block row space="between" style={{ flexWrap: 'wrap' }} >
-              {Images.Viewed.map((img, imgIndex) => (
+          <Block >
+            <Block >
+              {/* {Images.Viewed.map((img, imgIndex) => (
                 <Image
                   source={{ uri: img }}
                   key={`viewed-${img}`}
                   resizeMode="cover"
                   style={styles.thumb}
                 />
-              ))}
+              ))} */}
             </Block>
           </Block>
         </ScrollView>
