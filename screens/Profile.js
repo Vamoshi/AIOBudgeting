@@ -25,11 +25,11 @@ export default function Profile({ navigation }) {
               <Block row space="between">
                 <Block row>
                   <Block middle style={styles.pro}>
-                    <Text size={16} color="white">Pro</Text>
+                    <Text size={16} color="white">01</Text>
                   </Block>
-                  <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
+                  <Text color="white" size={16} muted style={styles.seller}></Text>
                   <Text size={16} color={materialTheme.COLORS.WARNING}>
-                    4.8 <IconExtra name="shape-star" family="GalioExtra" size={14} />
+                    
                   </Text>
                 </Block>
                 <Block>
