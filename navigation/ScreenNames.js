@@ -6,7 +6,7 @@ export default ScreenNames = () => {
         Stack: {
             Home: 'StackHome',
             Profile: 'StackProfile',
-            Settings: 'StackSettings',
+            Settings: 'StackNotes',
             Components: 'StackComponents',
             RecipeSearch: 'StackRecipeSearch',
 
@@ -16,7 +16,7 @@ export default ScreenNames = () => {
         Drawer: {
             Home: 'DrawerHome',
             Profile: 'DrawerProfile',
-            Settings: 'DrawerSettings',
+            Settings: 'DrawerNotes',
             Components: 'DrawerComponents',
             RecipeSearch: 'DrawerRecipeSearch',
 
