@@ -81,7 +81,8 @@ const RenderScreens = () => {
               key={index}
               component={
                 stackName === screenNames.Stack.Home ? HomeStack :
-                  stackName === screenNames.Stack.Profile ? ProfileStack :
+                  stackName === screenNames.Stack.Settings ? SettingsStack :
+                  //settings is now shopping list
                     stackName === screenNames.Stack.Favorites ? FavoritesStack :
                       // stackName === screenNames.Stack.Components ? ComponentsStack :
                         stackName === screenNames.Stack.RecipeSearch ? RecipeSearchStack :
