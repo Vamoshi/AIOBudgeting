@@ -22,11 +22,11 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const profile = {
-  avatar: null,
-  name: "",
+  avatar: "https://as2.ftcdn.net/v2/jpg/04/88/42/11/1000_F_488421190_K5LgxMTlGztWJJciZEI4VRnGeqvvqjLx.jpg",
+  name: "Your Account",
   type: "",
-  plan: "",
-  rating: "",
+  plan: "01",
+  rating: "Subscribe",
 };
 
 const RenderScreens = () => {
