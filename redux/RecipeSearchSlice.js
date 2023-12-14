@@ -45,9 +45,11 @@ const RecipeSearchSlice = createSlice({
             state.error = ""
         })
         builder.addCase(fetchRecipes.rejected, (state, action) => {
+            console.log(action);
+
             state.loading = false
             state.recipes = []
-            state.error = action.payload.errorCode
+            state.error = action.error.message
         })
     }
 })
