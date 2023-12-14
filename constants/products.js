@@ -1,7 +1,7 @@
 export default [
   {
-    title: 'Hardly Anything Takes More Coura...',
-    image: 'https://source.unsplash.com/dS2hi__ZZMk/840x840',
+    title: 'Favorite Recipes',
+    image: 'https://www.diabetesfoodhub.org/system/user_files/Images/1837-diabetic-pecan-crusted-chicken-breast_JulAug20DF_clean-simple_061720.jpg',
     price: 0,
     horizontal: true,
   },
