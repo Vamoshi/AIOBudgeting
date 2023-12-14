@@ -22,7 +22,7 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const profile = {
-  avatar: "",
+  avatar: null,
   name: "",
   type: "",
   plan: "",
