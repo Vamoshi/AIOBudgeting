@@ -9,7 +9,7 @@ import HomeScreen from "../screens/Home";
 import ProScreen from "../screens/Pro";
 import ProfileScreen from "../screens/Profile";
 import React from "react";
-import SettingsScreen from "../screens/Settings";
+import SettingsScreen from "../screens/Notes";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
