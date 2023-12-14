@@ -1,31 +1,61 @@
-import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } from 'react-native';
-import { Block, Text, theme, Button, } from 'galio-framework';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Linking } from 'react-native';
+import { Block, Text, theme, } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-import IconExtra from '../components/IconExtra';
-import { Images, materialTheme } from '../constants';
+import { materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import Home from './Home';
+import { useRoute } from '@react-navigation/core';
+import RecipeCard from '../components/RecipeCard';
+import { Webview } from "react-native-webview"
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
 export default function RecipeDetails({ navigation }) {
+
+    const { params: { navigationProps } } = useRoute()
+    const [recipe, setRecipe] = useState({})
+    const [link, setLink] = useState({})
+    const [pairs, setPairs] = useState([])
+    const [webViewFlag, setWebViewFlag] = useState(false)
+
+    const chunkArray = (ingredients, chunkSize = 2) => {
+        const chunked = [];
+        for (let i = 0; i < ingredients.length; i += chunkSize) {
+            chunked.push(ingredients.slice(i, i + chunkSize));
+            // console.log(chunked);
+        }
+        return chunked;
+    };
+
+
+    useEffect(() => {
+        setRecipe(navigationProps.recipe)
+        setLink(navigation._links)
+
+        // console.log(Object.keys(navigationProps))
+    }, [navigationProps])
+
+    useEffect(() => {
+        recipe.ingredients && setPairs(chunkArray(recipe.ingredients))
+    }, [recipe.ingredients])
+
     return (
         <Block flex style={styles.profile}>
             <Block flex>
                 <ImageBackground
-                    source={{ uri: Images.Profile }}
+                    source={{ uri: recipe.image }}
                     style={styles.profileContainer}
                     imageStyle={styles.profileImage}>
                     <Block flex style={styles.profileDetails}>
                         <Block style={styles.profileTexts}>
-                            <Text color="white" size={28} style={{ paddingBottom: 8 }}>Recipe Name</Text>
+                            <Text color="white" size={28} style={{ paddingBottom: 8 }}>{recipe.label}</Text>
                             <Block row space="between">
                                 <Block row>
-                                    <Text color="white" size={16} muted style={styles.seller}>Author</Text>
+                                    <Text color="white" size={16} muted style={styles.seller}>{recipe.source}</Text>
                                     <Text size={16} color={materialTheme.COLORS.WARNING}>
-                                        Stars [Number] <IconExtra name="shape-star" family="GalioExtra" size={14} />
+                                        {recipe.calories && `${recipe.totalNutrients.ENERC_KCAL.quantity.toFixed(2)} ${recipe.totalNutrients.ENERC_KCAL.unit.toUpperCase()}` || ""}
+                                        {/* <IconExtra name="shape-star" family="GalioExtra" size={14} /> */}
                                     </Text>
                                 </Block>
                             </Block>
@@ -38,33 +68,40 @@ export default function RecipeDetails({ navigation }) {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
                         <Block middle>
-                            <Text bold size={12} style={{ marginBottom: 8 }}>36</Text>
-                            <Text muted size={12}>Orders</Text>
+                            <Text bold size={16} style={{ marginBottom: 8 }}>{recipe.mealType}</Text>
+                            <Text muted size={16}>Meal Type</Text>
                         </Block>
                         <Block middle>
-                            <Text bold size={12} style={{ marginBottom: 8 }}>5</Text>
-                            <Text muted size={12}>Bids & Offers</Text>
+                            <Text bold size={16} style={{ marginBottom: 8 }}>{`${recipe.dishType && recipe.dishType}`}</Text>
+                            <Text muted size={16}>Dish Type</Text>
                         </Block>
                         <Block middle>
-                            <Text bold size={12} style={{ marginBottom: 8 }}>2</Text>
-                            <Text muted size={12}>Messages</Text>
+                            <Text bold size={16} style={{ marginBottom: 8 }}>{recipe.yield}</Text>
+                            <Text muted size={16}>Servings</Text>
                         </Block>
                     </Block>
                     <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-                        <Text size={16}>Recently viewed</Text>
-                        <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => navigation.navigate(Home)}>View All</Text>
+                        <Text size={20}>Summary</Text>
+                        <Text size={16} color={theme.COLORS.PRIMARY} onPress={() => Linking.openURL(recipe.url)}>View Full Recipe</Text>
                     </Block>
                     <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-                        <Block row space="between" style={{ flexWrap: 'wrap' }} >
-                            {Images.Viewed.map((img, imgIndex) => (
-                                <Image
-                                    source={{ uri: img }}
-                                    key={`viewed-${img}`}
-                                    resizeMode="cover"
-                                    style={styles.thumb}
-                                />
-                            ))}
-                        </Block>
+                        {
+                            pairs && pairs.length > 0 && pairs.map((pair, index) =>
+                                <Block flex row key={index}>
+                                    {
+                                        pair.map((ingredient, i) => <RecipeCard
+                                            key={i}
+                                            product={{
+                                                title: ingredient.text,
+                                                image: ingredient.image,
+                                                // price: 220,
+                                            }}
+                                            style={{ marginRight: theme.SIZES.BASE }}
+                                        />)
+                                    }
+                                </Block>
+                            )
+                        }
                     </Block>
                 </ScrollView>
             </Block>
