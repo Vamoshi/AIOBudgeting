@@ -12,8 +12,11 @@ const ingredientSearchSlice = createSlice({
     updateIngredientList: (state, action) => {
       state.keywords = action.payload.split(/[,\s]+/)
     },
+    updateHealth: (state, action) => {
+      state.health = action.payload
+    }
   },
 })
 
 export default ingredientSearchSlice.reducer
-export const { updateIngredientList } = ingredientSearchSlice.actions
+export const { updateIngredientList, updateHealth } = ingredientSearchSlice.actions

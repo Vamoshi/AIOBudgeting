@@ -49,7 +49,7 @@ const SearchButton = ({ isWhite, style, navigation }) => (
   </TouchableOpacity>
 );
 
-const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation, back, white }) => {
+const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation, back, white, dropdown }) => {
 
   const formattedTitle = formatTitle(title)
 
@@ -101,7 +101,6 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         style={styles.search}
         placeholder="Separate ingredients by Comma or Space"
         onEndEditing={handleEndEditing}
-        // onFocus={() => navigation.navigate(ScreenNames().Stack.Pro)}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
       />
     )
@@ -126,12 +125,14 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
     )
   }
 
+
   const renderHeader = () => {
     if (search || tabs) {
       return (
         <Block center>
           {search ? renderSearch() : null}
           {tabs ? renderTabs() : null}
+          {dropdown ? dropdown() : null}
         </Block>
       )
     }

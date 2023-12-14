@@ -16,6 +16,8 @@ import ScreenNames from "./ScreenNames";
 import RecipeSearch from "../screens/RecipeSearch";
 import RecipeDetails from "../screens/RecipeDetails";
 import FavoritesScreen from "../screens/Favorites";
+import CustomDropDown from "../components/CustomDropDown"
+import { healthLabels } from "../constants/HealthLabels";
 
 const { width } = Dimensions.get("screen");
 
@@ -245,6 +247,7 @@ function HomeStack(props) {
 }
 
 function RecipeSearchStack(props) {
+
   return (
     <Stack.Navigator
       initialRouteName={ScreenNames().Stack.RecipeSearch}
@@ -259,7 +262,9 @@ function RecipeSearchStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
+              dropdownTab
               search
+              dropdown={() => <CustomDropDown items={healthLabels} placeholder="Select a Health type" />}
               title="Search Recipes"
               navigation={navigation}
               scene={scene}

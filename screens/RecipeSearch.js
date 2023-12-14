@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
+import DropDown from '../components/Select';
+
 
 import RecipeCard from '../components/RecipeCard';
 
 const { width } = Dimensions.get('screen');
 import ScreenNames from '../navigation/ScreenNames';
 import { useSelector } from 'react-redux';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const RecipeSearch = () => {
 
@@ -35,6 +38,7 @@ const RecipeSearch = () => {
                         key={index}
                         horizontal
                         navigateTo={ScreenNames().Stack.RecipeDetails}
+                        navigationProps={recipe}
                       />
                     }) : <></>
           }
@@ -53,8 +57,9 @@ const RecipeSearch = () => {
 export default RecipeSearch;
 
 const styles = StyleSheet.create({
-  centeredText: {
-
+  dropdownContainer: {
+    borderWidth: 0,
+    borderBottomWidth: 0,
   },
   home: {
     width: width,
