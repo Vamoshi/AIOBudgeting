@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { View } from "react-native";
 import { TextInput,} from 'react-native';
-
-
-
+import {AsyncStorage} from 'react-native';
+//can delete thisVVV
+_retrieveData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('SaveData');
+    if (value !== null) {
+      newTest = text
+    }
+  } catch (error) {
+  }
+};
+//^^^^
 const Noter = () => {
   const [text, setText] = useState('');
   return (
@@ -19,5 +28,15 @@ const Noter = () => {
     </View>
   );
 };
-
+//can delete this vvvv
+_storeData = async () => {
+  try {
+    await AsyncStorage.setItem(
+      'SaveData',
+      text,
+    );
+  } catch (error) {
+  }
+};
+// ^^^^^
 export default Noter;
