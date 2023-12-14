@@ -6,7 +6,6 @@ import { materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { useRoute } from '@react-navigation/core';
 import RecipeCard from '../components/RecipeCard';
-import { Webview } from "react-native-webview"
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -17,7 +16,6 @@ export default function RecipeDetails({ navigation }) {
     const [recipe, setRecipe] = useState({})
     const [link, setLink] = useState({})
     const [pairs, setPairs] = useState([])
-    const [webViewFlag, setWebViewFlag] = useState(false)
 
     const chunkArray = (ingredients, chunkSize = 2) => {
         const chunked = [];
@@ -32,13 +30,9 @@ export default function RecipeDetails({ navigation }) {
     useEffect(() => {
         setRecipe(navigationProps.recipe)
         setLink(navigation._links)
-
-        // console.log(Object.keys(navigationProps))
-    }, [navigationProps])
-
-    useEffect(() => {
         recipe.ingredients && setPairs(chunkArray(recipe.ingredients))
-    }, [recipe.ingredients])
+
+    }, [navigationProps, recipe])
 
     return (
         <Block flex style={styles.profile}>
