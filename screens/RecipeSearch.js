@@ -34,7 +34,7 @@ const RecipeSearch = () => {
                         }}
                         key={index}
                         horizontal
-                        navigateToStack={ScreenNames().Stack.RecipeDetails}
+                        navigateTo={ScreenNames().Stack.RecipeDetails}
                       />
                     }) : <></>
           }
