@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 
 import RecipeCard from '../components/RecipeCard';
 
 const { width } = Dimensions.get('screen');
-import products from '../constants/products';
 import ScreenNames from '../navigation/ScreenNames';
+import { useSelector } from 'react-redux';
 
 const RecipeSearch = () => {
+
+  const searchResults = useSelector(state => state.recipeSearch)
+
   const renderProducts = () => {
     return (
       <ScrollView
@@ -16,12 +19,25 @@ const RecipeSearch = () => {
         contentContainerStyle={styles.products}
       >
         <Block flex>
-          {/* Put product.map here */}
-          <RecipeCard
-            product={products[0]}
-            horizontal
-            navigateToStack={ScreenNames().Stack.RecipeDetails}
-          />
+          {
+            searchResults.loading ? <Text>Loading...</Text> :
+              !searchResults.loading && searchResults.error ? <Text>Error: {searchResults.error}</Text> :
+                !searchResults.loading && searchResults.recipes.length === 0 ? <Text>No Results Found</Text> :
+                  !searchResults.loading && searchResults.recipes
+                    ? searchResults.recipes.map((recipe, index) => {
+                      return <RecipeCard
+                        product={{
+                          title: recipe.recipe.label,
+                          image: recipe.recipe.image,
+                          price: 180,
+                          horizontal: true,
+                        }}
+                        key={index}
+                        horizontal
+                        navigateToStack={ScreenNames().Stack.RecipeDetails}
+                      />
+                    }) : <></>
+          }
         </Block>
       </ScrollView>
     )
@@ -37,6 +53,9 @@ const RecipeSearch = () => {
 export default RecipeSearch;
 
 const styles = StyleSheet.create({
+  centeredText: {
+
+  },
   home: {
     width: width,
   },
