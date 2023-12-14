@@ -24,7 +24,8 @@ function Menu({
         const dontIclude = drawer[key]
 
         return dontIclude != drawer.Pro &&
-          dontIclude != drawer.RecipeDetails
+          dontIclude != drawer.RecipeDetails &&
+          dontIclude != drawer.Components
       }
     )
   };
