@@ -4,6 +4,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { StyleSheet, Dimensions } from "react-native";
 import { updateHealth } from "../redux/IngredientSearchSlice";
 import { useDispatch } from "react-redux";
+import { fetchRecipes } from "../redux/RecipeSearchSlice";
 const { width } = Dimensions.get("screen");
 
 export default CustomDropDown = ({ items, placeholder }) => {
@@ -19,6 +20,7 @@ export default CustomDropDown = ({ items, placeholder }) => {
 
   const handleOnSelectItem = (selected) => {
     dispatch(updateHealth(selected.value));
+    dispatch(fetchRecipes());
   };
 
   return (
