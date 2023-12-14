@@ -38,6 +38,7 @@ const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, 
   );
 };
 
+
 export default RecipeCard;
 
 const styles = StyleSheet.create({
