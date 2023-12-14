@@ -68,7 +68,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
           <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
-      case formatTitle(ScreenNames().Drawer.Profile):
+      case formatTitle(ScreenNames().Drawer.Favorites):
         return ([
           <ChatButton key='chat-profile' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />

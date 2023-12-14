@@ -11,7 +11,7 @@ import Home from './Home';
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function Profile({ navigation }) {
+export default function Favorites({ navigation }) {
   return (
     <Block flex style={styles.profile}>
       <Block flex>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     padding: theme.SIZES.BASE,
     marginHorizontal: theme.SIZES.BASE,
-    marginTop: -theme.SIZES.BASE * 10,
+    marginTop: -theme.SIZES.BASE * 8.5,
     borderTopLeftRadius: 13,
     borderTopRightRadius: 13,
     backgroundColor: theme.COLORS.WHITE,

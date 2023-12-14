@@ -3,11 +3,11 @@ import { Animated, Dimensions, Easing } from "react-native";
 import Header from '../components/Header';
 import { Images, materialTheme } from "../constants/";
 
-import ComponentsScreen from "../screens/Components";
+// import ComponentsScreen from "../screens/Components";
 import Menu from "./Menu";
 import HomeScreen from "../screens/Home";
 import ProScreen from "../screens/Pro";
-import ProfileScreen from "../screens/Profile";
+import ProfileScreen from "../screens/Favorites";
 import React from "react";
 import SettingsScreen from "../screens/Settings";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -15,6 +15,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
 import RecipeSearch from "../screens/RecipeSearch";
 import RecipeDetails from "../screens/RecipeDetails";
+import FavoritesScreen from "../screens/Favorites";
 
 const { width } = Dimensions.get("screen");
 
@@ -81,8 +82,8 @@ const RenderScreens = () => {
               component={
                 stackName === screenNames.Stack.Home ? HomeStack :
                   stackName === screenNames.Stack.Profile ? ProfileStack :
-                    stackName === screenNames.Stack.Settings ? SettingsStack :
-                      stackName === screenNames.Stack.Components ? ComponentsStack :
+                    stackName === screenNames.Stack.Favorites ? FavoritesStack :
+                      // stackName === screenNames.Stack.Components ? ComponentsStack :
                         stackName === screenNames.Stack.RecipeSearch ? RecipeSearchStack :
                           HomeStack
               }
@@ -148,29 +149,52 @@ function SettingsStack(props) {
   );
 }
 
-function ComponentsStack(props) {
-  const components = ScreenNames().Stack.Components
-
+function FavoritesStack(props) {
+  const favorites = ScreenNames().Stack.Favorites
   return (
     <Stack.Navigator
-      initialRouteName={components}
+      initialRouteName={favorites}
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name={components}
-        component={ComponentsScreen}
+        name={favorites}
+        component={FavoritesScreen}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title={components} scene={scene} navigation={navigation} />
+            <Header title={favorites} scene={scene} navigation={navigation} />
           ),
         }}
       />
     </Stack.Navigator>
   );
 }
+
+// function ComponentsStack(props) {
+//   const components = ScreenNames().Stack.Components
+
+//   return (
+//     <Stack.Navigator
+//       initialRouteName={components}
+//       screenOptions={{
+//         mode: "card",
+//         headerShown: "screen",
+//       }}
+//     >
+//       <Stack.Screen
+//         name={components}
+//         component={ComponentsScreen}
+//         options={{
+//           header: ({ navigation, scene }) => (
+//             <Header title={components} scene={scene} navigation={navigation} />
+//           ),
+//         }}
+//       />
+//     </Stack.Navigator>
+//   );
+// }
 
 function HomeStack(props) {
   const home = ScreenNames().Stack.Home
@@ -189,8 +213,8 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              search
-              tabs
+              // search
+              // tabs
               title={home}
               navigation={navigation}
               scene={scene}

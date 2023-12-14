@@ -5,9 +5,10 @@ export default ScreenNames = () => {
     return {
         Stack: {
             Home: 'StackHome',
-            Profile: 'StackFavorites',
+            // Profile: 'StackFavorites',
+            Favorites: 'StackFavorites',
             Settings: 'StackShopping List',
-            Components: 'StackComponents',
+            Components: 'StackDietary Restrictions',
             RecipeSearch: 'StackRecipeSearch',
 
             Pro: 'StackPro',
@@ -15,16 +16,17 @@ export default ScreenNames = () => {
         },
         Drawer: {
             Home: 'DrawerHome',
-            Profile: 'DrawerFavorites',
+            // Profile: 'DrawerFavorites',
+            Favorites: 'DrawerFavorites',
             Settings: 'DrawerShopping List',
-            Components: 'DrawerComponents',
+            Components: 'DrawerDietary Restrictions',
             RecipeSearch: 'DrawerRecipeSearch',
 
             Pro: 'DrawerPro',
             RecipeDetails: 'DrawerRecipeDetails',
         },
         Icons: {
-            Profile: { icon: "heart", family: "font-awesome" },
+            Favorites: { icon: "heart", family: "font-awesome" },
             Settings: { icon: "cart", family: "ionicon" },
             Components: { icon: "toggle-outline", family: "ionicon" },
             Home: { icon: "shop", family: "GalioExtra" },

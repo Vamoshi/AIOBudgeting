@@ -36,7 +36,7 @@ function Menu({
     >
       <Block flex={0.25} style={styles.header}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate(ScreenNames().Drawer.Profile)}
+          onPress={() => navigation.navigate(ScreenNames().Drawer.Favorites)}
         >
           <Block style={styles.profile}>
             <Image source={{ uri: profile.avatar }} style={styles.avatar} />
