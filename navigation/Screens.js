@@ -22,11 +22,11 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const profile = {
-  avatar: null,
-  name: "",
-  type: "",
-  plan: "",
-  rating: "",
+  avatar: Images.Profile,
+  name: "Rachel Brown",
+  type: "Seller",
+  plan: "Pro",
+  rating: 4.8,
 };
 
 const RenderScreens = () => {
