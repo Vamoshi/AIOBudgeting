@@ -1,27 +1,10 @@
-// Order is important from Stack and Drawer
-// After the space starts the subscreens
-
 export default ScreenNames = () => {
     return {
         Stack: {
-            Home: 'StackHome',
-            Profile: 'StackProfile',
-            Settings: 'StackSettings',
-            Components: 'StackComponents',
-            RecipeSearch: 'StackRecipeSearch',
-
-            Pro: 'StackPro',
-            RecipeDetails: 'StackRecipeDetails',
-        },
-        Drawer: {
-            Home: 'DrawerHome',
-            Profile: 'DrawerProfile',
-            Settings: 'DrawerSettings',
-            Components: 'DrawerComponents',
-            RecipeSearch: 'DrawerRecipeSearch',
-
-            Pro: 'DrawerPro',
-            RecipeDetails: 'DrawerRecipeDetails',
+            BudgetHomeScreen: "BudgetHomeScreen",
+            BudgetDetails: "BudgetDetails",
+            AccountsHomeScreen: "AccountsHomeScreen",
+            AccountsDetails: "AccountsDetails",
         },
         Icons: {
             Profile: { icon: "circle-10", family: "GalioExtra" },
