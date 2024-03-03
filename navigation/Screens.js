@@ -1,126 +1,82 @@
-import { Animated, Dimensions, Easing, View, Text, Button } from "react-native";
-// import { Header } from "../components";
-import Header from '../components/Header';
-import { Images, materialTheme } from "../constants/";
-
-import ComponentsScreen from "../screens/Components";
-import Menu from "./Menu";
-// import HomeScreen from "../screens/Home";
-import ProScreen from "../screens/Pro";
-import ProfileScreen from "../screens/Profile";
-import React, { useEffect, useRef } from "react";
-// import SettingsScreen from "../screens/Settings";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Dimensions, View, Text, Button } from "react-native";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
-import RecipeSearch from "../screens/RecipeSearch";
-import RecipeDetails from "../screens/RecipeDetails";
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import BudgetHomeScreen from "../screens/BudgetHomeScreen";
+import AccountsHomeScreen from "../screens/AccountsHomeScreen";
+import { Icon } from "galio-framework";
+import materialTheme from "../constants/Theme";
+import { formatTitle, removeIconOutline } from "../constants/utils";
+import Components from "../screens/Components";
+import BudgetDetails from "../screens/BudgetDetails";
+import AccountsDetails from "../screens/AccountsDetails";
 
 const { width } = Dimensions.get("screen");
-
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
-
-const profile = {
-  avatar: Images.Profile,
-  name: "Rachel Brown",
-  type: "Seller",
-  plan: "Pro",
-  rating: 4.8,
-};
-
-function BudgetDetails() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Details!</Text>
-    </View>
-  );
-}
-
-function AccountsDetails() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Details!</Text>
-    </View>
-  );
-}
-
-function BudgetHomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate(ScreenNames().Stack.BudgetDetails)}
-      />
-    </View>
-  );
-}
-
-function AccountsHomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Accounts Screen</Text>
-      <Button
-        title="Go to Account Details"
-        onPress={() => navigation.navigate(ScreenNames().Stack.AccountsDetails)}
-      />
-    </View>
-  );
-}
 
 const BudgetStack = createStackNavigator();
 
 function BudgetStackHomeScreen() {
   return (
     <BudgetStack.Navigator>
-      <BudgetStack.Screen name={ScreenNames().Stack.BudgetHomeScreen} component={BudgetHomeScreen} />
-      <BudgetStack.Screen name={ScreenNames().Stack.BudgetDetails} component={BudgetDetails} />
+      <BudgetStack.Screen name={ScreenNames().Stack.BudgetHomeScreen} component={BudgetHomeScreen}
+        options={() => ({
+          headerTitle: "Budget",
+        })}
+      />
+      <BudgetStack.Screen name={ScreenNames().Stack.BudgetDetails} component={BudgetDetails}
+        options={() => ({
+          headerTitle: "Budget Details",
+        })}
+      />
     </BudgetStack.Navigator>
+  );
+}
+
+const AccountsStack = createStackNavigator();
+
+function AccountsStackHomeScreen() {
+  return (
+    <AccountsStack.Navigator>
+      <AccountsStack.Screen name={ScreenNames().Stack.AccountsHomeScreen} component={AccountsHomeScreen}
+        options={() => ({
+          headerTitle: "Accounts",
+        })}
+      />
+      <AccountsStack.Screen name={ScreenNames().Stack.AccountsDetails} component={AccountsDetails}
+        options={() => ({
+          headerTitle: "Account Details",
+        })}
+      />
+    </AccountsStack.Navigator>
   );
 }
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const AccountsStack = createStackNavigator();
-
-  function AccountsStackHomeScreen() {
-    return (
-      <AccountsStack.Navigator>
-        <AccountsStack.Screen name={ScreenNames().Stack.AccountsHomeScreen} component={AccountsHomeScreen} />
-        <AccountsStack.Screen name={ScreenNames().Stack.AccountsDetails} component={AccountsDetails} />
-      </AccountsStack.Navigator>
-    );
-  }
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-list' : 'ios-list-outline';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return ScreenNames().Icons[route.name] &&
+            <Icon
+              size={23}
+              name={focused ? removeIconOutline(ScreenNames().Icons[route.name].icon) : ScreenNames().Icons[route.name].icon}
+              family={ScreenNames().Icons[route.name].family}
+              color={focused ? materialTheme.COLORS.ACTIVE : materialTheme.COLORS.MUTED}
+            />
         },
         headerShown: false,
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarLabel: formatTitle(ScreenNames().Tabs[route.name]),
+        tabBarActiveTintColor: materialTheme.COLORS.ACTIVE,
+        tabBarInactiveTintColor: materialTheme.COLORS.MUTED,
       })}
     >
-      <Tab.Screen name="BudgetTab" component={BudgetStackHomeScreen} />
-      <Tab.Screen name="AccountsTab" component={AccountsStackHomeScreen} />
+      <Tab.Screen name={ScreenNames().Tabs.BudgetTab} component={BudgetStackHomeScreen} />
+      <Tab.Screen name={ScreenNames().Tabs.AccountsTab} component={AccountsStackHomeScreen} />
+      <Tab.Screen name={ScreenNames().Tabs.ComponentsTab} component={Components} />
     </Tab.Navigator>
   );
 }

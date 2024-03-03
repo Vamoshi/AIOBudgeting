@@ -6,12 +6,17 @@ export default ScreenNames = () => {
             AccountsHomeScreen: "AccountsHomeScreen",
             AccountsDetails: "AccountsDetails",
         },
+        Tabs: {
+            BudgetTab: "BudgetTab",
+            AccountsTab: "AccountsTab",
+            ComponentsTab: "ComponentsTab"
+        },
         Icons: {
-            Profile: { icon: "circle-10", family: "GalioExtra" },
-            Settings: { icon: "gears", family: "font-awesome" },
-            Components: { icon: "toggle-outline", family: "ionicon" },
-            Home: { icon: "shop", family: "GalioExtra" },
-            RecipeSearch: { icon: "search-outline", family: "ionicon" },
+            BudgetTab: { icon: "wallet-outline", family: "ionicon" },
+            AccountsTab: { icon: "card-outline", family: "ionicon" },
+            // Components: { icon: "toggle-outline", family: "ionicon" },
+            // Home: { icon: "shop", family: "GalioExtra" },
+            // RecipeSearch: { icon: "search-outline", family: "ionicon" },
         }
     }
 }

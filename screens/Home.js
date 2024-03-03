@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 
-import RecipeCard from '../components/RecipeCard';
+import CardCard from '../components/CardCard';
 
 
 const { width } = Dimensions.get('screen');
@@ -16,7 +16,7 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          <RecipeCard
+          <CardCard
             product={{
               title: 'Recipes Search',
               image: 'https://source.unsplash.com/tb6ulgGY5Zc/840x840',
@@ -25,13 +25,13 @@ const Home = () => {
             horizontal
             navigateTo={ScreenNames().Drawer.RecipeSearch}
           />
-          <RecipeCard product={products[0]} horizontal />
+          <CardCard product={products[0]} horizontal />
           {/* <Block flex row>
-            <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <RecipeCard product={products[2]} />
+            <CardCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
+            <CardCard product={products[2]} />
           </Block>
-          <RecipeCard product={products[3]} horizontal />
-          <RecipeCard product={products[4]} full /> */}
+          <CardCard product={products[3]} horizontal />
+          <CardCard product={products[4]} full /> */}
         </Block>
       </ScrollView>
     )

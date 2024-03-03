@@ -14,41 +14,6 @@ import { fetchRecipes } from '../redux/RecipeSearchSlice';
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
-const ChatButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames().Stack.Pro)}>
-    <Icon
-      family="GalioExtra"
-      size={16}
-      name="chat-33"
-      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
-    />
-    <Block middle style={styles.notify} />
-  </TouchableOpacity>
-);
-
-const BasketButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames().Stack.Pro)}>
-    <Icon
-      family="GalioExtra"
-      size={16}
-      name="basket-simple"
-      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
-    />
-    <Block middle style={styles.notify} />
-  </TouchableOpacity>
-);
-
-const SearchButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate(ScreenNames().Stack.Pro)}>
-    <Icon
-      size={16}
-      family="entypo"
-      name="magnifying-glass"
-      color={theme.COLORS[isWhite ? 'WHITE' : 'ICON']}
-    />
-  </TouchableOpacity>
-);
-
 const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs, navigation, back, white }) => {
 
   const formattedTitle = formatTitle(title)
@@ -57,7 +22,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
   const dispatch = useDispatch()
 
   const handleLeftPress = () => {
-    return (back ? goBack() : navigation.openDrawer());
+    return (back && goBack());
   }
 
   const renderRight = () => {
@@ -154,8 +119,8 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         // right={renderRight()}
         rightStyle={{ alignItems: 'center' }}
         leftStyle={{ flex: 0.3, paddingTop: 2 }}
-        leftIconSize={16}
-        leftIconName={back ? 'chevron-left' : 'navicon'}
+        leftIconSize={25}
+        leftIconName={back && 'chevron-left'}
         leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.ICON}
         titleStyle={[
           styles.title,
