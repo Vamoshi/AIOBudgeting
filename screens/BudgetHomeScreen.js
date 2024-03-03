@@ -1,10 +1,10 @@
 import { Dimensions, StyleSheet } from "react-native";
 import React from "react";
-import BudgetCard from "../components/BudgetCard";
 import BudgetDetails from "./BudgetDetails";
 import { accountData } from "../constants";
 import { Block, theme } from "galio-framework";
 import { ScrollView } from "react-native-gesture-handler";
+import SummaryCard from "../components/SummaryCard";
 const { width } = Dimensions.get("screen");
 
 
@@ -18,7 +18,7 @@ export default function BudgetHomeScreen({ navigation }) {
         <Block flex style={styles.group}>
           <Block flex>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <BudgetCard accountData={accountData[0]} horizontal navigateTo={BudgetDetails} />
+              <SummaryCard budgetStyle accountData={accountData[0]} horizontal navigateTo={BudgetDetails} />
             </Block>
           </Block>
         </Block>

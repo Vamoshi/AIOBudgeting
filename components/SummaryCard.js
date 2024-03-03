@@ -6,11 +6,12 @@ import Theme from '../constants/Theme';
 import ScreenNames from '../navigation/ScreenNames';
 import { accountData } from '../constants';
 import IconExtra from './IconExtra';
+import { ProgressBar } from 'react-native-paper';
 
 
 const { width } = Dimensions.get('screen');
 
-const CardCard = ({ accountData, horizontal, full, style, priceColor, imageStyle, navigateTo, navigationProps }) => {
+const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
 
   const { navigate } = useNavigation()
 
@@ -19,21 +20,24 @@ const CardCard = ({ accountData, horizontal, full, style, priceColor, imageStyle
     imageStyle,
   ];
 
-  const goToBank = () => {
-    Linking.openURL(accountData.link);
+  const imageClickHandler = () => {
+    !budgetStyle && accountData && accountData.link && Linking.openURL(accountData.link);
   }
 
   return (
-    <Block row={horizontal} card flex style={[styles.cardCard, styles.shadow, style]}>
+    <Block row={horizontal} card flex style={[styles.SummaryCard, styles.shadow, style]}>
       <Block style={[styles.bankDetailsContainer,]}>
-        <TouchableNativeFeedback onPress={accountData && accountData.link && goToBank}>
+        <TouchableNativeFeedback onPress={imageClickHandler}>
           <View style={[styles.cardBorder]}>
-            <View style={[styles.imageContainer, styles.shadow]}>
+            <View style={[budgetStyle ? styles.imageContainerBudget : styles.imageContainer, styles.shadow]}>
               <Image source={{ uri: accountData && accountData.image }} style={imageStyles} resizeMode='cover' />
             </View>
-            <View style={styles.bankNameContainer}>
-              <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" /> Bank</Text>
-            </View>
+            {
+              !budgetStyle &&
+              <View style={styles.bankNameContainer}>
+                <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{accountData.bank}</Text>
+              </View>
+            }
           </View>
         </TouchableNativeFeedback>
       </Block>
@@ -41,17 +45,28 @@ const CardCard = ({ accountData, horizontal, full, style, priceColor, imageStyle
       <TouchableNativeFeedback onPress={() => {
         navigate(navigateTo, navigationProps)
       }}>
-        <Block flex space="around" style={styles.cardDesc}>
-          <View style={[]}>
-            <View style={styles.topLabel}>
-              <Text size={12}>{accountData && accountData.firstName} {accountData && accountData.lastName}</Text>
-              <Text size={10} style={[styles.cardType,]}>{accountData && accountData.type}</Text>
-            </View>
-            <Text size={12}>{accountData && accountData.number}</Text>
-          </View>
+        <Block flex space={budgetStyle ? "evenly" : "around"} style={styles.cardDesc}>
+          {
+            !budgetStyle ?
+              <View>
+                <View style={styles.topLabel}>
+                  <Text size={12}>{accountData && accountData.firstName} {accountData && accountData.lastName}</Text>
+                  <Text size={10} style={[styles.cardType,]}>{accountData && accountData.type}</Text>
+                </View>
+                <Text size={12}>{accountData && accountData.number}</Text>
+              </View>
+              :
+              <View>
+                <View style={styles.topLabel}>
+                  <Text size={17}>Food</Text>
+                </View>
+              </View>
+          }
+          {budgetStyle && <ProgressBar style={styles.progressBar} progress={200 / 500} color={Theme.COLORS.ERROR} />}
           <View style={styles.priceContainer}>
-            <Text size={12} style={styles.outflow}>$1,000</Text>
-            <Text size={12} style={styles.inflow}>$1,000</Text>
+            <Text size={12} color={Theme.COLORS.ERROR} style={[styles.numberStyle, styles.numberBorder]}>$200</Text>
+            <Text size={12} color={Theme.COLORS.SUCCESS} style={[styles.numberStyle, budgetStyle && styles.numberBorder]}>$300</Text>
+            {budgetStyle && <Text size={12} color={Theme.COLORS.MUTED} style={[styles.numberStyle]}>$500</Text>}
           </View>
         </Block>
       </TouchableNativeFeedback>
@@ -59,12 +74,13 @@ const CardCard = ({ accountData, horizontal, full, style, priceColor, imageStyle
   );
 };
 
-export default CardCard;
+export default SummaryCard;
 
 const styles = StyleSheet.create({
+  progressBar: {
+    backgroundColor: Theme.COLORS.SUCCESS,
+  },
   cardType: {
-    // borderWidth: 1,
-    // borderColor: "red",
     textTransform: 'capitalize',
     color: Theme.COLORS.MUTED
   },
@@ -75,53 +91,33 @@ const styles = StyleSheet.create({
   },
   priceContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: "15%",
     marginBottom: '-5%',
-    // paddingTop: "5%"
-    // paddingLeft: "40%",
-
     borderTopWidth: 1,
     borderColor: Theme.COLORS.DEFAULT,
   },
-  outflow: {
-    color: Theme.COLORS.ERROR,
-    marginTop: "4%",
-    paddingRight: "14%",
+  numberBorder: {
     borderRightWidth: 1,
     borderColor: Theme.COLORS.DEFAULT,
   },
-  inflow: {
-    color: Theme.COLORS.SUCCESS,
+  numberStyle: {
+    flex: 1,
     marginTop: "4%",
-    // borderWidth: 1,
-    // borderColor: "red",
+    textAlign: "center"
   },
-  cardCard: {
+  SummaryCard: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE * 0.8,
     minHeight: 114,
-
-    // borderWidth: 1,
-    // borderColor: "red",
   },
   cardDesc: {
     padding: theme.SIZES.BASE / 2,
     marginHorizontal: theme.SIZES.BASE / 2,
-    //   borderWidth: 1,
-    //   borderColor: "red",
   },
   cardBorder: {
     borderRightColor: Theme.COLORS.DEFAULT,
     borderRightWidth: 0.5,
-    // borderColor: "red",
     height: "100%",
   },
-  // imageContainer: {
-  //   elevation: 1,
-  //   borderWidth: 1,
-  //   borderColor: "red",
-  // },
   imageContainer: {
     borderRadius: 10,
     marginHorizontal: theme.SIZES.BASE / 2,
@@ -133,18 +129,22 @@ const styles = StyleSheet.create({
     height: "85%",
     width: 'auto',
   },
+  imageContainerBudget: {
+    borderRadius: 10,
+    marginHorizontal: theme.SIZES.BASE / 2,
+    marginTop: theme.SIZES.BASE / 2,
+    aspectRatio: 15 / 10,
+    height: "85%",
+    width: 'auto',
+  },
   image: {
     borderRadius: 10,
     height: "100%",
     width: "auto",
-    // borderWidth: 1,
-    // borderColor: "red",
   },
   bankDetailsContainer: {
     elevation: 1,
     position: "relative",
-    // borderWidth: 1,
-    // borderColor: "red",
   },
   bankNameContainer: {
     position: 'absolute',

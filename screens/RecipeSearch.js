@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 
-import CardCard from '../components/CardCard';
+import SummaryCard from '../components/SummaryCard';
 
 const { width } = Dimensions.get('screen');
 import ScreenNames from '../navigation/ScreenNames';
@@ -25,7 +25,7 @@ const RecipeSearch = () => {
                 !searchResults.loading && searchResults.recipes.length === 0 ? <Text>No Results Found</Text> :
                   !searchResults.loading && searchResults.recipes
                     ? searchResults.recipes.map((recipe, index) => {
-                      return <CardCard
+                      return <SummaryCard
                         product={{
                           title: recipe.recipe.label,
                           image: recipe.recipe.image,

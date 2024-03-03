@@ -1,6 +1,6 @@
 import { Dimensions, View, Text, Button, StyleSheet, ImageBackground } from "react-native";
 import { Block, theme } from "galio-framework";
-import CardCard from "../components/CardCard";
+import SummaryCard from "../components/SummaryCard";
 import { accountData } from "../constants";
 import { ScrollView } from "react-native-gesture-handler";
 import AccountsDetails from "./AccountsDetails";
@@ -18,8 +18,8 @@ export default function AccountsHomeScreen({ navigation }) {
                 <Block flex style={styles.group}>
                     <Block flex>
                         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-                            <CardCard accountData={accountData[0]} horizontal navigateTo={AccountsDetails} />
-                            <CardCard accountData={accountData[1]} horizontal navigateTo={AccountsDetails} />
+                            <SummaryCard accountData={accountData[0]} horizontal navigateTo={AccountsDetails} />
+                            <SummaryCard accountData={accountData[1]} horizontal navigateTo={AccountsDetails} />
                         </Block>
                     </Block>
                 </Block>

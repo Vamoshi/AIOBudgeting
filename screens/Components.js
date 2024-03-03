@@ -14,10 +14,11 @@ import { materialTheme, products, Images } from '../constants/';
 import DropDown from '../components/Select';
 import Icon from '../components/IconExtra';
 import Header from '../components/Header';
-import CardCard from '../components/CardCard';
+import SummaryCard from '../components/SummaryCard';
 import Switch from '../components/MkSwitch';
 import MenuHorizontal from '../components/MenuHorizontal';
 import Home from './Home';
+import Product from '../components/Product';
 
 const { width } = Dimensions.get('screen');
 
@@ -259,13 +260,13 @@ export default function Components({ navigation }) {
         <Text bold size={16} style={styles.title}>Cards</Text>
         <Block flex>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <CardCard product={products[0]} horizontal />
+            <Product product={products[0]} horizontal />
             <Block flex row>
-              <CardCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-              <CardCard product={products[2]} />
+              <Product product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
+              <Product product={products[2]} />
             </Block>
-            <CardCard product={products[3]} horizontal />
-            <CardCard product={products[4]} full />
+            <Product product={products[3]} horizontal />
+            <Product product={products[4]} full />
             <Block flex card shadow style={styles.category}>
               <ImageBackground
                 source={{ uri: Images.Products['Accessories'] }}
