@@ -5,8 +5,15 @@ import { accountData } from "../constants";
 import { ScrollView } from "react-native-gesture-handler";
 import AccountsDetails from "./AccountsDetails";
 import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
+import { useEffect } from "react";
 
 export default function AccountsHomeScreen({ navigation }) {
+    useEffect(() => {
+        console.log('====================================');
+        console.log(Object.keys(accountData));
+        console.log('====================================');
+    }, [])
+
 
     return (
         <Block flex center style={[]}>
@@ -17,8 +24,9 @@ export default function AccountsHomeScreen({ navigation }) {
                 <Block flex style={[styles.group]}>
                     <Block flex>
                         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-                            <SummaryCard accountData={accountData[0]} horizontal navigateTo={AccountsDetails} />
-                            <SummaryCard accountData={accountData[1]} horizontal navigateTo={AccountsDetails} />
+                            {
+                                Object.keys(accountData).map((key) => <SummaryCard accountData={accountData[key]} key={key} horizontal navigateTo={AccountsDetails} />)
+                            }
                         </Block>
                     </Block>
                 </Block>

@@ -51,7 +51,7 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
             {
               !budgetStyle &&
               <View style={styles.bankNameContainer}>
-                <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{accountData.bank}</Text>
+                <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{accountData && accountData.bank}</Text>
               </View>
             }
           </View>
@@ -94,7 +94,7 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
       >
         <View style={styles.modalContainer}>
           <View style={[styles.modalContent]}>
-            <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {accountData.bank} app?</Text>
+            <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {accountData && accountData.bank} app?</Text>
             <Block row space="evenly">
               <Block flex>
                 <Button
