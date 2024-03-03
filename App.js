@@ -19,6 +19,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { Images, products, materialTheme } from "./constants/";
 import Screens from "./navigation/Screens";
 import Store from "./redux/Store"
+import { Provider as PaperProvider } from 'react-native-paper';
+
 
 // Before rendering any navigation stack
 import { enableScreens } from "react-native-screens";

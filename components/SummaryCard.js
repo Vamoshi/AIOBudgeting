@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Dimensions, Image, TouchableHighlight, TouchableNativeFeedback, View, Linking } from 'react-native';
-import { Block, Text, theme } from 'galio-framework';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image, TouchableNativeFeedback, View, Linking, Modal } from 'react-native';
+import { Block, Button, Text, theme } from 'galio-framework';
 import { useNavigation } from '@react-navigation/native';
 import Theme from '../constants/Theme';
-import ScreenNames from '../navigation/ScreenNames';
-import { accountData } from '../constants';
 import IconExtra from './IconExtra';
 import { ProgressBar } from 'react-native-paper';
+import { materialTheme } from '../constants';
 
 
-const { width } = Dimensions.get('screen');
 
 const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
   const { navigate } = useNavigation()
 
@@ -20,7 +19,24 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
     imageStyle,
   ];
 
+
+  const hidePopup = () => {
+    setPopupVisible(false);
+  };
+
+  // const imageClickHandler = () => {
+  //   !budgetStyle && accountData && accountData.link && Linking.openURL(accountData.link);
+  // }
+
   const imageClickHandler = () => {
+    !budgetStyle ? setPopupVisible(true) : handleNavigation();
+  };
+
+  const handleNavigation = () => {
+    navigateTo && navigate(navigateTo, navigationProps)
+  }
+
+  const handleConfirm = () => {
     !budgetStyle && accountData && accountData.link && Linking.openURL(accountData.link);
   }
 
@@ -42,9 +58,7 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
         </TouchableNativeFeedback>
       </Block>
 
-      <TouchableNativeFeedback onPress={() => {
-        navigate(navigateTo, navigationProps)
-      }}>
+      <TouchableNativeFeedback onPress={handleNavigation}>
         <Block flex space={budgetStyle ? "evenly" : "around"} style={styles.cardDesc}>
           {
             !budgetStyle ?
@@ -70,6 +84,44 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
           </View>
         </Block>
       </TouchableNativeFeedback>
+
+      {/* Popup component */}
+      <Modal
+        visible={isPopupVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={hidePopup}
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent]}>
+            <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {accountData.bank} app?</Text>
+            <Block row space="evenly">
+              <Block flex>
+                <Button
+                  color={materialTheme.COLORS.MUTED}
+                  textStyle={styles.optionsText}
+                  style={[styles.optionsButton, styles.shadow]}
+                  onPress={hidePopup}
+                >
+                  No
+                </Button>
+              </Block>
+              <Block flex={1}>
+                <Button
+                  center
+                  shadowless
+                  color={materialTheme.COLORS.INFO}
+                  textStyle={styles.optionsText}
+                  style={[styles.optionsButton, styles.shadow]}
+                  onPress={handleConfirm}
+                >
+                  Yes
+                </Button>
+              </Block>
+            </Block>
+          </View>
+        </View>
+      </Modal>
     </Block >
   );
 };
@@ -77,6 +129,31 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
 export default SummaryCard;
 
 const styles = StyleSheet.create({
+  optionsText: {
+    fontSize: theme.SIZES.BASE * 0.8,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    letterSpacing: -0.29,
+  },
+  optionsButton: {
+    width: 'auto',
+    height: 34,
+    paddingHorizontal: theme.SIZES.BASE,
+    paddingVertical: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginHorizontal: "10%",
+  },
   progressBar: {
     backgroundColor: Theme.COLORS.SUCCESS,
   },

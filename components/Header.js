@@ -69,7 +69,7 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
         <Block center>
           {search ? renderSearch() : null}
           {tabs ? renderTabs() : null}
-          {dropdown ? dropdown() : null}
+          {/* {dropdown ? dropdown() : null} */}
         </Block>
       )
     }
