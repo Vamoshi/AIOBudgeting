@@ -1,36 +1,22 @@
-// Order is important from Stack and Drawer
-// After the space starts the subscreens
-
 export default ScreenNames = () => {
     return {
         Stack: {
-            Home: 'StackHome',
-            // Profile: 'StackFavorites',
-            Favorites: 'StackFavorites',
-            Settings: 'StackShopping List',
-            Components: 'StackDietary Restrictions',
-            RecipeSearch: 'StackRecipeSearch',
-
-            Pro: 'StackPro',
-            RecipeDetails: 'StackRecipeDetails',
+            BudgetHomeScreen: "BudgetHomeScreen",
+            BudgetDetails: "BudgetDetails",
+            AccountsHomeScreen: "AccountsHomeScreen",
+            AccountsDetails: "AccountsDetails",
         },
-        Drawer: {
-            Home: 'DrawerHome',
-            // Profile: 'DrawerFavorites',
-            Favorites: 'DrawerFavorites',
-            Settings: 'DrawerShopping List',
-            Components: 'DrawerDietary Restrictions',
-            RecipeSearch: 'DrawerRecipeSearch',
-
-            Pro: 'DrawerPro',
-            RecipeDetails: 'DrawerRecipeDetails',
+        Tabs: {
+            BudgetTab: "BudgetTab",
+            AccountsTab: "AccountsTab",
+            ComponentsTab: "ComponentsTab"
         },
         Icons: {
-            Favorites: { icon: "heart", family: "font-awesome" },
-            Settings: { icon: "cart", family: "ionicon" },
-            Components: { icon: "toggle-outline", family: "ionicon" },
-            Home: { icon: "shop", family: "GalioExtra" },
-            RecipeSearch: { icon: "search-outline", family: "ionicon" },
+            BudgetTab: { icon: "wallet-outline", family: "ionicon" },
+            AccountsTab: { icon: "card-outline", family: "ionicon" },
+            // Components: { icon: "toggle-outline", family: "ionicon" },
+            // Home: { icon: "shop", family: "GalioExtra" },
+            // RecipeSearch: { icon: "search-outline", family: "ionicon" },
         }
     }
 }

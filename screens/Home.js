@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 
-import RecipeCard from '../components/RecipeCard';
+import SummaryCard from '../components/SummaryCard';
 
 
 const { width } = Dimensions.get('screen');
@@ -16,40 +16,22 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          <RecipeCard
+          <SummaryCard
             product={{
               title: 'Recipes Search',
-              image: 'https://food-ubc.b-cdn.net/wp-content/uploads/2020/02/Save-Money-On-Groceries_UBC-Food-Services.jpg',
+              image: 'https://source.unsplash.com/tb6ulgGY5Zc/840x840',
               price: 220,
             }}
             horizontal
             navigateTo={ScreenNames().Drawer.RecipeSearch}
           />
-          {/* <RecipeCard product={products[0]} horizontal /> */}
+          <SummaryCard product={products[0]} horizontal />
           {/* <Block flex row>
-            <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <RecipeCard product={products[2]} />
+            <SummaryCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
+            <SummaryCard product={products[2]} />
           </Block>
-          <RecipeCard product={products[3]} horizontal />
-          <RecipeCard product={products[4]} full /> */}
-        </Block>
-        <Block flex>
-          <RecipeCard
-            product={{
-              title: 'Favorites Recipes',
-              image: 'https://www.diabetesfoodhub.org/system/user_files/Images/1837-diabetic-pecan-crusted-chicken-breast_JulAug20DF_clean-simple_061720.jpg',
-              price: 220,
-            }}
-            horizontal
-            navigateTo={ScreenNames().Drawer.Favorites}
-          />
-          {/* <RecipeCard product={products[0]} horizontal /> */}
-          {/* <Block flex row>
-            <RecipeCard product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <RecipeCard product={products[2]} />
-          </Block>
-          <RecipeCard product={products[3]} horizontal />
-          <RecipeCard product={products[4]} full /> */}
+          <SummaryCard product={products[3]} horizontal />
+          <SummaryCard product={products[4]} full /> */}
         </Block>
       </ScrollView>
     )

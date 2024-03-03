@@ -4,7 +4,7 @@ import { Button, Block, Text, Input, theme } from 'galio-framework';
 import DropDown from '../components/Select';
 
 
-import RecipeCard from '../components/RecipeCard';
+import SummaryCard from '../components/SummaryCard';
 
 const { width } = Dimensions.get('screen');
 import ScreenNames from '../navigation/ScreenNames';
@@ -28,7 +28,7 @@ const RecipeSearch = () => {
                 !searchResults.loading && searchResults.recipes.length === 0 ? <Text>No Results Found</Text> :
                   !searchResults.loading && searchResults.recipes
                     ? searchResults.recipes.map((recipe, index) => {
-                      return <RecipeCard
+                      return <SummaryCard
                         product={{
                           title: recipe.recipe.label,
                           image: recipe.recipe.image,

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Text, theme } from 'galio-framework';
-
 import materialTheme from '../constants/Theme';
 
 const GaButton = ({ gradient, children, style, ...props }) => {

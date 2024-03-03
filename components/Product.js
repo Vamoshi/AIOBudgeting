@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Pressable } from 'react-native';
+import React from 'react';
+import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-import { useNavigation } from '@react-navigation/native';
 
 
 const { width } = Dimensions.get('screen');
 
-const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, navigateTo, navigationProps }) => {
-
-  const { navigate } = useNavigation()
+const Product = ({ product, horizontal, full, style, priceColor, imageStyle }) => {
 
   const imageStyles = [
     styles.image,
@@ -18,42 +15,22 @@ const RecipeCard = ({ product, horizontal, full, style, priceColor, imageStyle, 
 
   return (
     <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-      <TouchableWithoutFeedback onPress={() => {
-        navigateTo && navigate(navigateTo, { navigationProps })
-      }}>
+      <TouchableWithoutFeedback >
         <Block flex style={[styles.imageContainer, styles.shadow]}>
           <Image source={{ uri: product.image }} style={imageStyles} />
         </Block>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => {
-        navigateTo && navigate(navigateTo, { navigationProps })
-      }}>
+      <TouchableWithoutFeedback >
         <Block flex space="between" style={styles.productDescription}>
-          <Text size={20} style={styles.productTitle}>{product.title}</Text>
-          <Text size={12} muted={true}>
-            {
-              navigationProps &&
-              navigationProps.recipe &&
-              `${navigationProps.recipe.source}` ||
-              ""
-            }
-          </Text>
-          <Text size={12} muted={!priceColor} color={priceColor}>
-            {
-              navigationProps &&
-              navigationProps.recipe.calories &&
-              `${navigationProps.recipe.totalNutrients.ENERC_KCAL.quantity.toFixed(2)} ${navigationProps.recipe.totalNutrients.ENERC_KCAL.unit.toUpperCase()}` ||
-              ""
-            }
-          </Text>
+          <Text size={14} style={styles.productTitle}>{product.title}</Text>
+          <Text size={12} muted={!priceColor} color={priceColor}>${product.price}</Text>
         </Block>
       </TouchableWithoutFeedback>
-    </Block >
+    </Block>
   );
 };
 
-
-export default RecipeCard;
+export default Product;
 
 const styles = StyleSheet.create({
   product: {

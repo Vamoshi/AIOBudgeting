@@ -1,304 +1,86 @@
-import { Animated, Dimensions, Easing } from "react-native";
-// import { Header } from "../components";
-import Header from '../components/Header';
-import { Images, materialTheme } from "../constants/";
-
-// import ComponentsScreen from "../screens/Components";
-import Menu from "./Menu";
-import HomeScreen from "../screens/Home";
-import ProScreen from "../screens/Pro";
-import ProfileScreen from "../screens/Favorites";
+import { Dimensions, View, Text, Button } from "react-native";
 import React from "react";
-import SettingsScreen from "../screens/Notes";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
-import RecipeSearch from "../screens/RecipeSearch";
-import RecipeDetails from "../screens/RecipeDetails";
-import FavoritesScreen from "../screens/Favorites";
-import CustomDropDown from "../components/CustomDropDown"
-import { healthLabels } from "../constants/HealthLabels";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import BudgetHomeScreen from "../screens/BudgetHomeScreen";
+import AccountsHomeScreen from "../screens/AccountsHomeScreen";
+import { Icon } from "galio-framework";
+import materialTheme from "../constants/Theme";
+import { formatTitle, removeIconOutline } from "../constants/utils";
+import Components from "../screens/Components";
+import BudgetDetails from "../screens/BudgetDetails";
+import AccountsDetails from "../screens/AccountsDetails";
 
 const { width } = Dimensions.get("screen");
 
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+const BudgetStack = createStackNavigator();
 
-const profile = {
-  avatar: "https://as2.ftcdn.net/v2/jpg/04/88/42/11/1000_F_488421190_K5LgxMTlGztWJJciZEI4VRnGeqvvqjLx.jpg",
-  name: "Your Account",
-  type: "",
-  plan: "01",
-  rating: "Subscribe",
-};
+function BudgetStackHomeScreen() {
+  return (
+    <BudgetStack.Navigator>
+      <BudgetStack.Screen name={ScreenNames().Stack.BudgetHomeScreen} component={BudgetHomeScreen}
+        options={() => ({
+          headerTitle: "Budget",
+        })}
+      />
+      <BudgetStack.Screen name={ScreenNames().Stack.BudgetDetails} component={BudgetDetails}
+        options={() => ({
+          headerTitle: "Budget Details",
+        })}
+      />
+    </BudgetStack.Navigator>
+  );
+}
 
-const RenderScreens = () => {
-  const screenKeys = Object.keys(ScreenNames().Stack)
-  const screenNames = ScreenNames()
+const AccountsStack = createStackNavigator();
+
+function AccountsStackHomeScreen() {
+  return (
+    <AccountsStack.Navigator>
+      <AccountsStack.Screen name={ScreenNames().Stack.AccountsHomeScreen} component={AccountsHomeScreen}
+        options={() => ({
+          headerTitle: "Accounts",
+        })}
+      />
+      <AccountsStack.Screen name={ScreenNames().Stack.AccountsDetails} component={AccountsDetails}
+        options={() => ({
+          headerTitle: "Account Details",
+        })}
+      />
+    </AccountsStack.Navigator>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
 
   return (
-    <Drawer.Navigator
-      style={{ flex: 1 }}
-      drawerContent={(props) => (
-        <Menu {...props} profile={profile} />
-      )}
-      drawerStyle={{
-        backgroundColor: "white",
-        width: width * 0.8,
-      }}
-      screenOptions={{
-        activeTintColor: "white",
-        inactiveTintColor: "#000",
-        activeBackgroundColor: materialTheme.COLORS.ACTIVE,
-        inactiveBackgroundColor: "transparent",
-        itemStyle: {
-          width: width * 0.74,
-          paddingHorizontal: 12,
-          justifyContent: "center",
-          alignContent: "center",
-          overflow: "hidden",
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          return ScreenNames().Icons[route.name] &&
+            <Icon
+              size={23}
+              name={focused ? removeIconOutline(ScreenNames().Icons[route.name].icon) : ScreenNames().Icons[route.name].icon}
+              family={ScreenNames().Icons[route.name].family}
+              color={focused ? materialTheme.COLORS.ACTIVE : materialTheme.COLORS.MUTED}
+            />
         },
-        labelStyle: {
-          fontSize: 18,
-          fontWeight: "normal",
-        },
-      }}
-      initialRouteName={ScreenNames().Drawer.Home}
-      options={{ headerShown: false }}
-    >
-      {
-        screenKeys.map((screenKey, index) => {
-
-          const stackName = screenNames.Stack[screenKey]
-          const drawerName = screenNames.Drawer[screenKey]
-
-
-
-          return (
-            <Drawer.Screen
-              name={drawerName}
-              options={{
-                headerShown: false,
-              }}
-              key={index}
-              component={
-                stackName === screenNames.Stack.Home ? HomeStack :
-                  stackName === screenNames.Stack.Settings ? SettingsStack :
-                    //settings is now shopping list
-                    stackName === screenNames.Stack.Favorites ? FavoritesStack :
-                      // stackName === screenNames.Stack.Components ? ComponentsStack :
-                      stackName === screenNames.Stack.RecipeSearch ? RecipeSearchStack :
-                        HomeStack
-              }
-            />
-          )
-        })
-      }
-    </Drawer.Navigator>
-  )
-}
-
-function ProfileStack(props) {
-  const profile = ScreenNames().Stack.Profile
-
-  return (
-    <Stack.Navigator
-      initialRouteName={profile}
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name={profile}
-        component={ProfileScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              white
-              transparent
-              title={profile}
-              scene={scene}
-              navigation={navigation}
-            />
-          ),
-          headerTransparent: true,
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function SettingsStack(props) {
-  const settings = ScreenNames().Stack.Settings
-  return (
-    <Stack.Navigator
-      initialRouteName={settings}
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name={settings}
-        component={SettingsScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header title={settings} scene={scene} navigation={navigation} />
-          ),
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function FavoritesStack(props) {
-  const favorites = ScreenNames().Stack.Favorites
-  return (
-    <Stack.Navigator
-      initialRouteName={favorites}
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name={favorites}
-        component={FavoritesScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header title={favorites} scene={scene} navigation={navigation} />
-          ),
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-// function ComponentsStack(props) {
-//   const components = ScreenNames().Stack.Components
-
-//   return (
-//     <Stack.Navigator
-//       initialRouteName={components}
-//       screenOptions={{
-//         mode: "card",
-//         headerShown: "screen",
-//       }}
-//     >
-//       <Stack.Screen
-//         name={components}
-//         component={ComponentsScreen}
-//         options={{
-//           header: ({ navigation, scene }) => (
-//             <Header title={components} scene={scene} navigation={navigation} />
-//           ),
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
-
-function HomeStack(props) {
-  const home = ScreenNames().Stack.Home
-  const pro = ScreenNames().Stack.Pro
-  return (
-    <Stack.Navigator
-      initialRouteName={home}
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name={home}
-        component={HomeScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              // search
-              // tabs
-              title={home}
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name={pro}
-        component={ProScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              back
-              white
-              transparent
-              title=""
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true,
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function RecipeSearchStack(props) {
-
-  return (
-    <Stack.Navigator
-      initialRouteName={ScreenNames().Stack.RecipeSearch}
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name={ScreenNames().Stack.RecipeSearch}
-        component={RecipeSearch}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              dropdownTab
-              search
-              dropdown={() => <CustomDropDown items={healthLabels} placeholder="Select a Health type" />}
-              title="Search Recipes"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name={ScreenNames().Stack.RecipeDetails}
-        component={RecipeDetails}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              back
-              title="Recipe Details"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-export default function ScreenStack() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        mode: "card",
         headerShown: false,
-      }}
+        tabBarLabel: formatTitle(ScreenNames().Tabs[route.name]),
+        tabBarActiveTintColor: materialTheme.COLORS.ACTIVE,
+        tabBarInactiveTintColor: materialTheme.COLORS.MUTED,
+      })}
     >
-      <Stack.Screen name="App" component={RenderScreens} />
-    </Stack.Navigator>
+      <Tab.Screen name={ScreenNames().Tabs.BudgetTab} component={BudgetStackHomeScreen} />
+      <Tab.Screen name={ScreenNames().Tabs.AccountsTab} component={AccountsStackHomeScreen} />
+      <Tab.Screen name={ScreenNames().Tabs.ComponentsTab} component={Components} />
+    </Tab.Navigator>
   );
 }
+
+// Create Screens
+// Group Screens to Stack
+// Add to Tab.Screen with Stack Function Component as component
