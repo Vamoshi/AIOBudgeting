@@ -41,6 +41,10 @@ function AccountsStackHomeScreen() {
       <AccountsStack.Screen name={ScreenNames().Stack.AccountsHomeScreen} component={AccountsHomeScreen}
         options={() => ({
           headerTitle: "Accounts",
+          headerStyle: {
+            // borderWidth: 1,
+            // borderColor: "red",
+          },
         })}
       />
       <AccountsStack.Screen name={ScreenNames().Stack.AccountsDetails} component={AccountsDetails}

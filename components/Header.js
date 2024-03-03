@@ -25,34 +25,6 @@ const Header = ({ tabTitleLeft, tabTitleRight, search, title, transparent, tabs,
     return (back && goBack());
   }
 
-  const renderRight = () => {
-
-    switch (formattedTitle) {
-      case formatTitle(ScreenNames().Drawer.Home):
-        return ([
-          <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
-        ]);
-      case formatTitle(ScreenNames().Drawer.Favorites):
-        return ([
-          <ChatButton key='chat-profile' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
-        ]);
-      case formatTitle(ScreenNames().Drawer.RecipeSearch):
-        return ([
-          <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
-        ]);
-      case formatTitle(ScreenNames().Drawer.Settings):
-        return ([
-          <ChatButton key='chat-search' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
-        ]);
-      default:
-        break;
-    }
-  }
-
   const handleEndEditing = (event) => {
     dispatch(updateIngredientList(event.nativeEvent.text))
     dispatch(fetchRecipes())
