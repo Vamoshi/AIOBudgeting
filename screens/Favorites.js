@@ -32,9 +32,6 @@ export default function Favorites({ navigation }) {
   useEffect(() => {
     setRecipes(Object.values(favorites))
     recipes.length > 0 && setPairs(chunkArray(recipes))
-
-    // console.log('====================================');
-
   }, [favorites])
 
 

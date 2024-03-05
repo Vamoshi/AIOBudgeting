@@ -1,0 +1,150 @@
+{
+  "cards": {
+    "card1": {
+      "cardID": "card1",
+      "number": "**** **** **** 1234",
+      "bank": "BMO",
+      "image": "https://www.bmo.com/en-us/dist/images/main/personal/checking-accounts/debit-mastercard/BMO-US-Standard-Debit-Card-255x160.png",
+      "lastName": "Lepon",
+      "firstName": "Joshua",
+      "horizontal": true,
+      "link": "https://play.google.com/store/apps/details?id=com.bmo.mobile",
+      "accountType": "debit",
+      "cardType": "mastercard"
+    },
+    "card2": {
+      "cardID": "card2",
+      "number": "**** **** **** 4321",
+      "bank": "TD",
+      "image": "https://www.td.com/content/dam/tdct/images/personal-banking/cash-back-infinite-visa-card-large-1-en.jpeg",
+      "lastName": "Lepon",
+      "firstName": "Joshua",
+      "horizontal": true,
+      "link": "https://play.google.com/store/apps/details?id=com.bmo.mobile",
+      "accountType": "credit",
+      "cardType": "visa"
+    }
+  },
+  "transactions": {
+    "1": {
+      "transactionID": "1",
+      "cardID": "card1",
+      "description": "Acme Corporation",
+      "amount": "-1000"
+    },
+    "2": {
+      "transactionID": "2",
+      "cardID": "card1",
+      "description": "Globex Corporation",
+      "amount": "50.00"
+    },
+    "3": {
+      "transactionID": "3",
+      "cardID": "card1",
+      "description": "Umbrella Corporation",
+      "amount": "75.00"
+    },
+    "4": {
+      "transactionID": "4",
+      "cardID": "card1",
+      "description": "Wayne Enterprises",
+      "amount": "120.00"
+    },
+    "5": {
+      "transactionID": "5",
+      "cardID": "card1",
+      "description": "Stark Industries",
+      "amount": "65.00"
+    },
+    "6": {
+      "transactionID": "6",
+      "cardID": "card1",
+      "description": "LexCorp",
+      "amount": "40.00"
+    },
+    "7": {
+      "transactionID": "7",
+      "cardID": "card1",
+      "description": "Monsters, Inc.",
+      "amount": "25.00"
+    },
+    "8": {
+      "transactionID": "8",
+      "cardID": "card1",
+      "description": "Weyland-Yutani Corporation",
+      "amount": "10.00"
+    },
+    "9": {
+      "transactionID": "9",
+      "cardID": "card1",
+      "description": "Cyberdyne Systems",
+      "amount": "60.00"
+    },
+    "10": {
+      "transactionID": "10",
+      "cardID": "card1",
+      "description": "Tyrell Corporation",
+      "amount": "90.00"
+    },
+    "11": {
+      "transactionID": "11",
+      "cardID": "card2",
+      "description": "Gringotts Wizarding Bank",
+      "amount": "-20.00"
+    },
+    "12": {
+      "transactionID": "12",
+      "cardID": "card2",
+      "description": "Umbrella Corporation",
+      "amount": "300.00"
+    },
+    "13": {
+      "transactionID": "13",
+      "cardID": "card2",
+      "description": "Globex Corporation",
+      "amount": "200.00"
+    },
+    "14": {
+      "transactionID": "14",
+      "cardID": "card2",
+      "description": "Wayne Enterprises",
+      "amount": "500.00"
+    },
+    "15": {
+      "transactionID": "15",
+      "cardID": "card2",
+      "description": "Stark Industries",
+      "amount": "150.00"
+    },
+    "16": {
+      "transactionID": "16",
+      "cardID": "card2",
+      "description": "LexCorp",
+      "amount": "75.00"
+    },
+    "17": {
+      "transactionID": "17",
+      "cardID": "card2",
+      "description": "Monsters, Inc.",
+      "amount": "100.00"
+    },
+    "18": {
+      "transactionID": "18",
+      "cardID": "card2",
+      "description": "Weyland-Yutani Corporation",
+      "amount": "50.00"
+    },
+    "19": {
+      "transactionID": "19",
+      "cardID": "card2",
+      "description": "Cyberdyne Systems",
+      "amount": "-80.00"
+    },
+    "20": {
+      "transactionID": "20",
+      "cardID": "card2",
+      "description": "Tyrell Corporation",
+      "amount": "400.00"
+    }
+  }
+}

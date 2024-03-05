@@ -1,15 +1,20 @@
 import { Dimensions, StyleSheet } from "react-native";
-import React from "react";
-import BudgetDetails from "./BudgetDetails";
-import { accountData } from "../constants";
+import React, { useEffect } from "react";
+import { accountData, categories } from "../constants";
 import { Block, theme } from "galio-framework";
 import { ScrollView } from "react-native-gesture-handler";
 import SummaryCard from "../components/SummaryCard";
 import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
+import ScreenNames from "../navigation/ScreenNames"
 
 const { width } = Dimensions.get("screen");
 
 export default function BudgetHomeScreen({ navigation }) {
+
+  useEffect(() => {
+    accountData
+  }, [accountData])
+
   return (
     <Block flex center>
       <ScrollView
@@ -19,7 +24,21 @@ export default function BudgetHomeScreen({ navigation }) {
         <Block flex style={styles.group}>
           <Block flex>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <SummaryCard budgetStyle accountData={accountData[0]} horizontal navigateTo={BudgetDetails} />
+              {
+                Object.keys(categories).map((key) => {
+                  categoryData = categories[key]
+
+                  return <SummaryCard
+                    categoryData={categoryData}
+                    accountData={accountData}
+                    navigationProps={{ categoryData, accountData }}
+                    budgetStyle
+                    key={key}
+                    horizontal
+                    navigateTo={ScreenNames().Stack.BudgetDetails}
+                  />
+                })
+              }
             </Block>
           </Block>
         </Block>

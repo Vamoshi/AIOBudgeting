@@ -1,11 +1,23 @@
 import { Dimensions, View, Text, Button, StyleSheet, ImageBackground } from "react-native";
 import { Block, theme } from "galio-framework";
 import SummaryCard from "../components/SummaryCard";
-import { accountData } from "../constants";
 import { ScrollView } from "react-native-gesture-handler";
 import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
+import { useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 
 export default function AccountsDetails() {
+    const route = useRoute()
+    const { navigationProps } = route.params
+
+    const [accountData, setAccountData] = useState(navigationProps && navigationProps.accountData)
+    const [cardData, setCardData] = useState(navigationProps && navigationProps.cardData)
+
+    useEffect(() => {
+        setAccountData(navigationProps.accountData)
+        setCardData(navigationProps.categoryData)
+    }, [navigationProps])
+
     return (
         <Block flex center style={[]}>
             <ScrollView
@@ -15,7 +27,11 @@ export default function AccountsDetails() {
                 <Block flex style={[styles.group]}>
                     <Block flex>
                         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-                            <SummaryCard accountData={accountData[0]} horizontal />
+                            <SummaryCard
+                                accountData={accountData}
+                                cardData={cardData}
+                                horizontal
+                            />
                         </Block>
                     </Block>
                 </Block>

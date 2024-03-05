@@ -2,7 +2,8 @@ import Images from './Images';
 import products from './products';
 import materialTheme from './Theme';
 import utils from './utils';
-import accountData from './accountData'
+import accountData from './DummyData/accountData'
+import categories from "./DummyData/categories"
 
 export {
   Images,
@@ -10,4 +11,5 @@ export {
   materialTheme,
   utils,
   accountData,
+  categories,
 }

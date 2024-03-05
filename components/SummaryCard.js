@@ -5,87 +5,156 @@ import { useNavigation } from '@react-navigation/native';
 import Theme from '../constants/Theme';
 import IconExtra from './IconExtra';
 import { ProgressBar } from 'react-native-paper';
-import { materialTheme } from '../constants';
+import { categories, materialTheme } from '../constants';
 
 
-
-const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
+// Needs (categoryData || cardData) && accountData, 
+const SummaryCard = ({ categoryData, accountData, cardData, horizontal, style, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   const { navigate } = useNavigation()
+
+  const handleNavigation = () => {
+    navigateTo && navigate(navigateTo, { navigationProps })
+  }
+
+  const handleConfirm = () => {
+    !budgetStyle && cardData && cardData.link && Linking.openURL(cardData.link);
+  }
+  const hidePopup = () => {
+    setPopupVisible(false);
+  };
+  const imageClickHandler = () => {
+    !budgetStyle ? setPopupVisible(true) : handleNavigation();
+  };
 
   const imageStyles = [
     styles.image,
     imageStyle,
   ];
 
+  const [accountsOutflow, setAccountsOutflow] = useState(0)
+  const calcAccountsOutflow = () => {
+    total = 0
 
-  const hidePopup = () => {
-    setPopupVisible(false);
-  };
-
-  // const imageClickHandler = () => {
-  //   !budgetStyle && accountData && accountData.link && Linking.openURL(accountData.link);
-  // }
-
-  const imageClickHandler = () => {
-    !budgetStyle ? setPopupVisible(true) : handleNavigation();
-  };
-
-  const handleNavigation = () => {
-    navigateTo && navigate(navigateTo, navigationProps)
+    if (cardData && accountData) {
+      transactions = accountData.transactions
+      allTransactionKeys = Object.keys(accountData.transactions)
+      allTransactionKeys.forEach((tID) => {
+        transactionAmount = transactions[tID].amount
+        transactionCard = transactions[tID].cardID
+        card = cardData.cardID
+        transactionCard === card ? transactionAmount > 0 ? total += parseFloat(transactionAmount) : 0 : 0
+      })
+    }
+    setAccountsOutflow(total)
   }
 
-  const handleConfirm = () => {
-    !budgetStyle && accountData && accountData.link && Linking.openURL(accountData.link);
+  const [accountsInflow, setAccountsInflow] = useState(0)
+  const calcAccountsInflow = () => {
+    total = 0
+
+    if (cardData && accountData) {
+      transactions = accountData.transactions
+      allTransactionKeys = Object.keys(accountData.transactions)
+      allTransactionKeys.forEach((tID) => {
+        transactionAmount = transactions[tID].amount
+        transactionCard = transactions[tID].cardID
+        card = cardData.cardID
+
+        transactionCard === card ? transactionAmount < 0 ? total += parseFloat(transactionAmount) * -1 : 0 : 0
+      })
+    }
+    setAccountsInflow(total)
   }
+
+  const [budgetOutflow, setBudgetOutflow] = useState(0)
+  const calcBudgetOutflow = () => {
+    total = 0
+
+    if (accountData && categories && categoryData) {
+      categoryTransactions = categories[categoryData.category].transactions
+      transactionDetails = accountData.transactions
+
+      categoryTransactions.forEach((tID) => {
+        total += parseFloat(transactionDetails[tID].amount)
+      })
+    }
+
+    setBudgetOutflow(total)
+  }
+
+  const [budgetRemaining, setBudgetRemaining] = useState(0)
+  const calcBudgetRemaining = () => {
+    setBudgetRemaining(parseFloat(categoryData.budget - budgetOutflow))
+  }
+
+  useEffect(() => {
+    if (budgetStyle && categoryData) {
+      calcBudgetOutflow()
+      calcBudgetRemaining()
+    }
+    else {
+      calcAccountsOutflow()
+      calcAccountsInflow()
+    }
+  }, [categoryData, accountData, cardData])
 
   return (
     <Block row={horizontal} card flex style={[styles.SummaryCard, styles.shadow, style]}>
-      <Block style={[styles.bankDetailsContainer,]}>
-        <TouchableNativeFeedback onPress={imageClickHandler}>
-          <View style={[styles.cardBorder]}>
-            <View style={[budgetStyle ? styles.imageContainerBudget : styles.imageContainer, styles.shadow]}>
-              <Image source={{ uri: accountData && accountData.image }} style={imageStyles} resizeMode='cover' />
-            </View>
-            {
-              !budgetStyle &&
-              <View style={styles.bankNameContainer}>
-                <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{accountData && accountData.bank}</Text>
-              </View>
-            }
-          </View>
-        </TouchableNativeFeedback>
-      </Block>
 
-      <TouchableNativeFeedback onPress={handleNavigation}>
-        <Block flex space={budgetStyle ? "evenly" : "around"} style={styles.cardDesc}>
-          {
-            !budgetStyle ?
-              <View>
-                <View style={styles.topLabel}>
-                  <Text size={12}>{accountData && accountData.firstName} {accountData && accountData.lastName}</Text>
-                  <Text size={10} style={[styles.cardType,]}>{accountData && accountData.type}</Text>
+      {
+        !budgetStyle && cardData || budgetStyle && categoryData ?
+          <>
+            <Block style={[styles.bankDetailsContainer,]}>
+              <TouchableNativeFeedback onPress={imageClickHandler}>
+                <View style={[styles.cardBorder]}>
+                  <View style={[budgetStyle ? styles.imageContainerBudget : styles.imageContainer, styles.shadow]}>
+                    <Image source={{ uri: budgetStyle ? categoryData.image : cardData.image }} style={imageStyles} resizeMode='contain' />
+                  </View>
+                  {
+                    !budgetStyle &&
+                    <View style={styles.bankNameContainer}>
+                      <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{cardData.bank}</Text>
+                    </View>
+                  }
                 </View>
-                <Text size={12}>{accountData && accountData.number}</Text>
-              </View>
-              :
-              <View>
-                <View style={styles.topLabel}>
-                  <Text size={17}>Food</Text>
-                </View>
-              </View>
-          }
-          {budgetStyle && <ProgressBar style={styles.progressBar} progress={200 / 500} color={Theme.COLORS.ERROR} />}
-          <View style={styles.priceContainer}>
-            <Text size={12} color={Theme.COLORS.ERROR} style={[styles.numberStyle, styles.numberBorder]}>$200</Text>
-            <Text size={12} color={Theme.COLORS.SUCCESS} style={[styles.numberStyle, budgetStyle && styles.numberBorder]}>$300</Text>
-            {budgetStyle && <Text size={12} color={Theme.COLORS.MUTED} style={[styles.numberStyle]}>$500</Text>}
-          </View>
-        </Block>
-      </TouchableNativeFeedback>
+              </TouchableNativeFeedback>
+            </Block>
 
-      {/* Popup component */}
+            <TouchableNativeFeedback onPress={handleNavigation}>
+              <Block flex space={budgetStyle ? "evenly" : "around"} style={styles.cardDesc}>
+                {
+                  !budgetStyle ?
+                    <View>
+                      <View style={styles.topLabel}>
+                        <Text size={12}>{cardData.firstName} {cardData.lastName}</Text>
+                        <Text size={10} style={[styles.accountType,]}>{cardData.accountType}</Text>
+                      </View>
+                      <View style={styles.topLabel}>
+                        <Text size={12}>{cardData.number}</Text>
+                        <Text size={10} style={[styles.accountType,]}>{cardData.cardType}</Text>
+                      </View>
+                    </View>
+                    :
+                    <View>
+                      <View style={styles.topLabel}>
+                        <Text size={17} style={[styles.budgetTitle]}>{categoryData.category}</Text>
+                      </View>
+                    </View>
+                }
+                {budgetStyle && <ProgressBar style={styles.progressBar} progress={(Math.max(0, budgetOutflow) / categoryData.budget)} color={Theme.COLORS.ERROR} />}
+                <View style={styles.priceContainer}>
+                  <Text size={12} color={Theme.COLORS.ERROR} style={[styles.numberStyle, styles.numberBorder]}>${budgetStyle ? budgetOutflow : accountsOutflow}</Text>
+                  <Text size={12} color={Theme.COLORS.SUCCESS} style={[styles.numberStyle, budgetStyle && styles.numberBorder]}>${budgetStyle ? budgetRemaining : accountsInflow}</Text>
+                  {budgetStyle && <Text size={12} color={Theme.COLORS.MUTED} style={[styles.numberStyle]}>${categoryData.budget}</Text>}
+                </View>
+              </Block>
+            </TouchableNativeFeedback>
+          </>
+          :
+          <></>
+      }
       <Modal
         visible={isPopupVisible}
         animationType="slide"
@@ -94,7 +163,7 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
       >
         <View style={styles.modalContainer}>
           <View style={[styles.modalContent]}>
-            <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {accountData && accountData.bank} app?</Text>
+            <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {cardData && cardData.bank} app?</Text>
             <Block row space="evenly">
               <Block flex>
                 <Button
@@ -123,12 +192,16 @@ const SummaryCard = ({ accountData, horizontal, style, imageStyle, navigateTo, n
         </View>
       </Modal>
     </Block >
-  );
+  )
 };
 
 export default SummaryCard;
 
 const styles = StyleSheet.create({
+
+  budgetTitle: {
+    textTransform: 'capitalize',
+  },
   optionsText: {
     fontSize: theme.SIZES.BASE * 0.8,
     fontWeight: "normal",
@@ -157,7 +230,7 @@ const styles = StyleSheet.create({
   progressBar: {
     backgroundColor: Theme.COLORS.SUCCESS,
   },
-  cardType: {
+  accountType: {
     textTransform: 'capitalize',
     color: Theme.COLORS.MUTED
   },
