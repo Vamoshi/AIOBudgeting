@@ -25,7 +25,6 @@ export default function AccountsHomeScreen({ navigation }) {
                                         accountData={accountData}
                                         cardData={cardData}
                                         key={key}
-                                        horizontal
                                         navigateTo={ScreenNames().Stack.AccountsDetails}
                                         navigationProps={{ accountData, cardData }}
                                     />

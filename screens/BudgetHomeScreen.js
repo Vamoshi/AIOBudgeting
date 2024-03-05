@@ -34,7 +34,6 @@ export default function BudgetHomeScreen({ navigation }) {
                     navigationProps={{ categoryData, accountData }}
                     budgetStyle
                     key={key}
-                    horizontal
                     navigateTo={ScreenNames().Stack.BudgetDetails}
                   />
                 })

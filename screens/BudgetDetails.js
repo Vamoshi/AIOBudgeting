@@ -5,6 +5,7 @@ import { useRoute } from "@react-navigation/core";
 import { Block, theme } from "galio-framework";
 import { ScrollView } from "react-native-gesture-handler";
 import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
+import TransactionCard from "../components/TransactionCard"
 
 
 export default function BudgetDetails() {
@@ -14,10 +15,13 @@ export default function BudgetDetails() {
 
     const [accountData, setAccountData] = useState(navigationProps && navigationProps.accountData)
     const [categoryData, setCategoryData] = useState(navigationProps && navigationProps.categoryData)
+    const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
         setAccountData(navigationProps.accountData)
         setCategoryData(navigationProps.categoryData)
+        setTransactions(categoryData.transactions)
+
     }, [navigationProps])
 
     return (
@@ -35,6 +39,18 @@ export default function BudgetDetails() {
                                 budgetStyle
                                 horizontal
                             />
+                            {
+                                transactions.map((tid) =>
+                                    <TransactionCard
+                                        tid={tid}
+                                        key={tid}
+                                        categoryData={categoryData}
+                                        accountData={accountData}
+                                        budgetStyle
+                                        horizontal
+                                    />
+                                )
+                            }
                         </Block>
                     </Block>
                 </Block>

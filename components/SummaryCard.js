@@ -9,7 +9,7 @@ import { categories, materialTheme } from '../constants';
 
 
 // Needs (categoryData || cardData) && accountData, 
-const SummaryCard = ({ categoryData, accountData, cardData, horizontal, style, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
+const SummaryCard = ({ categoryData, accountData, cardData, summary, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   const { navigate } = useNavigation()
@@ -86,7 +86,7 @@ const SummaryCard = ({ categoryData, accountData, cardData, horizontal, style, i
 
   const [budgetRemaining, setBudgetRemaining] = useState(0)
   const calcBudgetRemaining = () => {
-    setBudgetRemaining(parseFloat(categoryData.budget - budgetOutflow))
+    setBudgetRemaining(parseInt(categoryData.budget) - parseInt(budgetOutflow))
   }
 
   useEffect(() => {
@@ -98,10 +98,10 @@ const SummaryCard = ({ categoryData, accountData, cardData, horizontal, style, i
       calcAccountsOutflow()
       calcAccountsInflow()
     }
-  }, [categoryData, accountData, cardData])
+  }, [categoryData, accountData, cardData, budgetOutflow])
 
   return (
-    <Block row={horizontal} card flex style={[styles.SummaryCard, styles.shadow, style]}>
+    <Block row={true} card flex style={[styles.SummaryCard, styles.shadow]}>
 
       {
         !budgetStyle && cardData || budgetStyle && categoryData ?
@@ -132,7 +132,7 @@ const SummaryCard = ({ categoryData, accountData, cardData, horizontal, style, i
                         <Text size={10} style={[styles.accountType,]}>{cardData.accountType}</Text>
                       </View>
                       <View style={styles.topLabel}>
-                        <Text size={12}>{cardData.number}</Text>
+                        <Text size={12}>{cardData.number.slice(-9)}</Text>
                         <Text size={10} style={[styles.accountType,]}>{cardData.cardType}</Text>
                       </View>
                     </View>
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: theme.SIZES.BASE / 2,
     marginTop: theme.SIZES.BASE / 2,
-    aspectRatio: 15 / 10,
+    aspectRatio: 5 / 5,
     height: "85%",
     width: 'auto',
   },

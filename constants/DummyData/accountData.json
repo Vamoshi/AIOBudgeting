@@ -30,121 +30,141 @@
       "transactionID": "1",
       "cardID": "card1",
       "description": "Acme Corporation",
-      "amount": "-1000"
+      "amount": "-1000",
+      "date": "2024-03-15"
     },
     "2": {
       "transactionID": "2",
       "cardID": "card1",
       "description": "Globex Corporation",
-      "amount": "50.00"
+      "amount": "50.00",
+      "date": "2024-03-08"
     },
     "3": {
       "transactionID": "3",
       "cardID": "card1",
       "description": "Umbrella Corporation",
-      "amount": "75.00"
+      "amount": "75.00",
+      "date": "2024-03-25"
     },
     "4": {
       "transactionID": "4",
       "cardID": "card1",
       "description": "Wayne Enterprises",
-      "amount": "120.00"
+      "amount": "120.00",
+      "date": "2024-03-19"
     },
     "5": {
       "transactionID": "5",
       "cardID": "card1",
       "description": "Stark Industries",
-      "amount": "65.00"
+      "amount": "65.00",
+      "date": "2024-03-05"
     },
     "6": {
       "transactionID": "6",
       "cardID": "card1",
       "description": "LexCorp",
-      "amount": "40.00"
+      "amount": "40.00",
+      "date": "2024-03-11"
     },
     "7": {
       "transactionID": "7",
       "cardID": "card1",
       "description": "Monsters, Inc.",
-      "amount": "25.00"
+      "amount": "25.00",
+      "date": "2024-03-29"
     },
     "8": {
       "transactionID": "8",
       "cardID": "card1",
       "description": "Weyland-Yutani Corporation",
-      "amount": "10.00"
+      "amount": "10.00",
+      "date": "2024-03-03"
     },
     "9": {
       "transactionID": "9",
       "cardID": "card1",
       "description": "Cyberdyne Systems",
-      "amount": "60.00"
+      "amount": "60.00",
+      "date": "2024-03-13"
     },
     "10": {
       "transactionID": "10",
       "cardID": "card1",
       "description": "Tyrell Corporation",
-      "amount": "90.00"
+      "amount": "90.00",
+      "date": "2024-03-27"
     },
     "11": {
       "transactionID": "11",
       "cardID": "card2",
       "description": "Gringotts Wizarding Bank",
-      "amount": "-20.00"
+      "amount": "-20.00",
+      "date": "2024-03-22"
     },
     "12": {
       "transactionID": "12",
       "cardID": "card2",
       "description": "Umbrella Corporation",
-      "amount": "300.00"
+      "amount": "300.00",
+      "date": "2024-03-18"
     },
     "13": {
       "transactionID": "13",
       "cardID": "card2",
       "description": "Globex Corporation",
-      "amount": "200.00"
+      "amount": "200.00",
+      "date": "2024-03-01"
     },
     "14": {
       "transactionID": "14",
       "cardID": "card2",
       "description": "Wayne Enterprises",
-      "amount": "500.00"
+      "amount": "500.00",
+      "date": "2024-03-09"
     },
     "15": {
       "transactionID": "15",
       "cardID": "card2",
       "description": "Stark Industries",
-      "amount": "150.00"
+      "amount": "150.00",
+      "date": "2024-03-24"
     },
     "16": {
       "transactionID": "16",
       "cardID": "card2",
       "description": "LexCorp",
-      "amount": "75.00"
+      "amount": "75.00",
+      "date": "2024-03-06"
     },
     "17": {
       "transactionID": "17",
       "cardID": "card2",
       "description": "Monsters, Inc.",
-      "amount": "100.00"
+      "amount": "100.00",
+      "date": "2024-03-14"
     },
     "18": {
       "transactionID": "18",
       "cardID": "card2",
       "description": "Weyland-Yutani Corporation",
-      "amount": "50.00"
+      "amount": "50.00",
+      "date": "2024-03-20"
     },
     "19": {
       "transactionID": "19",
       "cardID": "card2",
       "description": "Cyberdyne Systems",
-      "amount": "-80.00"
+      "amount": "-80.00",
+      "date": "2024-03-16"
     },
     "20": {
       "transactionID": "20",
       "cardID": "card2",
       "description": "Tyrell Corporation",
-      "amount": "400.00"
+      "amount": "400.00",
+      "date": "2024-03-28"
     }
   }
 }

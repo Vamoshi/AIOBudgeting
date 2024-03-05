@@ -2,7 +2,7 @@
   "expo": {
     "name": "rn-material-kit-free",
     "description": "React Native - Material Kit Free",
-    "slug": "rn-material-kit-free",
+    "slug": "aiobudgeting",
     "privacy": "unlisted",
     "platforms": [
       "ios",
@@ -24,6 +24,12 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35685cec-d8ec-4c28-bbc3-9e63059d6908"
+      }
+    },
+    "owner": "vamoshi"
   }
 }
