@@ -14,8 +14,8 @@ export default function AccountsDetails() {
     const [cardData, setCardData] = useState(navigationProps && navigationProps.cardData)
 
     useEffect(() => {
-        setAccountData(navigationProps.accountData)
-        setCardData(navigationProps.categoryData)
+        !accountData && setAccountData(navigationProps.accountData)
+        !cardData && setCardData(navigationProps.categoryData)
     }, [navigationProps])
 
     return (
