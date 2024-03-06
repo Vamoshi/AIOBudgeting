@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, TouchableNativeFeedback, View, Linking, Modal } from 'react-native';
+import { StyleSheet, TouchableNativeFeedback, View, Linking, Modal } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { useNavigation } from '@react-navigation/native';
 import Theme from '../constants/Theme';
-import IconExtra from './IconExtra';
-import { ProgressBar } from 'react-native-paper';
-import { categories, materialTheme } from '../constants';
+import { materialTheme } from '../constants';
 
-
-const TransactionCard = ({ categoryData, accountData, cardData, tid, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
+// Needs accountData && tid
+const TransactionCard = ({ categoryData, summary, accountData, cardData, tid, navigateTo, navigationProps, budgetStyle }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   const { navigate } = useNavigation()
@@ -37,15 +35,27 @@ const TransactionCard = ({ categoryData, accountData, cardData, tid, imageStyle,
   const [transaction, setTransaction] = useState({})
   const [date, setDate] = useState()
 
+  const formatPercent = (number) => {
+    return Math.round(Math.abs((number)), 0) || 0
+  }
+
+  const calcBudgetPercent = () => {
+    return formatPercent((transaction.amount / (transaction.amount <= 0 ? summary.inflow : summary.outflow)) * 100)
+  }
+
+  const calcAccountPercent = () => {
+    return formatPercent((transaction.amount / categoryData.budget) * 100)
+  }
+
   useEffect(() => {
     accountData && setTransaction(accountData.transactions[tid])
     transaction && transaction.date && formatDate()
-  }, [categoryData, accountData, cardData, transaction])
+  }, [categoryData, accountData, cardData, transaction, tid])
 
   return (
     <Block row={true} card flex={1} style={[styles.SummaryCard, styles.shadow]}>
       {
-        transaction && accountData && (!budgetStyle && cardData || budgetStyle && categoryData) ?
+        tid && accountData ?
           <>
             <TouchableNativeFeedback onPress={handleNavigation}>
               <Block flex={1} style={styles.cardDesc}>
@@ -56,8 +66,12 @@ const TransactionCard = ({ categoryData, accountData, cardData, tid, imageStyle,
                 </View>
                 <View style={[styles.priceContainer]}>
                   <Text size={12} color={Theme.COLORS.PRIMARY} style={[styles.numberStyle, styles.numberBorder, styles.date]}>{date || ""}</Text>
-                  <Text size={12} color={transaction.amount >= 0 ? Theme.COLORS.ERROR : Theme.COLORS.SUCCESS} style={[styles.numberStyle, budgetStyle && styles.numberBorder]}>{(transaction.amount / categoryData.budget) * 100}%</Text>
-                  <Text size={12} color={transaction.amount >= 0 ? Theme.COLORS.ERROR : Theme.COLORS.SUCCESS} style={[styles.numberStyle]}>${parseFloat(transaction.amount)}</Text>
+                  <Text size={12} color={transaction.amount >= 0 ? Theme.COLORS.ERROR : Theme.COLORS.SUCCESS} style={[styles.numberStyle, styles.numberBorder]}>
+                    {
+                      budgetStyle ? calcAccountPercent() : calcBudgetPercent()
+                    }%
+                  </Text>
+                  <Text size={12} color={transaction.amount >= 0 ? Theme.COLORS.ERROR : Theme.COLORS.SUCCESS} style={[styles.numberStyle, styles.numberBorder]}>${parseFloat(transaction.amount)}</Text>
                 </View>
               </Block>
             </TouchableNativeFeedback>

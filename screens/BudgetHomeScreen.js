@@ -15,6 +15,66 @@ export default function BudgetHomeScreen({ navigation }) {
     accountData
   }, [accountData])
 
+  const calcBudgetOutflow = (categoryTransactions) => {
+    let outflow = 0;
+
+    if (accountData && categories) {
+      transactionDetails = accountData.transactions
+
+      categoryTransactions.forEach((tID) => {
+        outflow += parseFloat(transactionDetails[tID].amount)
+      })
+    }
+
+    return outflow
+  }
+
+  const calcBudgetRemaining = (categoryData, budgetOutflow) => {
+    return parseInt(categoryData.budget) - parseInt(budgetOutflow) || 0
+  }
+
+  const createCategorySummary = () => {
+    const summaryObject = {
+      category: "Budget Summary",
+      budget: 0,
+      transactions: [],
+      image: "https://cdn4.iconfinder.com/data/icons/fintech-color-line-vol-1/256/BUDGETING-1024.png"
+    }
+
+    let budget = 0
+    let transactions = []
+
+    Object.keys(categories).forEach((categoryID) => {
+      transactions = transactions.concat(categories[categoryID].transactions)
+      budget += categories[categoryID].budget
+    })
+
+    summaryObject.budget = budget
+    summaryObject.transactions = transactions
+
+    return summaryObject
+  }
+
+  const SummarySummaryCard = () => {
+    if (categories) {
+
+      const categorySummary = createCategorySummary()
+
+      const budgetOutflow = calcBudgetOutflow(categorySummary.transactions)
+      const budgetInflow = calcBudgetRemaining(categorySummary, budgetOutflow)
+      const summary = { outflow: budgetOutflow, inflow: budgetInflow }
+
+      return <SummaryCard
+        categoryData={categorySummary}
+        accountData={accountData}
+        navigationProps={{ categoryData: categorySummary, accountData, summary }}
+        budgetStyle
+        navigateTo={ScreenNames().Stack.BudgetDetails}
+        summary={summary}
+      />
+    }
+  }
+
   return (
     <Block flex center>
       <ScrollView
@@ -24,17 +84,23 @@ export default function BudgetHomeScreen({ navigation }) {
         <Block flex style={styles.group}>
           <Block flex>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <SummarySummaryCard />
               {
-                Object.keys(categories).map((key) => {
+                categories && Object.keys(categories).map((key) => {
                   categoryData = categories[key]
+
+                  const budgetOutflow = calcBudgetOutflow(categoryData.transactions)
+                  const budgetInflow = calcBudgetRemaining(categoryData, budgetOutflow)
+                  const summary = { outflow: budgetOutflow, inflow: budgetInflow }
 
                   return <SummaryCard
                     categoryData={categoryData}
                     accountData={accountData}
-                    navigationProps={{ categoryData, accountData }}
+                    navigationProps={{ categoryData, accountData, summary }}
                     budgetStyle
                     key={key}
                     navigateTo={ScreenNames().Stack.BudgetDetails}
+                    summary={summary}
                   />
                 })
               }

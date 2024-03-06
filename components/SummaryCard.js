@@ -8,8 +8,8 @@ import { ProgressBar } from 'react-native-paper';
 import { categories, materialTheme } from '../constants';
 
 
-// Needs (categoryData || cardData) && accountData, 
-const SummaryCard = ({ categoryData, accountData, cardData, summary, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
+// Needs (categoryData || cardData) && accountData & summary, 
+const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   const { navigate } = useNavigation()
@@ -31,74 +31,14 @@ const SummaryCard = ({ categoryData, accountData, cardData, summary, imageStyle,
   const imageStyles = [
     styles.image,
     imageStyle,
+    budgetStyle && styles.whiteBG
   ];
 
-  const [accountsOutflow, setAccountsOutflow] = useState(0)
-  const calcAccountsOutflow = () => {
-    total = 0
-
-    if (cardData && accountData) {
-      transactions = accountData.transactions
-      allTransactionKeys = Object.keys(accountData.transactions)
-      allTransactionKeys.forEach((tID) => {
-        transactionAmount = transactions[tID].amount
-        transactionCard = transactions[tID].cardID
-        card = cardData.cardID
-        transactionCard === card ? transactionAmount > 0 ? total += parseFloat(transactionAmount) : 0 : 0
-      })
-    }
-    setAccountsOutflow(total)
-  }
-
-  const [accountsInflow, setAccountsInflow] = useState(0)
-  const calcAccountsInflow = () => {
-    total = 0
-
-    if (cardData && accountData) {
-      transactions = accountData.transactions
-      allTransactionKeys = Object.keys(accountData.transactions)
-      allTransactionKeys.forEach((tID) => {
-        transactionAmount = transactions[tID].amount
-        transactionCard = transactions[tID].cardID
-        card = cardData.cardID
-
-        transactionCard === card ? transactionAmount < 0 ? total += parseFloat(transactionAmount) * -1 : 0 : 0
-      })
-    }
-    setAccountsInflow(total)
-  }
-
-  const [budgetOutflow, setBudgetOutflow] = useState(0)
-  const calcBudgetOutflow = () => {
-    total = 0
-
-    if (accountData && categories && categoryData) {
-      categoryTransactions = categories[categoryData.category].transactions
-      transactionDetails = accountData.transactions
-
-      categoryTransactions.forEach((tID) => {
-        total += parseFloat(transactionDetails[tID].amount)
-      })
-    }
-
-    setBudgetOutflow(total)
-  }
-
-  const [budgetRemaining, setBudgetRemaining] = useState(0)
-  const calcBudgetRemaining = () => {
-    setBudgetRemaining(parseInt(categoryData.budget) - parseInt(budgetOutflow))
-  }
-
-  useEffect(() => {
-    if (budgetStyle && categoryData) {
-      calcBudgetOutflow()
-      calcBudgetRemaining()
-    }
-    else {
-      calcAccountsOutflow()
-      calcAccountsInflow()
-    }
-  }, [categoryData, accountData, cardData, budgetOutflow])
+  // useEffect(() => {
+  //   console.log('====================================');
+  //   console.log(categoryData);
+  //   console.log('====================================');
+  // }, [categoryData])
 
   return (
     <Block row={true} card flex style={[styles.SummaryCard, styles.shadow]}>
@@ -143,12 +83,17 @@ const SummaryCard = ({ categoryData, accountData, cardData, summary, imageStyle,
                       </View>
                     </View>
                 }
-                {budgetStyle && <ProgressBar style={styles.progressBar} progress={(Math.max(0, budgetOutflow) / categoryData.budget)} color={Theme.COLORS.ERROR} />}
-                <View style={styles.priceContainer}>
-                  <Text size={12} color={Theme.COLORS.ERROR} style={[styles.numberStyle, styles.numberBorder]}>${budgetStyle ? budgetOutflow : accountsOutflow}</Text>
-                  <Text size={12} color={Theme.COLORS.SUCCESS} style={[styles.numberStyle, budgetStyle && styles.numberBorder]}>${budgetStyle ? budgetRemaining : accountsInflow}</Text>
-                  {budgetStyle && <Text size={12} color={Theme.COLORS.MUTED} style={[styles.numberStyle]}>${categoryData.budget}</Text>}
-                </View>
+                {summary && budgetStyle && <ProgressBar style={styles.progressBar} progress={(Math.max(0, summary.outflow) / categoryData.budget)} color={Theme.COLORS.ERROR} />}
+                {
+                  summary && summary.inflow && summary.outflow ?
+                    <View style={styles.priceContainer}>
+                      <Text size={12} color={Theme.COLORS.ERROR} style={[styles.numberStyle, styles.numberBorder]}>${summary && summary.outflow || ""}</Text>
+                      <Text size={12} color={Theme.COLORS.SUCCESS} style={[styles.numberStyle, budgetStyle && styles.numberBorder]}>${summary && summary.inflow || ""}</Text>
+                      {budgetStyle && <Text size={12} color={Theme.COLORS.MUTED} style={[styles.numberStyle]}>${categoryData.budget}</Text>}
+                    </View>
+                    :
+                    <></>
+                }
               </Block>
             </TouchableNativeFeedback>
           </>
@@ -198,7 +143,9 @@ const SummaryCard = ({ categoryData, accountData, cardData, summary, imageStyle,
 export default SummaryCard;
 
 const styles = StyleSheet.create({
-
+  whiteBG: {
+    backgroundColor: "white",
+  },
   budgetTitle: {
     textTransform: 'capitalize',
   },
@@ -256,7 +203,7 @@ const styles = StyleSheet.create({
   },
   SummaryCard: {
     backgroundColor: theme.COLORS.WHITE,
-    marginVertical: theme.SIZES.BASE * 0.8,
+    marginVertical: theme.SIZES.BASE * 0.5,
     minHeight: 114,
   },
   cardDesc: {

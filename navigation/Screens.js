@@ -26,7 +26,7 @@ function BudgetStackHomeScreen() {
       />
       <BudgetStack.Screen name={ScreenNames().Stack.BudgetDetails} component={BudgetDetails}
         options={() => ({
-          headerTitle: "Budget Details",
+          headerTitle: "Details",
         })}
       />
     </BudgetStack.Navigator>
@@ -49,7 +49,7 @@ function AccountsStackHomeScreen() {
       />
       <AccountsStack.Screen name={ScreenNames().Stack.AccountsDetails} component={AccountsDetails}
         options={() => ({
-          headerTitle: "Account Details",
+          headerTitle: "Details",
         })}
       />
     </AccountsStack.Navigator>

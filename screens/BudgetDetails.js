@@ -15,12 +15,18 @@ export default function BudgetDetails() {
 
     const [accountData, setAccountData] = useState(navigationProps && navigationProps.accountData)
     const [categoryData, setCategoryData] = useState(navigationProps && navigationProps.categoryData)
+    const [summary, setSummary] = useState(navigationProps && navigationProps.summary)
     const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
-        setAccountData(navigationProps.accountData)
-        setCategoryData(navigationProps.categoryData)
+        !accountData && setAccountData(navigationProps.accountData)
+        !categoryData && setCategoryData(navigationProps.categoryData)
+        !summary && setSummary(navigationProps.summary)
         setTransactions(categoryData.transactions)
+
+        console.log('====================================');
+        console.log(summary);
+        console.log('====================================');
 
     }, [navigationProps])
 
@@ -38,6 +44,7 @@ export default function BudgetDetails() {
                                 accountData={accountData}
                                 budgetStyle
                                 horizontal
+                                summary={summary}
                             />
                             {
                                 transactions.map((tid) =>
@@ -47,7 +54,6 @@ export default function BudgetDetails() {
                                         categoryData={categoryData}
                                         accountData={accountData}
                                         budgetStyle
-                                        horizontal
                                     />
                                 )
                             }
