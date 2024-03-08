@@ -61,7 +61,7 @@ export default homePageStyles = StyleSheet.create({
         paddingHorizontal: theme.SIZES.BASE * 2,
     },
     group: {
-        paddingTop: theme.SIZES.BASE * 1.5,
+        paddingTop: theme.SIZES.BASE,
     },
     shadow: {
         shadowColor: 'black',

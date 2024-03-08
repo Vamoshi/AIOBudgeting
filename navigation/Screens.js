@@ -1,16 +1,19 @@
-import { Dimensions, View, Text, Button } from "react-native";
+import { Dimensions, View, Text, Button, TouchableNativeFeedback, StyleSheet } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BudgetHomeScreen from "../screens/BudgetHomeScreen";
 import AccountsHomeScreen from "../screens/AccountsHomeScreen";
-import { Icon } from "galio-framework";
+import { Block, Icon } from "galio-framework";
 import materialTheme from "../constants/Theme";
 import { formatTitle, removeIconOutline } from "../constants/utils";
 import Components from "../screens/Components";
 import BudgetDetails from "../screens/BudgetDetails";
 import AccountsDetails from "../screens/AccountsDetails";
+import IconExtra from "../components/IconExtra";
+import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
+import { TouchableRipple } from "react-native-paper";
 
 const { width } = Dimensions.get("screen");
 
@@ -22,6 +25,13 @@ function BudgetStackHomeScreen() {
       <BudgetStack.Screen name={ScreenNames().Stack.BudgetHomeScreen} component={BudgetHomeScreen}
         options={() => ({
           headerTitle: "Budget",
+          headerRight: () =>
+            <TouchableRipple onPress={() => { }}>
+              <IconExtra size={30} name="add-circle-outline" family="ionicon" />
+            </TouchableRipple>,
+          headerRightContainerStyle: {
+            paddingRight: "5%"
+          }
         })}
       />
       <BudgetStack.Screen name={ScreenNames().Stack.BudgetDetails} component={BudgetDetails}
@@ -41,10 +51,15 @@ function AccountsStackHomeScreen() {
       <AccountsStack.Screen name={ScreenNames().Stack.AccountsHomeScreen} component={AccountsHomeScreen}
         options={() => ({
           headerTitle: "Accounts",
-          headerStyle: {
-            // borderWidth: 1,
-            // borderColor: "red",
-          },
+          headerRight: () =>
+            <Block>
+              <TouchableNativeFeedback>
+                <IconExtra size={30} name="add-circle-outline" family="ionicon" />
+              </TouchableNativeFeedback>
+            </Block>,
+          headerRightContainerStyle: {
+            paddingRight: "5%"
+          }
         })}
       />
       <AccountsStack.Screen name={ScreenNames().Stack.AccountsDetails} component={AccountsDetails}
@@ -80,7 +95,7 @@ export default function App() {
     >
       <Tab.Screen name={ScreenNames().Tabs.BudgetTab} component={BudgetStackHomeScreen} />
       <Tab.Screen name={ScreenNames().Tabs.AccountsTab} component={AccountsStackHomeScreen} />
-      <Tab.Screen name={ScreenNames().Tabs.ComponentsTab} component={Components} />
+      {/* <Tab.Screen name={ScreenNames().Tabs.ComponentsTab} component={Components} /> */}
     </Tab.Navigator>
   );
 }
@@ -88,3 +103,7 @@ export default function App() {
 // Create Screens
 // Group Screens to Stack
 // Add to Tab.Screen with Stack Function Component as component
+
+const styles = StyleSheet.create({
+  ...HomePageStyles
+});

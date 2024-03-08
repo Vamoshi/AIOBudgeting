@@ -4,7 +4,7 @@ import { Block, Button, Text, theme } from 'galio-framework';
 import { useNavigation } from '@react-navigation/native';
 import Theme from '../constants/Theme';
 import IconExtra from './IconExtra';
-import { ProgressBar } from 'react-native-paper';
+import { ProgressBar, TouchableRipple } from 'react-native-paper';
 import { categories, materialTheme } from '../constants';
 
 
@@ -34,6 +34,18 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
     budgetStyle && styles.whiteBG
   ];
 
+  const editBudgetCard = () => {
+    console.log('====================================');
+    console.log(categoryData);
+    console.log('====================================');
+  }
+
+  const editAccountCard = () => {
+    console.log('====================================');
+    console.log(cardData);
+    console.log('====================================');
+  }
+
   // useEffect(() => {
   //   console.log('====================================');
   //   console.log(categoryData);
@@ -41,44 +53,65 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
   // }, [categoryData])
 
   return (
-    <Block row={true} card flex style={[styles.SummaryCard, styles.shadow]}>
-
+    <Block row={true} card flex style={[styles.SummaryCard, styles.shadow, budgetStyle && {
+      marginVertical: theme.SIZES.BASE * 0.5,
+    }]}>
       {
         !budgetStyle && cardData || budgetStyle && categoryData ?
           <>
-            <Block style={[styles.bankDetailsContainer,]}>
-              <TouchableNativeFeedback onPress={imageClickHandler}>
-                <View style={[styles.cardBorder]}>
-                  <View style={[budgetStyle ? styles.imageContainerBudget : styles.imageContainer, styles.shadow]}>
-                    <Image source={{ uri: budgetStyle ? categoryData.image : cardData.image }} style={imageStyles} resizeMode='contain' />
-                  </View>
-                  {
-                    !budgetStyle &&
-                    <View style={styles.bankNameContainer}>
-                      <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{cardData.bank}</Text>
-                    </View>
-                  }
+            {/* <Block style={[styles.bankDetailsContainer,]}> */}
+            <TouchableNativeFeedback onPress={cardData && cardData.link ? imageClickHandler : handleNavigation}>
+              <View style={[styles.cardBorder]}>
+                <View style={[
+                  budgetStyle ? styles.imageContainerBudget : styles.imageContainer,
+                  styles.shadow,
+                  !budgetStyle && cardData && cardData.link && styles.imageOffset,
+                ]}>
+                  <Image source={{ uri: budgetStyle ? categoryData.image : cardData.image }} style={imageStyles} resizeMode='contain' />
                 </View>
-              </TouchableNativeFeedback>
-            </Block>
-
+                {
+                  !budgetStyle && cardData && cardData.link &&
+                  <View style={styles.bankNameContainer}>
+                    <Text muted={true} style={[styles.bankText]}><IconExtra name="open-outline" family="ionicon" />{cardData.bank}</Text>
+                  </View>
+                }
+              </View>
+            </TouchableNativeFeedback>
+            {/* </Block> */}
+            {
+              budgetStyle && !categoryData.category.toLowerCase().includes("summary") &&
+              <TouchableRipple style={[styles.budgetSettingsIcon]} onPress={editBudgetCard}>
+                <IconExtra name="ellipsis-horizontal-outline" family="ionicon" />
+              </TouchableRipple>
+            }
             <TouchableNativeFeedback onPress={handleNavigation}>
               <Block flex space={budgetStyle ? "evenly" : "around"} style={styles.cardDesc}>
                 {
                   !budgetStyle ?
                     <View>
+                      {/* Name & settings */}
                       <View style={styles.topLabel}>
                         <Text size={12}>{cardData.firstName} {cardData.lastName}</Text>
-                        <Text size={10} style={[styles.accountType,]}>{cardData.accountType}</Text>
+                        {
+                          !budgetStyle && !cardData.accountType.toLowerCase().includes("summary") && <TouchableRipple style={[styles.accountSettingsIcon]} onPress={editAccountCard}>
+                            <IconExtra name="ellipsis-horizontal-outline" family="ionicon" />
+                          </TouchableRipple>
+                        }
+                        {cardData.accountType.toLowerCase().includes("summary") && <Text size={10} style={[styles.accountType]}>{cardData.accountType}</Text>}
                       </View>
+                      {/*  cardnumber && Debit/credit */}
                       <View style={styles.topLabel}>
                         <Text size={12}>{cardData.number.slice(-9)}</Text>
-                        <Text size={10} style={[styles.accountType,]}>{cardData.cardType}</Text>
+                        {!cardData.accountType.toLowerCase().includes("summary") && <Text size={10} style={[styles.accountType]}>{cardData.accountType}</Text>}
+                      </View>
+                      {/* mastercard/visa */}
+                      <View style={[styles.topLabel, { flexDirection: "", }]}>
+                        <Text size={10} style={[styles.accountType, { textAlign: "right" }]}>{cardData.cardType}</Text>
                       </View>
                     </View>
                     :
                     <View>
-                      <View style={styles.topLabel}>
+                      <View style={[styles.topLabel]}>
                         <Text size={17} style={[styles.budgetTitle]}>{categoryData.category}</Text>
                       </View>
                     </View>
@@ -143,6 +176,20 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
 export default SummaryCard;
 
 const styles = StyleSheet.create({
+  budgetSettingsIcon: {
+    position: 'absolute',
+    top: "14%",
+    right: "5%",
+    zIndex: 999,
+    borderRadius: 999,
+  },
+  accountSettingsIcon: {
+    // position: 'absolute',
+    // top: "9%",
+    // right: "6%",
+    zIndex: 999,
+    borderRadius: 999,
+  },
   whiteBG: {
     backgroundColor: "white",
   },
@@ -203,7 +250,7 @@ const styles = StyleSheet.create({
   },
   SummaryCard: {
     backgroundColor: theme.COLORS.WHITE,
-    marginVertical: theme.SIZES.BASE * 0.5,
+    marginVertical: theme.SIZES.BASE * 0.8,
     minHeight: 114,
   },
   cardDesc: {
@@ -220,11 +267,13 @@ const styles = StyleSheet.create({
     marginHorizontal: theme.SIZES.BASE / 2,
     marginTop: theme.SIZES.BASE / 2,
     aspectRatio: 15 / 10,
-    marginTop: "-10%",
     paddingBottom: "1.5%",
     paddingLeft: "2%",
     height: "85%",
     width: 'auto',
+  },
+  imageOffset: {
+    marginTop: "-10%",
   },
   imageContainerBudget: {
     borderRadius: 10,

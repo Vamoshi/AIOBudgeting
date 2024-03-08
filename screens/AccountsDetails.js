@@ -17,7 +17,7 @@ export default function AccountsDetails() {
     const [transactions, setTransactions] = useState()
 
     const fetchTransactions = () => setTransactions(
-        Object.keys(accountData.transactions).filter((key) => accountData.transactions[key].cardID === cardData.cardID)
+        Object.keys(accountData.transactions).filter((key) => accountData.transactions[key].cardID === cardData.cardID || cardData.cardID === "summary")
     )
 
     useEffect(() => {
@@ -42,6 +42,7 @@ export default function AccountsDetails() {
                                 cardData={cardData}
                                 summary={summary}
                                 horizontal
+                                imageStyle={{ backgroundColor: "white" }}
                             />
                             {
                                 transactions && transactions.map((key) =>

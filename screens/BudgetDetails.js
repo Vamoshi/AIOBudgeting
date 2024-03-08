@@ -24,10 +24,6 @@ export default function BudgetDetails() {
         !summary && setSummary(navigationProps.summary)
         setTransactions(categoryData.transactions)
 
-        console.log('====================================');
-        console.log(summary);
-        console.log('====================================');
-
     }, [navigationProps])
 
     return (
