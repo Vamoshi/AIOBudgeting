@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, TouchableNativeFeedback, View, Linking, Modal } from 'react-native';
+import { StyleSheet, Image, TouchableNativeFeedback, View, Linking, Modal, ScrollView } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { useNavigation } from '@react-navigation/native';
 import Theme from '../constants/Theme';
 import IconExtra from './IconExtra';
 import { ProgressBar, TouchableRipple } from 'react-native-paper';
 import { categories, materialTheme } from '../constants';
+import CustomModal from './CustomModal';
+import EditableSummaryCard from '../components/EditableSummaryCard'
 
 
 // Needs (categoryData || cardData) && accountData & summary, 
 const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
-  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [exitAppPopup, setExitAppPopup] = useState(false);
+  const [budgetPopup, setBudgetPopup] = useState(false);
+  const [accountPopup, setAccountPopup] = useState(false);
 
   const { navigate } = useNavigation()
 
@@ -22,10 +26,10 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
     !budgetStyle && cardData && cardData.link && Linking.openURL(cardData.link);
   }
   const hidePopup = () => {
-    setPopupVisible(false);
+    setExitAppPopup(false);
   };
   const imageClickHandler = () => {
-    !budgetStyle ? setPopupVisible(true) : handleNavigation();
+    !budgetStyle ? setExitAppPopup(true) : handleNavigation();
   };
 
   const imageStyles = [
@@ -35,15 +39,11 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
   ];
 
   const editBudgetCard = () => {
-    console.log('====================================');
-    console.log(categoryData);
-    console.log('====================================');
+    setBudgetPopup(true)
   }
 
   const editAccountCard = () => {
-    console.log('====================================');
-    console.log(cardData);
-    console.log('====================================');
+    setAccountPopup(true)
   }
 
   // useEffect(() => {
@@ -133,14 +133,11 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
           :
           <></>
       }
-      <Modal
-        visible={isPopupVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={hidePopup}
-      >
-        <View style={styles.modalContainer}>
-          <View style={[styles.modalContent]}>
+      <CustomModal
+        visible={exitAppPopup}
+        setVisibility={setExitAppPopup}
+        component={
+          <>
             <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {cardData && cardData.bank} app?</Text>
             <Block row space="evenly">
               <Block flex>
@@ -166,9 +163,28 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
                 </Button>
               </Block>
             </Block>
-          </View>
-        </View>
-      </Modal>
+          </>
+        }
+      />
+      <CustomModal
+        visible={budgetPopup}
+        setVisibility={setBudgetPopup}
+        component={
+          <EditableSummaryCard
+            full
+            budgetStyle
+          />
+        }
+      />
+      <CustomModal
+        visible={accountPopup}
+        setVisibility={setAccountPopup}
+        component={
+          <EditableSummaryCard
+            full
+          />
+        }
+      />
     </Block >
   )
 };
@@ -176,11 +192,12 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
 export default SummaryCard;
 
 const styles = StyleSheet.create({
+
   budgetSettingsIcon: {
     position: 'absolute',
     top: "14%",
     right: "5%",
-    zIndex: 999,
+    zIndex: 10,
     borderRadius: 999,
   },
   accountSettingsIcon: {
@@ -207,19 +224,6 @@ const styles = StyleSheet.create({
     height: 34,
     paddingHorizontal: theme.SIZES.BASE,
     paddingVertical: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginHorizontal: "10%",
   },
   progressBar: {
     backgroundColor: Theme.COLORS.SUCCESS,
