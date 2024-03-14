@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, TouchableNativeFeedback, View, Linking, Modal } from 'react-native';
+import { StyleSheet, Image, TouchableNativeFeedback, View, Linking, Modal, ScrollView } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { useNavigation } from '@react-navigation/native';
 import Theme from '../constants/Theme';
 import IconExtra from './IconExtra';
-import { ProgressBar, TouchableRipple } from 'react-native-paper';
-import { categories, materialTheme } from '../constants';
+import { ActivityIndicator, ProgressBar, TouchableRipple } from 'react-native-paper';
+import CustomModal from './CustomModal';
+import EditableSummaryCard from '../components/EditableSummaryCard'
+import { materialTheme } from '../constants';
 
 
 // Needs (categoryData || cardData) && accountData & summary, 
 const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, navigationProps, budgetStyle }) => {
-  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [exitAppPopup, setExitAppPopup] = useState(false);
+  const [budgetPopup, setBudgetPopup] = useState(false);
+  const [accountPopup, setAccountPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false)
+  const [deleteFeedbackPopup, setDeleteFeedbackPopup] = useState(false)
 
   const { navigate } = useNavigation()
 
@@ -18,14 +24,14 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
     navigateTo && navigate(navigateTo, { navigationProps })
   }
 
-  const handleConfirm = () => {
+  const openExternalApp = () => {
     !budgetStyle && cardData && cardData.link && Linking.openURL(cardData.link);
   }
   const hidePopup = () => {
-    setPopupVisible(false);
+    setExitAppPopup(false);
   };
   const imageClickHandler = () => {
-    !budgetStyle ? setPopupVisible(true) : handleNavigation();
+    !budgetStyle ? setExitAppPopup(true) : handleNavigation();
   };
 
   const imageStyles = [
@@ -35,22 +41,26 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
   ];
 
   const editBudgetCard = () => {
-    console.log('====================================');
-    console.log(categoryData);
-    console.log('====================================');
+    setBudgetPopup(true)
   }
 
   const editAccountCard = () => {
-    console.log('====================================');
-    console.log(cardData);
-    console.log('====================================');
+    setAccountPopup(true)
   }
 
   // useEffect(() => {
   //   console.log('====================================');
-  //   console.log(categoryData);
+  //   console.log(categoryData, cardData);
   //   console.log('====================================');
   // }, [categoryData])
+
+  const [optionsPopup, setOptionsPopup] = useState(false)
+
+  const [categoryNameField, setCategoryNameField] = useState("")
+  const [budgetField, setBudgetField] = useState("")
+  const [lastNameField, setLastNameField] = useState("")
+  const [firstNameField, setFirstNameField] = useState("")
+  const [cardNumberField, setCardNumberField] = useState("")
 
   return (
     <Block row={true} card flex style={[styles.SummaryCard, styles.shadow, budgetStyle && {
@@ -80,7 +90,7 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
             {/* </Block> */}
             {
               budgetStyle && !categoryData.category.toLowerCase().includes("summary") &&
-              <TouchableRipple style={[styles.budgetSettingsIcon]} onPress={editBudgetCard}>
+              <TouchableRipple style={[styles.budgetSettingsIcon]} onPress={() => setOptionsPopup(true)}>
                 <IconExtra name="ellipsis-horizontal-outline" family="ionicon" />
               </TouchableRipple>
             }
@@ -93,7 +103,7 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
                       <View style={styles.topLabel}>
                         <Text size={12}>{cardData.firstName} {cardData.lastName}</Text>
                         {
-                          !budgetStyle && !cardData.accountType.toLowerCase().includes("summary") && <TouchableRipple style={[styles.accountSettingsIcon]} onPress={editAccountCard}>
+                          !budgetStyle && !cardData.accountType.toLowerCase().includes("summary") && <TouchableRipple style={[styles.accountSettingsIcon]} onPress={() => setOptionsPopup(true)}>
                             <IconExtra name="ellipsis-horizontal-outline" family="ionicon" />
                           </TouchableRipple>
                         }
@@ -125,50 +135,116 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
                       {budgetStyle && <Text size={12} color={Theme.COLORS.MUTED} style={[styles.numberStyle]}>${categoryData.budget}</Text>}
                     </View>
                     :
-                    <></>
+                    <ActivityIndicator animating={true} color={theme.COLORS.PRIMARY} />
                 }
               </Block>
             </TouchableNativeFeedback>
           </>
           :
-          <></>
+          <ActivityIndicator animating={true} color={theme.COLORS.PRIMARY} />
       }
-      <Modal
-        visible={isPopupVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={hidePopup}
-      >
-        <View style={styles.modalContainer}>
-          <View style={[styles.modalContent]}>
-            <Text p style={{ marginBottom: theme.SIZES.BASE * 1.5, textAlign: "center" }}>Do you want to exit and open the {cardData && cardData.bank} app?</Text>
-            <Block row space="evenly">
-              <Block flex>
-                <Button
-                  color={materialTheme.COLORS.MUTED}
-                  textStyle={styles.optionsText}
-                  style={[styles.optionsButton, styles.shadow]}
-                  onPress={hidePopup}
-                >
-                  No
-                </Button>
-              </Block>
-              <Block flex={1}>
-                <Button
-                  center
-                  shadowless
-                  color={materialTheme.COLORS.INFO}
-                  textStyle={styles.optionsText}
-                  style={[styles.optionsButton, styles.shadow]}
-                  onPress={handleConfirm}
-                >
-                  Yes
-                </Button>
-              </Block>
+      <>
+        <CustomModal
+          visible={exitAppPopup}
+          setVisibility={setExitAppPopup}
+          handleConfirm={openExternalApp}
+          component={
+            <Block
+              style={[{ padding: theme.SIZES.BASE }]}
+            >
+              <Text p style={{ textAlign: "center" }}>Do you want to open the {cardData && cardData.bank} app?</Text>
             </Block>
-          </View>
-        </View>
-      </Modal>
+          }
+        />
+        <CustomModal
+          visible={budgetPopup}
+          setVisibility={setBudgetPopup}
+          component={
+            <EditableSummaryCard
+              full
+              budgetStyle
+              stateFunctions={{ setCategoryNameField, setBudgetField }}
+            />
+          }
+          disableConfirm={!categoryNameField && !budgetField}
+        />
+        <CustomModal
+          visible={accountPopup}
+          setVisibility={setAccountPopup}
+          component={
+            <EditableSummaryCard
+              full
+              stateFunctions={{ setLastNameField, setFirstNameField, setCardNumberField }}
+            />
+          }
+          disableConfirm={!lastNameField && !firstNameField && !cardNumberField}
+        />
+        <CustomModal
+          visible={optionsPopup}
+          setVisibility={setOptionsPopup}
+          buttons={
+            {
+              confirm: "Edit",
+              cancel: "Delete",
+            }
+          }
+          extraButtons={
+            <Block flex>
+              <Button
+                color={materialTheme.COLORS.MUTED}
+                textStyle={styles.optionsText}
+                style={[styles.optionsButton, styles.shadow]}
+                onPress={() => {
+                  setOptionsPopup(false)
+                }}
+              >
+                Cancel
+              </Button>
+            </Block>
+          }
+          buttonColor={{ cancel: Theme.COLORS.ERROR }}
+          handleConfirm={budgetStyle ? editBudgetCard : editAccountCard}
+          handleCancel={() => {
+            setBudgetPopup(false)
+            setAccountPopup(false)
+            setDeletePopup(true)
+          }}
+          component={
+            <Block
+              style={[{ padding: theme.SIZES.BASE }]}
+            >
+              <Text p style={{ textAlign: "center" }}>What do you want to do with "{budgetStyle ? categoryData && categoryData.category : cardData && cardData.number || cardData.cardID}"?</Text>
+            </Block>
+          }
+        />
+        <CustomModal
+          visible={deletePopup}
+          setVisibility={setDeletePopup}
+          component={
+            <Block
+              style={[{ padding: theme.SIZES.BASE }]}
+            >
+              <Text p style={{ textAlign: "center" }}>Are you sure you want to delete "{budgetStyle ? categoryData && categoryData.category : cardData && cardData.number || cardData.cardID}"? </Text>
+              <Text style={{ textAlign: "center" }} h6></Text>
+              <Text p style={{ textAlign: "center", color: Theme.COLORS.ERROR }}>Warning: This action cannot be undone</Text>
+            </Block>
+          }
+          handleConfirm={() => setDeleteFeedbackPopup(true)}
+          buttonColor={{ confirm: Theme.COLORS.ERROR, cancel: Theme.COLORS.SUCCESS }}
+        />
+        <CustomModal
+          visible={deleteFeedbackPopup}
+          setVisibility={setDeleteFeedbackPopup}
+          component={
+            <Block
+              style={[{ padding: theme.SIZES.BASE }]}
+            >
+              <Text p style={{ textAlign: "center" }}>"{budgetStyle ? categoryData && categoryData.category : cardData && cardData.number || cardData.cardID}" Has been deleted </Text>
+            </Block>
+          }
+          noCancelButton
+        />
+      </>
     </Block >
   )
 };
@@ -176,11 +252,23 @@ const SummaryCard = ({ categoryData, cardData, summary, imageStyle, navigateTo, 
 export default SummaryCard;
 
 const styles = StyleSheet.create({
+  optionsText: {
+    fontSize: theme.SIZES.BASE * 0.8,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    letterSpacing: -0.29,
+  },
+  optionsButton: {
+    width: 'auto',
+    height: 34,
+    paddingHorizontal: theme.SIZES.BASE,
+    paddingVertical: 10,
+  },
   budgetSettingsIcon: {
     position: 'absolute',
     top: "14%",
     right: "5%",
-    zIndex: 999,
+    zIndex: 10,
     borderRadius: 999,
   },
   accountSettingsIcon: {
@@ -195,31 +283,6 @@ const styles = StyleSheet.create({
   },
   budgetTitle: {
     textTransform: 'capitalize',
-  },
-  optionsText: {
-    fontSize: theme.SIZES.BASE * 0.8,
-    fontWeight: "normal",
-    fontStyle: "normal",
-    letterSpacing: -0.29,
-  },
-  optionsButton: {
-    width: 'auto',
-    height: 34,
-    paddingHorizontal: theme.SIZES.BASE,
-    paddingVertical: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginHorizontal: "10%",
   },
   progressBar: {
     backgroundColor: Theme.COLORS.SUCCESS,

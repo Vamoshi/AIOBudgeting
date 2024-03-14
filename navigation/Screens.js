@@ -1,11 +1,11 @@
-import { Dimensions, View, Text, Button, TouchableNativeFeedback, StyleSheet } from "react-native";
-import React from "react";
+import { StyleSheet } from "react-native";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScreenNames from "./ScreenNames";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BudgetHomeScreen from "../screens/BudgetHomeScreen";
 import AccountsHomeScreen from "../screens/AccountsHomeScreen";
-import { Block, Icon } from "galio-framework";
+import { Icon } from "galio-framework";
 import materialTheme from "../constants/Theme";
 import { formatTitle, removeIconOutline } from "../constants/utils";
 import Components from "../screens/Components";
@@ -14,10 +14,39 @@ import AccountsDetails from "../screens/AccountsDetails";
 import IconExtra from "../components/IconExtra";
 import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
 import { TouchableRipple } from "react-native-paper";
-
-const { width } = Dimensions.get("screen");
+import CustomModal from "../components/CustomModal";
+import EditableSummaryCard from "../components/EditableSummaryCard";
 
 const BudgetStack = createStackNavigator();
+
+const RenderHeaderRight = ({ budgetStyle }) => {
+  const [budgetPopup, setBudgetPopup] = useState(false);
+  const [accountPopup, setAccountPopup] = useState(false);
+
+  const [categoryNameField, setCategoryNameField] = useState("")
+  const [budgetField, setBudgetField] = useState("")
+  const [lastNameField, setLastNameField] = useState("")
+  const [firstNameField, setFirstNameField] = useState("")
+  const [cardNumberField, setCardNumberField] = useState("")
+
+  return <TouchableRipple onPress={() => { budgetStyle ? setBudgetPopup(true) : setAccountPopup(true) }}>
+    <>
+      <IconExtra size={30} name="add-circle-outline" family="ionicon" />
+      <CustomModal
+        visible={budgetStyle ? budgetPopup : accountPopup}
+        setVisibility={budgetStyle ? setBudgetPopup : setAccountPopup}
+        component={
+          <EditableSummaryCard
+            full
+            budgetStyle={budgetStyle}
+            stateFunctions={budgetStyle ? { setCategoryNameField, setBudgetField } : { setLastNameField, setFirstNameField, setCardNumberField }}
+          />
+        }
+        disableConfirm={budgetStyle ? !categoryNameField && !budgetField : !lastNameField && !firstNameField && !cardNumberField}
+      />
+    </>
+  </TouchableRipple>
+}
 
 function BudgetStackHomeScreen() {
   return (
@@ -25,10 +54,7 @@ function BudgetStackHomeScreen() {
       <BudgetStack.Screen name={ScreenNames().Stack.BudgetHomeScreen} component={BudgetHomeScreen}
         options={() => ({
           headerTitle: "Budget",
-          headerRight: () =>
-            <TouchableRipple onPress={() => { }}>
-              <IconExtra size={30} name="add-circle-outline" family="ionicon" />
-            </TouchableRipple>,
+          headerRight: () => <RenderHeaderRight budgetStyle />,
           headerRightContainerStyle: {
             paddingRight: "5%"
           }
@@ -51,12 +77,7 @@ function AccountsStackHomeScreen() {
       <AccountsStack.Screen name={ScreenNames().Stack.AccountsHomeScreen} component={AccountsHomeScreen}
         options={() => ({
           headerTitle: "Accounts",
-          headerRight: () =>
-            <Block>
-              <TouchableNativeFeedback>
-                <IconExtra size={30} name="add-circle-outline" family="ionicon" />
-              </TouchableNativeFeedback>
-            </Block>,
+          headerRight: () => <RenderHeaderRight />,
           headerRightContainerStyle: {
             paddingRight: "5%"
           }
@@ -95,7 +116,7 @@ export default function App() {
     >
       <Tab.Screen name={ScreenNames().Tabs.BudgetTab} component={BudgetStackHomeScreen} />
       <Tab.Screen name={ScreenNames().Tabs.AccountsTab} component={AccountsStackHomeScreen} />
-      {/* <Tab.Screen name={ScreenNames().Tabs.ComponentsTab} component={Components} /> */}
+      <Tab.Screen name={ScreenNames().Tabs.ComponentsTab} component={Components} />
     </Tab.Navigator>
   );
 }
