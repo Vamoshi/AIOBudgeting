@@ -23,6 +23,12 @@ const RenderHeaderRight = ({ budgetStyle }) => {
   const [budgetPopup, setBudgetPopup] = useState(false);
   const [accountPopup, setAccountPopup] = useState(false);
 
+  const [categoryNameField, setCategoryNameField] = useState("")
+  const [budgetField, setBudgetField] = useState("")
+  const [lastNameField, setLastNameField] = useState("")
+  const [firstNameField, setFirstNameField] = useState("")
+  const [cardNumberField, setCardNumberField] = useState("")
+
   return <TouchableRipple onPress={() => { budgetStyle ? setBudgetPopup(true) : setAccountPopup(true) }}>
     <>
       <IconExtra size={30} name="add-circle-outline" family="ionicon" />
@@ -33,8 +39,10 @@ const RenderHeaderRight = ({ budgetStyle }) => {
           <EditableSummaryCard
             full
             budgetStyle={budgetStyle}
+            stateFunctions={budgetStyle ? { setCategoryNameField, setBudgetField } : { setLastNameField, setFirstNameField, setCardNumberField }}
           />
         }
+        disableConfirm={budgetStyle ? !categoryNameField && !budgetField : !lastNameField && !firstNameField && !cardNumberField}
       />
     </>
   </TouchableRipple>

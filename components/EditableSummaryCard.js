@@ -9,7 +9,7 @@ import CustomSegmentedButtons from '../components/CustomSegmentedButtons'
 
 const { width } = Dimensions.get('screen');
 
-const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => {
+const EditableSummaryCard = ({ stateFunctions, budgetStyle, horizontal, style, imageStyle }) => {
 
     const imageStyles = [
         styles.image,
@@ -49,7 +49,6 @@ const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => 
     const [accountType, setAccountType] = useState('');
     const [cardType, setCardType] = useState('');
 
-
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -68,15 +67,16 @@ const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => 
                             <View style={[styles.topLabel]}>
                                 <View style={[styles.inputContainer, { marginRight: "1%" }]}>
                                     <Input
-                                        placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                                        style={[{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT },]}
+                                        color='black'
+                                        placeholderTextColor={materialTheme.COLORS.ERROR}
+                                        style={[]}
                                         placeholder="Last Name"
                                     />
                                 </View>
                                 <View style={[styles.inputContainer]}>
                                     <Input
-                                        placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                                        style={[{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT },]}
+                                        color='black'
+                                        placeholderTextColor={materialTheme.COLORS.ERROR}
                                         placeholder="First Name"
                                     />
                                 </View>
@@ -86,8 +86,8 @@ const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => 
                                 {/* change to input */}
                                 <View style={[styles.inputContainer]}>
                                     <Input
-                                        placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                                        style={[{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT },]}
+                                        color='black'
+                                        placeholderTextColor={materialTheme.COLORS.ERROR}
                                         placeholder="Card Number"
                                         inputMode='numeric'
                                     />
@@ -112,8 +112,8 @@ const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => 
                         :
                         <View style={[styles.inputContainer]}>
                             <Input
-                                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                                style={[{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT },]}
+                                color='black'
+                                placeholderTextColor={materialTheme.COLORS.ERROR}
                                 placeholder="Category Name"
                             />
                             <ProgressBar style={styles.progressBar} progress={0.5} color={Theme.COLORS.ERROR} />
@@ -128,8 +128,8 @@ const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => 
                     {budgetStyle &&
                         <View style={[styles.inputContainer]}>
                             <Input
-                                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                                style={[{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT, marginHorizontal: "2%" },]}
+                                color='black'
+                                placeholderTextColor={materialTheme.COLORS.ERROR}
                                 placeholder="$Budget"
                                 inputMode='numeric'
                             />
@@ -144,6 +144,10 @@ const EditableSummaryCard = ({ budgetStyle, horizontal, style, imageStyle }) => 
 export default EditableSummaryCard;
 
 const styles = StyleSheet.create({
+    inputStyle: {
+        borderRadius: 3,
+        borderColor: materialTheme.COLORS.ERROR,
+    },
     inputContainer: {
         flex: 1,
     },

@@ -6,6 +6,7 @@ import { Block, theme } from "galio-framework";
 import { ScrollView } from "react-native-gesture-handler";
 import HomePageStyles from "../constants/CommonStyles/HomePageStyles";
 import TransactionCard from "../components/TransactionCard"
+import { categories } from "../constants";
 
 
 export default function BudgetDetails() {
@@ -24,7 +25,10 @@ export default function BudgetDetails() {
         !summary && setSummary(navigationProps.summary)
         setTransactions(categoryData.transactions)
 
-    }, [navigationProps])
+        // console.log('====================================');
+        // console.log(categoryData);
+        // console.log('====================================');
+    }, [navigationProps, categoryData, transactions])
 
     return (
         <Block flex center>
