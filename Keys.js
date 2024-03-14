@@ -1,0 +1,4 @@
+const APPLICATION_ID = ""
+const APPLICATION_KEY = ""
+
+export { APPLICATION_ID, APPLICATION_KEY }
